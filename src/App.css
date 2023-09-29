@@ -28,6 +28,74 @@
   color: #61dafb;
 }
 
+h1{
+  color: rgb(10, 10, 10);
+  font-size: 36px;
+  position: absolute; /* Establece una posición absoluta */
+  top: 100px; /* Ajusta la distancia desde la parte superior según tus necesidades */
+  left: 600px; /* Ajusta la distancia desde la izquierda según tus necesidades */
+}
+
+/* RegistroComic.css */
+.formRegister{
+  position: absolute; 
+  top: 200px; 
+  right: 50px; 
+  width: 1000px; 
+}
+
+/* Estilos para los grupos de etiquetas y campos */
+.form-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Estilos para las etiquetas de los campos */
+label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: right;
+  
+}
+
+/* Estilos para los campos de entrada y textarea */
+input[type="text"],
+textarea,
+input[type="date"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 100px;
+}
+
+/* Estilos para los botones */
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items:center; /* Centra verticalmente los elementos hijos */
+  position: absolute; /* Establece una posición absoluta */
+  bottom: -50px; /* Ajusta la distancia desde el borde inferior según tus necesidades */
+  right: -12px; /* Ajusta la distancia desde el borde derecho según tus necesidades */
+  width: 600px; /* Establece el ancho deseado para el contenedor */
+  height: 50px; /* Establece la altura deseada para el contenedor */
+  background-color: #fff; /* Cambia el color de fondo según tu preferencia */
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 80px;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

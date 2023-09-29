@@ -6,6 +6,7 @@ import Destacados from './paginas/Destacados';
 import Terror from './paginas/Terror';
 import { Inicio } from './paginas/Inicio';
 
+
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
               <Route path='/accion' element={<Accion/>}/>
               <Route path='/destacados' element={<Destacados/>}/>
               <Route path='/terror' element={<Terror/>}/>
+              
           </Routes>
       </BrowserRouter>
     </div>

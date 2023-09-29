@@ -1,3 +1,8 @@
+:root {
+--verdesito: rgb(1, 162, 28);
+
+}
+
 .App {
   text-align: center;
 }
@@ -86,7 +91,7 @@ input[type="date"] {
 }
 
 button {
-  background-color: #007bff;
+  background-color: var(--verdesito);
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -103,4 +108,9 @@ button {
   to {
     transform: rotate(360deg);
   }
+}
+
+.contenedor-icono a{
+  font-size: 30px;
+  color: rgb(1, 162, 28);
 }

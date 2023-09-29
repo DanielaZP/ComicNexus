@@ -8,9 +8,14 @@ export const RegistroComic = () => {
   };
 
   return (
-<div>
+<div className='container'>
       <h1>Registrar Comic</h1>
-      <form className='formRegister'>
+      <div className='row'>
+        <div className='col-6'>
+        <img src="./heroes/marvel-iron.jpg" class="img-thumbnail" style={{width: "350px"}} alt="..."/>
+        </div>
+        <div className='col-6'>
+        <form className='formRegister'>
         <div className="form-group">
           <label htmlFor="titulo">Título:</label>
           <input type="text" id="titulo" name="titulo" />
@@ -43,6 +48,8 @@ export const RegistroComic = () => {
           <button type="button">Guardar</button>
         </div>
       </form>
+        </div>
+      </div>
     </div>
   );
 };

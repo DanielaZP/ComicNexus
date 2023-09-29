@@ -1,12 +1,10 @@
 import React from 'react'
+import Carrucel from '../componentes/Carrucel'
 
 export const Inicio = () => {
   return (
     <div>
-        <h1>
-            Inicio
-        </h1>
-
+        <Carrucel/>
     </div>
   )
 }

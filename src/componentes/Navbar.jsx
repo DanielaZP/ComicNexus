@@ -41,7 +41,7 @@ const Navbar = () => {
                 >
                   Categorias
                 </a>
-                <ul class="dropdown-menu">
+                <ul className="dropdown-menu">
                   <li>
                     <Link className="dropdown-item" to="/terror">
                       Terror
@@ -83,12 +83,12 @@ const Navbar = () => {
             </form>
           </div>
         </div>
-        <div class="contenedor-icono">
-          <Link class="navbar-brand" to="/registro-comic">
-            <i class="bi bi-person-circle"></i>
+        <div className="contenedor-icono">
+          <Link className="navbar-brand" to="/registro-comic">
+            <i className="bi bi-person-circle"></i>
           </Link>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -96,7 +96,7 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
         </div>
       </nav>

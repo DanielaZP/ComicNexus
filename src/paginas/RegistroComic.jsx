@@ -14,7 +14,7 @@ export const RegistroComic = () => {
         <div className="col-6">
           <img
             src="./heroes/marvel-iron.jpg"
-            class="img-thumbnail mx-auto d-block"
+            className="img-thumbnail mx-auto d-block"
             style={{ width: "300px" }}
             alt="..."
           />

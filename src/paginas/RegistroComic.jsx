@@ -23,13 +23,14 @@ export const RegistroComic = () => {
           <form className="formRegister">
             <div className="form-group">
               <label className="form-label" htmlFor="titulo">
-                Título
+                Título <span className="text-dangerous">*</span>
               </label>
               <input
                 className="form-control"
                 type="text"
                 id="titulo"
                 name="titulo"
+                required
               />
             </div>
             <div className="form-group">
@@ -42,12 +43,14 @@ export const RegistroComic = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="categorias">Categorías</label>
+              <label htmlFor="categorias"> Categorías<span className="text-dangerous">*</span>
+              </label>
               <input
                 className="form-control"
                 type="text"
                 id="categorias"
                 name="categorias"
+                required
               />
             </div>
             <div className="form-group">
@@ -62,19 +65,21 @@ export const RegistroComic = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="sinopsis">Sinopsis:</label>
+              <label htmlFor="sinopsis">Sinopsis: <span className="text-dangerous">*</span>
+              </label>
               <textarea
                 className="form-control"
                 id="sinopsis"
                 name="sinopsis"
                 rows="4"
                 cols="50"
+                required
               />
             </div>
             <div className="d-flex justify-content-between">
-              <button type="submit">Cancelar</button>
+              <button type="button">Cancelar</button>
               <button type="reset">Limpiar</button>
-              <button type="button">Guardar</button>
+              <button type="submit">Guardar</button>
             </div>
           </form>
         </div>

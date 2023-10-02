@@ -3,7 +3,7 @@ import React from 'react'
 const Destacados = () => {
   return (
     <div>
-        <h1> DESTACADOS</h1>
+        <h1> lista comics</h1>
     </div>
   )
 }

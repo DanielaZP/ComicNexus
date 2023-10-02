@@ -28,7 +28,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/destacados">
-                  Destacados
+                  Lista comics
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -59,12 +59,12 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/terror">
-                      Ciencia ficcion
+                      Suspenso
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/terror">
-                      Ciencia ficcion
+                      Educativos
                     </Link>
                   </li>
                 </ul>
@@ -74,30 +74,25 @@ const Navbar = () => {
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Buscar"
+                placeholder="Spider..."
                 aria-label="Search"
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button className="btn custom-btn-color" type="submit">
                 Buscar
               </button>
             </form>
           </div>
-        </div>
-        <div className="contenedor-icono">
-          <Link className="navbar-brand" to="/registro-comic">
-            <i className="bi bi-person-circle"></i>
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
+        </div> 
+        <div class="dropdown ">
+          <button class="btn btn-secondary dropdown-toggle custom-btn-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle "></i>
           </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="#">Mis playlists</a></li>
+            <li><hr class="dropdown-divider"/></li>
+            <li><Link class="dropdown-item" to="/registro-comic">Administrar Comics</Link></li>
+          </ul>
         </div>
       </nav>
     </div>

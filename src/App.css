@@ -1,6 +1,8 @@
 :root {
   --verdesito: rgb(1, 162, 28);
+  --rojito: #ff5733;
 }
+
 
 /* Estilos para los grupos de etiquetas y campos */
 .form-group {
@@ -41,5 +43,24 @@ button {
 .select-image-button {
   width: 300px; 
   margin-top: 10px;
+}
+
+.custom-btn-color {
+  background-color: var(--verdesito); 
+  color: #ffffff; 
+}
+
+.custom-btn-color:hover {
+  background-color: #ff5733; 
+  color: #ffffff; 
+
+}
+
+.icono:hover {
+  color: var(--rojito);
+}
+
+.boton-toggle:hover {
+  background-color: var(--rojito);
 }
 

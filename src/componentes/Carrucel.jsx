@@ -29,21 +29,21 @@ const Carrucel = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src="./Images/img01.avif"
+              src="./Images/img05.jpeg"
               className="d-block w-100"
               alt="..."
             />
           </div>
           <div className="carousel-item">
             <img
-              src="./Images/img02.jpeg"
+              src="./Images/img07.jpeg"
               className="d-block w-100"
               alt="..."
             />
           </div>
           <div className="carousel-item">
             <img
-              src="./Images/img03.jpeg"
+              src="./Images/img08.jpeg"
               className="d-block w-100"
               alt="..."
             />

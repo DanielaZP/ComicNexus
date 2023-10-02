@@ -83,8 +83,8 @@ const Navbar = () => {
             </form>
           </div>
         </div> 
-        <div class="dropdown ">
-          <button class="btn btn-secondary dropdown-toggle custom-btn-color" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle custom-btn-color" style={{marginRight:20}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle "></i>
           </button>
           <ul class="dropdown-menu">

@@ -15,3 +15,7 @@ code {
 .text-dangerous {
   color:red;
 }
+
+.dropdown-menu[data-bs-popper] {
+  left: -120px;
+}

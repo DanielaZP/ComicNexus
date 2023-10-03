@@ -109,7 +109,7 @@ export const RegistroComic = () => {
                 </div>
               )}
               <Button onClick={() => document.getElementById("imagen").click()} className="select-image-button">
-                Seleccionar Imagen
+                Seleccionar Imagen <span className="text-danger">*</span>
               </Button>
             </div>
             <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
@@ -120,13 +120,15 @@ export const RegistroComic = () => {
           <form className="formRegister">
           <div className="ui large form">
           <div className="field">
-              <label>Titulo<span className="text-danger">*</span></label>
+              <label>Titulo <span className="text-danger">*</span></label>
               <Input
                 placeholder="Ingrese el titulo del comic"
                 name="titulo"
                 type="text"
                 value={titulo}
                 onChange={handleTituloChange}
+                maxLength="80"
+                required
               />
               {tituloExcedeLimite && (
                   <Label basic color="red" pointing>
@@ -142,12 +144,12 @@ export const RegistroComic = () => {
             </div>
 
           <div className="field">
-              <label>Autores<span className="text-danger">*</span></label>
+              <label>Autores </label>
               <Input placeholder="Ingrese los autores" name="autores" type="text" maxLength="100"/>
             </div>
              
             <div className="field">
-              <label>Categorías<span className="text-danger">*</span></label>
+              <label>Categorías <span className="text-danger">*</span></label>
               <Dropdown
                 placeholder="Seleccione la o las categorias"
                 /*className="form-control"*/
@@ -157,6 +159,8 @@ export const RegistroComic = () => {
                 multiple
                 value={selectedCategorias}
                 onChange={handleCategoriaChange}
+               
+                required
               />
             </div>
 

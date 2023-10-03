@@ -16,6 +16,6 @@ code {
   color:red;
 }
 
-.dropdown-menu[data-bs-popper] {
+#main-menu  {
   left: -120px;
 }

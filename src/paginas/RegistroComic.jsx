@@ -72,7 +72,7 @@ export const RegistroComic = () => {
               )}
               <button
                 onClick={() => document.getElementById("imagen").click()}
-                className="select-image-button"
+                className="select-image-button btn custom-btn-color"
               >
                 Seleccionar Imagen
               </button>
@@ -148,9 +148,9 @@ export const RegistroComic = () => {
               />
             </div>
             <div className="d-flex justify-content-between">
-              <button type="button">Cancelar</button>
-              <button type="reset">Limpiar</button>
-              <button type="submit">Guardar</button>
+            <a href="#" class="btn custom-btn-color">Cancelar</a>
+            <a href="#" class="btn custom-btn-color">Limpiar</a>
+            <a href="#" class="btn custom-btn-color">Guardar</a>
             </div>
           </form>
         </div>

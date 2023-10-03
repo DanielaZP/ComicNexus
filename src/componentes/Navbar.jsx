@@ -27,7 +27,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/destacados">
+                <Link className="nav-link" to="/lista-comics">
                   Lista comics
                 </Link>
               </li>
@@ -59,12 +59,12 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/terror">
-                      Suspenso
+                      Romance
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/terror">
-                      Educativos
+                      Comedia
                     </Link>
                   </li>
                 </ul>
@@ -87,7 +87,7 @@ const Navbar = () => {
           <button class="btn btn-secondary dropdown-toggle custom-btn-color" style={{marginRight:20}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle "></i>
           </button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" id="main-menu">
             <li><a class="dropdown-item" href="#">Mi perfil</a></li>
             <li><a class="dropdown-item" href="#">Mis playlists</a></li>
             <li><hr class="dropdown-divider"/></li>

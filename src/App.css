@@ -3,19 +3,21 @@
   --rojito: #ff5733;
 }
 
-
-/* Estilos para los grupos de etiquetas y campos */
 .form-group {
   display: grid;
-  grid-template-columns: 100px 1fr;
   margin-bottom: 10px;
+  flex-direction: column;
 }
 
-/* Estilos para las etiquetas de los campos */
+.form-control {
+  background-color: lightgray;
+}
+
 label {
   font-weight: bold;
   margin-right: 10px;
-  text-align: right;
+  text-align: justify;
+  color: #0e0d0d;
 }
 
 button {
@@ -38,11 +40,34 @@ button {
   display: flex;
   flex-direction: column; 
   align-items: center; 
+  margin-top: 20px;
 }
 
 .select-image-button {
   width: 300px; 
   margin-top: 10px;
+  background-color: var(--verdesito) !important;
+  color: white !important; 
+}
+
+.custom-button {
+  background-color: var(--verdesito) !important; 
+  color: white !important; 
+
+}
+
+/*.formRegister{
+  width: 500px;
+  margin-top: 20px;
+  background-color:#393a3b;
+  padding: 10px;
+  border-radius: 2%;
+  border-style: dotted;
+  border-color: #fff;
+}*/
+
+.container{
+  margin-top: 2%;
 }
 
 .custom-btn-color {
@@ -64,3 +89,7 @@ button {
   background-color: var(--rojito);
 }
 
+.imagen-previa {
+  max-width: 300px; 
+  max-height: 500px; 
+}

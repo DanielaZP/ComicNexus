@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message } from "semantic-ui-react";
+import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
 
 export const RegistroComic = () => {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
@@ -15,6 +15,28 @@ export const RegistroComic = () => {
   const [mostrarAdvertencia, setMostrarAdvertencia] = useState(false);
   const [sinopsis, setSinopsis] = useState("");
   const [sinopsisExcedeLimite, setSinopsisExcedeLimite] = useState(false);
+  const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
+  const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleGuardarClick = () => {
+    event.preventDefault();
+    if (titulo.trim() === "" ||sinopsis.trim()==="") {
+      setCampoObligatorioTituloError(true);
+      setCampoObligatorioSinopsisError(true);
+      return; 
+    }
+  
+    // guardar datos bd cambiar el campoobliagatorio personalizado con varios elf is
+    openModal();
+  };
 
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);
@@ -34,6 +56,7 @@ export const RegistroComic = () => {
 
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
+    setCampoObligatorioTituloError(false);
     const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| ]*$/;
 
     if (nuevoTitulo.length > 60) {
@@ -76,6 +99,7 @@ export const RegistroComic = () => {
 
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
+    setCampoObligatorioSinopsisError(false);
     const regex = /^[a-zA-Z-',. ]*$/;
     
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
@@ -95,11 +119,10 @@ export const RegistroComic = () => {
   };*/
 
   const options = [
-    { key: "Terror", value: "Terror", text: "Terror" },
-    { key: "Accion", value: "Accion", text: "Acción" },
-    { key: "CienciaFiccion", value: "CienciaFiccion", text: "Ciencia Ficción" },
-    { key: "Romance", value: "Romance", text: "Romance" },
-    { key: "Comedia", value: "Comedia", text: "Comedia" },
+    { key: "1", value: "Terror", text: "Terror" },
+    { key: "2", value: "Accion", text: "Acción" },
+    { key: "3", value: "CienciaFiccion", text: "Ciencia Ficción" },
+    { key: "4", value: "Comedia", text: "Comedia" },
   ];
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
@@ -184,6 +207,11 @@ export const RegistroComic = () => {
                     <p>El título es demasiado corto.</p>
                   </Message>
                 )}
+                {campoObligatorioTituloError && (
+                  <Message size="mini" negative>
+                  <p>Por favor, complete este campo obligatorio.</p>
+                  </Message>
+                )}
               
             </div>
 
@@ -257,18 +285,42 @@ export const RegistroComic = () => {
                 <p>La sinopsis supera el limite de caracteres.</p>
                 </Message>
               )}
+              {campoObligatorioSinopsisError && (
+                  <Message size="mini" negative>
+                  <p>Por favor, complete este campo obligatorio.</p>
+                  </Message>
+                )}
             </div>
             
             <div className="d-flex justify-content-between">
             <a href="#" class="btn custom-btn-color">Cancelar</a>
             <a href="#" class="btn custom-btn-color">Limpiar</a>
-            <a href="#" class="btn custom-btn-color">Guardar</a>
+            <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>
 
           </div>
           </form>
         </Grid.Column>
       </Grid>
+      <Modal open={isModalOpen} onClose={closeModal} style={{
+           position: 'absolute',
+           top: '50%',
+           left: '50%',
+           transform: 'translate(-50%, -50%)',
+           width: '30%', 
+           height: '20%',
+        }}>
+        <Modal.Header>¿Está seguro de añadir el comic?</Modal.Header>
+        <Modal.Actions>
+          <Button color="red" onClick={closeModal}>
+            NO
+          </Button>
+          <Button color="green" onClick={closeModal}>
+            SÍ
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
     </div>
     
   );

@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Card from '../componentes/Card';
+
 // import imagenError from '../ruta/de/tu/imagen-de-error.jpg'; // Ruta de tu imagen de error
 
 function ListaComics() {
@@ -18,6 +19,7 @@ function ListaComics() {
   }, []);
 
   return (
+    
     <div className='container'>
       <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
         {comics.map(comic => (

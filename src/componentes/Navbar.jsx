@@ -53,17 +53,12 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/terror">
+                    <Link className="dropdown-item" to="/ciencia-ficcion">
                       Ciencia ficcion
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/terror">
-                      Romance
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/terror">
+                    <Link className="dropdown-item" to="/comedia">
                       Comedia
                     </Link>
                   </li>
@@ -91,7 +86,7 @@ const Navbar = () => {
             <li><a class="dropdown-item" href="#">Mi perfil</a></li>
             <li><a class="dropdown-item" href="#">Mis playlists</a></li>
             <li><hr class="dropdown-divider"/></li>
-            <li><Link class="dropdown-item" to="/registro-comic">Administrar Comics</Link></li>
+            <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>
         </div>
       </nav>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown, Grid, Image, Input, TextArea, Button, Label } from "semantic-ui-react";
+import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message } from "semantic-ui-react";
 
 export const RegistroComic = () => {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
@@ -9,20 +9,28 @@ export const RegistroComic = () => {
   const [titulo, setTitulo] = useState("");
   const [tituloExcedeLimite, setTituloExcedeLimite] = useState(false);
   const [tituloCorto, setTituloCorto] = useState(false);
+  const [autor, setAutor] = useState("");
+  const [autorExcedeLimite, setAutorExcedeLimite] = useState(false);
+  const [autorCorto, setAutorCorto] = useState(false);
+  const [mostrarAdvertencia, setMostrarAdvertencia] = useState(false);
+  const [sinopsis, setSinopsis] = useState("");
+  const [sinopsisExcedeLimite, setSinopsisExcedeLimite] = useState(false);
 
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);
     const currentDate = new Date();
 
-    /*if (selectedDate < currentDate) {
-      setErrorFecha("La fecha no puede ser anterior a la fecha actual");
+    if (selectedDate > currentDate) {
+      setErrorFecha("La fecha no puede ser posterior a la fecha actual");
+      setMostrarAdvertencia(true); 
     } else {
       setErrorFecha("");
-    }*/
+      setMostrarAdvertencia(false); 
+    }
 
     setFechaPublicacion(e.target.value);
-    
   };
+
 
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
@@ -42,6 +50,39 @@ export const RegistroComic = () => {
 
     if (regex.test(nuevoTitulo) && nuevoTitulo.length <= 60) {
       setTitulo(nuevoTitulo);
+    }
+  };
+
+  const handleAutorChange = (e) => {
+    const nuevoAutor = e.target.value;
+    const regex = /^[a-zA-Z0-9-',. ]*$/;
+
+    if (nuevoAutor.length > 100) {
+      setAutorExcedeLimite(true);
+    } else {
+      setAutorExcedeLimite(false);
+    }
+
+    if (nuevoAutor.length < 3) {
+      setAutorCorto(true);
+    } else {
+      setAutorCorto(false);
+    }
+
+    if (regex.test(nuevoAutor) && nuevoAutor.length <= 100) {
+      setAutor(nuevoAutor);
+    }
+  };
+
+  const handleSinopsisChange = (e) => {
+    const nuevoSinopsis = e.target.value;
+    const regex = /^[a-zA-Z-',. ]*$/;
+    
+    if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
+      setSinopsis(nuevoSinopsis);
+      setSinopsisExcedeLimite(false); 
+    } else {
+      setSinopsisExcedeLimite(true);
     }
   };
   /*const estiloFondo = {
@@ -98,7 +139,7 @@ export const RegistroComic = () => {
                   className="empty-image-container"
                   style={{
                     width: "300px",
-                    height: "500px",
+                    height: "470px",
                     border: "1px dashed #ccc",
                     display: "flex",
                     justifyContent: "center",
@@ -134,21 +175,37 @@ export const RegistroComic = () => {
                 required
               />
               {tituloExcedeLimite && (
-                  <Label basic color="red" pointing>
-                    El título supera el límite de caracteres (60 caracteres máximo).
-                  </Label>
+                  <Message size="mini" negative>
+                    <p>El título supera el límite de caracteres.</p>
+                  </Message>
                 )}
                 {tituloCorto && (
-                  <Label basic color="red" pointing>
-                    El título es demasiado corto (debe tener al menos 3 caracteres).
-                  </Label>
+                  <Message size="mini" negative>
+                    <p>El título es demasiado corto.</p>
+                  </Message>
                 )}
               
             </div>
 
           <div className="field">
               <label>Autores </label>
-              <Input placeholder="Ingrese los autores" name="autores" type="text" maxLength="100"/>
+              <Input 
+              placeholder="Ingrese los autores" 
+              name="autores" 
+              type="text" 
+              value={autor}
+              onChange={handleAutorChange}
+            />
+            {autorExcedeLimite && (
+                  <Message size="mini" negative>
+                    <p>El nombre supera el límite de caracteres.</p>
+                  </Message>
+                )}
+                {autorCorto && (
+                  <Message size="mini" negative>
+                    <p>El nombre es demasiado corto.</p>
+                  </Message>
+                )}
             </div>
              
             <div className="field">
@@ -169,17 +226,20 @@ export const RegistroComic = () => {
 
             <div className="field">
               <label>Año de Publicación</label>
-              <Input
-                /*className="form-control"*/
-                type="date"
-                placeholder="dd/mm/aaaa"
-                id="fechaPublicacion"
-                name="fechaPublicacion"
-                value={fechaPublicacion}
-                onChange={handleFechaChange}
-                max={new Date().toISOString().split("T")[0]}
-              />
-              {errorFecha && <div className="text-danger">{errorFecha}</div>}
+                <Input
+                  type="date"
+                  placeholder="dd/mm/aaaa"
+                  id="fechaPublicacion"
+                  name="fechaPublicacion"
+                  value={fechaPublicacion}
+                  onChange={handleFechaChange}
+                  max={new Date().toISOString().split("T")[0]}
+                />
+                {mostrarAdvertencia && (
+                  <Message size="mini" negative>
+                    <p>{errorFecha}</p>
+                  </Message>
+                )}
             </div>
 
             <div className="field">
@@ -188,9 +248,15 @@ export const RegistroComic = () => {
                 /*className="form-control"*/
                 id="sinopsis"
                 name="sinopsis"
-                maxLength="500"
+                value={sinopsis}
+                onChange={handleSinopsisChange}
                 required
               />
+              {sinopsisExcedeLimite && (
+                <Message size="mini" negative>
+                <p>La sinopsis supera el limite de caracteres.</p>
+                </Message>
+              )}
             </div>
             
             <div className="d-flex justify-content-between">

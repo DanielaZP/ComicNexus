@@ -9,7 +9,7 @@ function ListaComics() {
 
   useEffect(() => {
     // Hacer la solicitud HTTP a tu servidor Laravel
-    axios.get('http://localhost/comic_backend/public/api/comics')
+    axios.get('http://127.0.0.1:8000/api/comics')
       .then(response => {
         setComics(response.data);
       })
@@ -26,11 +26,11 @@ function ListaComics() {
           <div className="col" key={comic.cod_comic}>
             {/* Utiliza la interpolación de cadenas para obtener la URL de la imagen */}
             <img
-              src={`http://localhost/comic_backend/public/api/images/${comic.cod_comic}`}
+              src={`http://127.0.0.1:8000/api/images/${comic.cod_comic}`}
               alt='Comic Cover'
               onError={(e) => {
                 // e.target.onerror=null;
-                e.target.src='http://localhost/comic_backend/public/api/images/1'; // Establece la imagen de reserva si hay un problema al cargar la imagen
+                e.target.src='http://127.0.0.1:8000/api/images/1'; // Establece la imagen de reserva si hay un problema al cargar la imagen
                 // e.target.alt = 'Imagen no encontrada'; // Cambia el texto alternativo
               }}
             />

@@ -7,6 +7,7 @@ import Terror from './paginas/Terror';
 import CienciaFiccion from './paginas/CienciaFiccion';
 import Comedia from './paginas/Comedia';
 import Perfil from './paginas/Perfil';
+import PaginaAdmi from './paginas/PaginaAdmi';
 import ListaComics from './paginas/ListaComics';
 import { RegistroComic } from './paginas/RegistroComic';
 import { Inicio } from './paginas/Inicio';
@@ -26,6 +27,7 @@ function App() {
               <Route path='/terror' element={<Terror/>}/>
               <Route path='/comedia' element={<Comedia/>}/>
               <Route path='/ciencia-ficcion' element={<CienciaFiccion/>}/>
+              <Route path='/pagina-admi' element={<PaginaAdmi/>}/>
           </Routes>
         <Footer/>
       </BrowserRouter>

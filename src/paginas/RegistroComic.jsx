@@ -260,9 +260,9 @@ export const RegistroComic = () => {
             </div>
             
             <div className="d-flex justify-content-between">
-              <Button type="button" className="custom-button">Cancelar</Button>
-              <Button type="reset" className="custom-button">Limpiar</Button>
-              <Button type="submit" className="custom-button">Guardar</Button>
+            <a href="#" class="btn custom-btn-color">Cancelar</a>
+            <a href="#" class="btn custom-btn-color">Limpiar</a>
+            <a href="#" class="btn custom-btn-color">Guardar</a>
             </div>
 
           </div>

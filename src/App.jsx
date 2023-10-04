@@ -4,6 +4,8 @@ import Navbar from './componentes/Navbar';
 import Accion from './paginas/Accion';
 import Destacados from './paginas/Destacados';
 import Terror from './paginas/Terror';
+import CienciaFiccion from './paginas/CienciaFiccion';
+import Comedia from './paginas/Comedia';
 import Perfil from './paginas/Perfil';
 import ListaComics from './paginas/ListaComics';
 import { RegistroComic } from './paginas/RegistroComic';
@@ -22,6 +24,8 @@ function App() {
               <Route path='/registro-comic' element={<RegistroComic/>}/>
               <Route path='/lista-comics' element={<ListaComics/>}/>
               <Route path='/terror' element={<Terror/>}/>
+              <Route path='/comedia' element={<Comedia/>}/>
+              <Route path='/ciencia-ficcion' element={<CienciaFiccion/>}/>
           </Routes>
         <Footer/>
       </BrowserRouter>

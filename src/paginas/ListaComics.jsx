@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from '../componentes/Card'
+import { Container } from 'react-bootstrap';
 
 const comics = [
     {
@@ -46,7 +47,13 @@ const comics = [
 
 function ListaComics() {
   return (
+    
     <div className='container'>
+          <Container className="text-center my-5">
+            <h1 className="display-4">Disfruta de todos nuestros comics</h1>
+            <p className="lead">Explora y descubre contenido increíble</p>
+            <hr className="my-4" style={{ borderColor: 'var(--verdesito)', borderWidth: '2px' }} />
+        </Container>
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
         {
           comics.map(comic => (

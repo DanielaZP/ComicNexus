@@ -53,7 +53,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/terror">
+                    <Link className="dropdown-item" to="/ciencia-ficcion">
                       Ciencia ficcion
                     </Link>
                   </li>
@@ -63,7 +63,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/terror">
+                    <Link className="dropdown-item" to="/comedia">
                       Comedia
                     </Link>
                   </li>

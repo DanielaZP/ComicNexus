@@ -1,6 +1,7 @@
 import React from 'react'
 import Carrucel from '../componentes/Carrucel'
 import Card from '../componentes/Card'
+import { Container } from 'react-bootstrap';
 
 
 const comics = [
@@ -29,6 +30,10 @@ const comics = [
 export const Inicio = () => {
   return (
     <div className='container'>
+          <Container className="text-center my-5">
+          <h1 className="display-4">ComicsNexus</h1>
+          <hr className="my-4" style={{ borderColor: 'var(--verdesito)', borderWidth: '2px' }} />
+        </Container>
         <Carrucel/>
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
         {

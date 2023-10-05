@@ -10,7 +10,7 @@ const Accion = () => {
 
 useEffect(() => {
   // Realiza una solicitud GET a la API de Laravel para obtener los datos de los cómics
-  axios.get('http://localhost/ComicNext_laravel/public/api/categoria/Accion')
+  axios.get('https://comic-next-laravel.vercel.app/api/api/categoria/Accion')
     .then((response) => {
       // Almacena los datos JSON en el estado local
       console.log(response.data);

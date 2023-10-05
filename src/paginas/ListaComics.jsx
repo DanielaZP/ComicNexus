@@ -39,6 +39,7 @@ function ListaComics() {
           <div className="col-md-4" key={comic.comic.cod_comic}>
           <CardCat comic={comic} />
         </div>
+
         ))}
       </div>
     </div>

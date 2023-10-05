@@ -26,13 +26,8 @@ function ListaComics() {
           <div className="col" key={comic.cod_comic}>
             {/* Utiliza la interpolación de cadenas para obtener la URL de la imagen */}
             <img
-              src={`http://127.0.0.1:8000/api/images/${comic.cod_comic}`}
+              src={comic.portada}
               alt='Comic Cover'
-              onError={(e) => {
-                // e.target.onerror=null;
-                e.target.src='http://127.0.0.1:8000/api/images/1'; // Establece la imagen de reserva si hay un problema al cargar la imagen
-                // e.target.alt = 'Imagen no encontrada'; // Cambia el texto alternativo
-              }}
             />
            <h5 class="card-title">{comic.titulo}</h5>
            <p class="card-text">{comic.sinopsis}</p>

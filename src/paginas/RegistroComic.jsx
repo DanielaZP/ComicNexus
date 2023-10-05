@@ -27,6 +27,26 @@ export const RegistroComic = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleLimpiarClick = () => {
+    setTitulo("");
+    setTituloExcedeLimite(false);
+    setTituloCorto(false);
+    setAutor("");
+    setAutorExcedeLimite(false);
+    setAutorCorto(false);
+    setSelectedCategorias([]); 
+    setFechaPublicacion("");
+    setErrorFecha("");
+    setMostrarAdvertencia(false);
+    setSinopsis("");
+    setSinopsisExcedeLimite(false);
+    setCampoObligatorioTituloError(false);
+    setCampoObligatorioSinopsisError(false);
+    setImageUrl(""); 
+    setHasImage(false);
+  };
+
   const handleGuardarClick = () => {
     event.preventDefault();
     if (titulo.trim() === "" ||sinopsis.trim()==="") {
@@ -295,7 +315,7 @@ export const RegistroComic = () => {
             
             <div className="d-flex justify-content-between">
             <Link class="btn custom-btn-color" to= "/">Cancelar</Link>
-            <a href="#" class="btn custom-btn-color">Limpiar</a>
+            <a href="#" onClick={handleLimpiarClick} class="btn custom-btn-color">Limpiar</a>
             <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>
 

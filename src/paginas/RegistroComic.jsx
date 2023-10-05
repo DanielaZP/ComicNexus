@@ -19,6 +19,16 @@ export const RegistroComic = () => {
   const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
   const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fileExtensionError, setFileExtensionError] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  const openErrorModal = () => {
+    setIsErrorModalOpen(true);
+  };
+
+  const closeErrorModal = () => {
+    setIsErrorModalOpen(false);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -152,19 +162,30 @@ export const RegistroComic = () => {
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
+
     if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imageUrl = event.target.result;
-        setImageUrl(imageUrl);
-        setHasImage(true);
-      };
-      reader.readAsDataURL(selectedFile);
+      const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+      if (fileExtension === 'jpg' || fileExtension === 'png') {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target.result;
+          setImageUrl(imageUrl);
+          setHasImage(true);
+          setFileExtensionError(false); 
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setFileExtensionError(true);
+        openErrorModal();
+      }
     } else {
       setImageUrl("");
       setHasImage(false);
+      setFileExtensionError(false); 
     }
   };
+
 
   return (
     
@@ -338,6 +359,24 @@ export const RegistroComic = () => {
           </Button>
           <Button color="green" onClick={closeModal}>
             SÍ
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
+      <Modal open={isErrorModalOpen} onClose={closeErrorModal} style={{ 
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '30%', 
+        height: '20%',
+       }}>
+        <Modal.Content>
+          <p>Por favor, seleccione una imagen con extensión .jpg o .png.</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" onClick={closeErrorModal}>
+            Cerrar
           </Button>
         </Modal.Actions>
       </Modal>

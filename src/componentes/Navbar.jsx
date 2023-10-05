@@ -72,7 +72,7 @@ const Navbar = () => {
                 placeholder="Spider..."
                 aria-label="Search"
               />
-              <button className="btn custom-btn-color" type="submit">
+              <button className="btn desact-btn-color" type="submit">
                 Buscar
               </button>
             </form>

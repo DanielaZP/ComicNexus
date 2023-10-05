@@ -8,7 +8,7 @@ function CardCat({ comic }) {
       <div className="card-body">
         <h5 className="card-title">{titulo}</h5>
         <p className="card-text">{sinopsis}</p>
-        <a href={`/ver-comic/${cod_comic}`} className="btn custom-btn-color">
+        <a href={`/ver-comic/${cod_comic}`} className="btn desact-btn-color">
           Ver comic
         </a>
       </div>

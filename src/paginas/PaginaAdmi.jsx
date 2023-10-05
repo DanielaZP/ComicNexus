@@ -24,7 +24,7 @@ function PaginaAdmi() {
             <div class="card-body">
                 <h5 class="card-title">Elimar comic existente de la plataforma</h5>
                 <p class="card-text">Para eliminar el registro y datos de un comic ya existente presione el boton.</p>
-                <a href="#" class="btn custom-btn-color">Eliminar comic</a>
+                <a href="#" class="btn desact-btn-color">Eliminar comic</a>
             </div>
             </div>
         </div>

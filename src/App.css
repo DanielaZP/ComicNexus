@@ -80,6 +80,10 @@ button {
   color: #ffffff; 
 
 }
+.desact-btn-color{
+  background-color: grey; 
+  color: #ffffff; 
+}
 
 .icono:hover {
   color: var(--rojito);

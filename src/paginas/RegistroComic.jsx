@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
 
 export const RegistroComic = () => {
@@ -293,7 +294,7 @@ export const RegistroComic = () => {
             </div>
             
             <div className="d-flex justify-content-between">
-            <a href="#" class="btn custom-btn-color">Cancelar</a>
+            <Link class="btn custom-btn-color" to= "/">Cancelar</Link>
             <a href="#" class="btn custom-btn-color">Limpiar</a>
             <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>

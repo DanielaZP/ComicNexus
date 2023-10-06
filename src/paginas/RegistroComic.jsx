@@ -19,6 +19,8 @@ export const RegistroComic = () => {
   const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
   const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  //const [selectedCategorias, setSelectedCategorias] = useState([]);
+  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -314,7 +316,7 @@ export const RegistroComic = () => {
             </div>
             
             <div className="d-flex justify-content-between">
-            <Link class="btn Warning-btn-color" to= "/">Cancelar</Link>
+            <Link class="btn custom-btn-color" to= "/">Cancelar</Link>
             <a href="#" onClick={handleLimpiarClick} class="btn custom-btn-color">Limpiar</a>
             <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>

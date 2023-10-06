@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
+import Axios from "axios"; 
 
 export const RegistroComic = () => {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
@@ -21,7 +22,34 @@ export const RegistroComic = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileExtensionError, setFileExtensionError] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
-
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  
+    const url = "/localhost"
+    const [data, setData] = useState({
+      titulo:"",
+      autor:"",
+      sinopsis:"",
+      categorias:{},
+      fechaPublicacion:""
+    })
+    function handleSubmit(e){
+      const newdata={...data}
+      newdata[e.target.id] = e.target.value
+      setData(newdata)
+      console.log(newdata)
+    }
+    function submit(e){
+      e.preventDefault();
+      Axios.post(url,{
+        titulo: data.titulo,
+        autor: data.autor,
+        sinopsis: data.sinopsis
+      })
+        .then(res => {
+          console.log(res.date)
+        })
+    }
+  
   const openErrorModal = () => {
     setIsErrorModalOpen(true);
   };
@@ -81,6 +109,11 @@ export const RegistroComic = () => {
       setMostrarAdvertencia(false); 
     }
 
+    setData((prevData) => ({
+      ...prevData,
+      fechaPublicacion: e.target.value
+    }));
+
     setFechaPublicacion(e.target.value);
   };
 
@@ -104,6 +137,10 @@ export const RegistroComic = () => {
 
     if (regex.test(nuevoTitulo) && nuevoTitulo.length <= 60) {
       setTitulo(nuevoTitulo);
+      setData((prevData) => ({
+        ...prevData,
+        titulo: e.target.value
+      }));
     }
   };
 
@@ -125,6 +162,10 @@ export const RegistroComic = () => {
 
     if (regex.test(nuevoAutor) && nuevoAutor.length <= 100) {
       setAutor(nuevoAutor);
+      setData((prevData) => ({
+        ...prevData,
+        autor: e.target.value
+      }));
     }
   };
 
@@ -136,6 +177,10 @@ export const RegistroComic = () => {
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
       setSinopsisExcedeLimite(false); 
+      setData((prevData) => ({
+        ...prevData,
+        sinopsis: e.target.value
+      }));
     } else {
       setSinopsisExcedeLimite(true);
     }
@@ -234,7 +279,7 @@ export const RegistroComic = () => {
                 placeholder="Ingrese el titulo del comic"
                 name="titulo"
                 type="text"
-                value={titulo}
+                value={data.titulo}
                 onChange={handleTituloChange}
                 maxLength="80"
                 required
@@ -263,7 +308,7 @@ export const RegistroComic = () => {
               placeholder="Ingrese los autores" 
               name="autores" 
               type="text" 
-              value={autor}
+              value={data.autor}
               onChange={handleAutorChange}
             />
             {autorExcedeLimite && (
@@ -301,7 +346,7 @@ export const RegistroComic = () => {
                   placeholder="dd/mm/aaaa"
                   id="fechaPublicacion"
                   name="fechaPublicacion"
-                  value={fechaPublicacion}
+                  value={data.fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
                 />
@@ -318,7 +363,7 @@ export const RegistroComic = () => {
                 /*className="form-control"*/
                 id="sinopsis"
                 name="sinopsis"
-                value={sinopsis}
+                value={data.sinopsis}
                 onChange={handleSinopsisChange}
                 required
               />
@@ -357,9 +402,10 @@ export const RegistroComic = () => {
           <Button color="red" onClick={closeModal}>
             NO
           </Button>
-          <Button color="green" onClick={closeModal}>
+          <Button type="submit" color="green" onClick={handleSubmit}>
             SÍ
           </Button>
+          
         </Modal.Actions>
       </Modal>
 

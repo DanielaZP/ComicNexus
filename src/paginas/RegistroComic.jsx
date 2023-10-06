@@ -29,8 +29,10 @@ export const RegistroComic = () => {
       titulo:"",
       autor:"",
       sinopsis:"",
-      categorias:{},
-      fechaPublicacion:""
+      selectedCategorias:{},
+      fechaPublicacion:"",
+      selectedFile:""
+
     })
     function handleSubmit(e){
       const newdata={...data}
@@ -200,9 +202,15 @@ export const RegistroComic = () => {
     { key: "3", value: "CienciaFiccion", text: "Ciencia Ficción" },
     { key: "4", value: "Comedia", text: "Comedia" },
   ];
+
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
     setSelectedCategorias(value);
+    setData((prevData) => ({
+      ...prevData,
+      selectedCategorias: value
+    }));
+
   };
 
   const handleImageUpload = (e) => {
@@ -218,6 +226,12 @@ export const RegistroComic = () => {
           setImageUrl(imageUrl);
           setHasImage(true);
           setFileExtensionError(false); 
+          setData((prevData) => ({
+            ...prevData,
+            selectedFile: selectedFile.name, // Puedes almacenar el objeto de archivo completo si es necesario
+            // O solo la URL si eso es suficiente:
+            // selectedFileUrl: imageUrl,
+          }));
         };
         reader.readAsDataURL(selectedFile);
       } else {
@@ -228,6 +242,10 @@ export const RegistroComic = () => {
       setImageUrl("");
       setHasImage(false);
       setFileExtensionError(false); 
+      setData((prevData) => ({
+        ...prevData,
+        selectedFile: "", // Establecemos el nombre del archivo (path) como cadena vacía
+      }));
     }
   };
 
@@ -332,7 +350,7 @@ export const RegistroComic = () => {
                 options={options}
                 selection
                 multiple
-                value={selectedCategorias}
+                value={data.selectedCategorias}
                 onChange={handleCategoriaChange}
                
                 required

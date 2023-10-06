@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
 
+
 export const RegistroComic = () => {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
   const [errorFecha, setErrorFecha] = useState("");
@@ -276,7 +277,7 @@ export const RegistroComic = () => {
             </div>
 
             <div className="field">
-              <label>Año de Publicación</label>
+                <label>Año de Publicación</label>
                 <Input
                   type="date"
                   placeholder="dd/mm/aaaa"
@@ -285,6 +286,7 @@ export const RegistroComic = () => {
                   value={fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
+                  min="1985-01-01"  // Establece la fecha mínima
                 />
                 {mostrarAdvertencia && (
                   <Message size="mini" negative>
@@ -292,6 +294,7 @@ export const RegistroComic = () => {
                   </Message>
                 )}
             </div>
+
 
             <div className="field">
               <label>Sinopsis: <span className="text-danger">*</span></label>
@@ -316,7 +319,7 @@ export const RegistroComic = () => {
             </div>
             
             <div className="d-flex justify-content-between">
-            <Link class="btn custom-btn-color" to= "/">Cancelar</Link>
+            <Link class="btn Warning-btn-color" to= "/">Cancelar</Link>
             <a href="#" onClick={handleLimpiarClick} class="btn custom-btn-color">Limpiar</a>
             <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>
@@ -326,24 +329,24 @@ export const RegistroComic = () => {
         </Grid.Column>
       </Grid>
       <Modal open={isModalOpen} onClose={closeModal} style={{
-           position: 'absolute',
-           top: '50%',
-           left: '50%',
-           transform: 'translate(-50%, -50%)',
-           width: '30%', 
-           height: '20%',
-        }}>
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '30%', 
+        height: '20%',
+        fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      }}>
         <Modal.Header>¿Está seguro de añadir el cómic?</Modal.Header>
-        <Modal.Actions>
-          <Button color="red" onClick={closeModal}>
+        <Modal.Actions style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+          <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal}>
             NO
-          </Button>
-          <Button color="green" onClick={closeModal}>
+          </button>
+          <button className="btn custom-btn-color" onClick={closeModal}>
             SÍ
-          </Button>
+          </button>
         </Modal.Actions>
       </Modal>
-
     </div>
     
   );

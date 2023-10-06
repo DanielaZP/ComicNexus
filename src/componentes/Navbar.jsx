@@ -65,17 +65,17 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
+            {/* <form className="d-flex" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Spider..."
                 aria-label="Search"
               />
-              <button className="btn desact-btn-color" type="submit">
+              <button className="btn custom-btn-color" type="submit">
                 Buscar
               </button>
-            </form>
+            </form> */}
           </div>
         </div> 
         <div class="dropdown">

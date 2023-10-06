@@ -380,7 +380,7 @@ export const RegistroComic = () => {
             </div>
             
             <div className="d-flex justify-content-between">
-            <Link class="btn custom-btn-color" to= "/">Cancelar</Link>
+            <Link class="btn Warning-btn-color" to= "/">Cancelar</Link>
             <a href="#" onClick={handleLimpiarClick} class="btn custom-btn-color">Limpiar</a>
             <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
             </div>

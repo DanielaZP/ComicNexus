@@ -5,7 +5,7 @@ function Card({comic}) {
         <div class="card-body">
             <h5 class="card-title">{comic.titulo}</h5>
             <p class="card-text">{comic.sinopsis}</p>
-            <a href="#" class="btn desact-btn-color">Ver comic</a>
+            {/* <a href="#" class="btn custom-btn-color">Ver comic</a> */}
         </div>
     </div>
   )

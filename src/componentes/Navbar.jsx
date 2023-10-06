@@ -28,7 +28,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/lista-comics">
-                  Lista comics
+                  Lista cómics
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -39,7 +39,7 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Categorias
+                  Categorías
                 </a>
                 <ul className="dropdown-menu">
                   <li>
@@ -49,12 +49,12 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/accion">
-                      Accion
+                      Acción
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/ciencia-ficcion">
-                      Ciencia ficcion
+                      Ciencia ficción
                     </Link>
                   </li>
                   <li>

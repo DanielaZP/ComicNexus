@@ -171,7 +171,7 @@ export const RegistroComic = () => {
   return (
     
       <div className="container">
-        <h1 className="ui center aligned header">Registrar Comic</h1>
+        <h1 className="ui center aligned header">Registrar Cómic</h1>
   
       <Grid columns={2}>
         <Grid.Column>
@@ -210,7 +210,7 @@ export const RegistroComic = () => {
           <form className="formRegister">
           <div className="ui large form">
           <div className="field">
-              <label>Titulo <span className="text-danger">*</span></label>
+              <label>Título <span className="text-danger">*</span></label>
               <Input
                 placeholder="Ingrese el titulo del comic"
                 name="titulo"
@@ -305,7 +305,7 @@ export const RegistroComic = () => {
               />
               {sinopsisExcedeLimite && (
                 <Message size="mini" negative>
-                <p>La sinopsis supera el limite de caracteres.</p>
+                <p>La sinopsis supera el límite de caracteres.</p>
                 </Message>
               )}
               {campoObligatorioSinopsisError && (
@@ -333,7 +333,7 @@ export const RegistroComic = () => {
            width: '30%', 
            height: '20%',
         }}>
-        <Modal.Header>¿Está seguro de añadir el comic?</Modal.Header>
+        <Modal.Header>¿Está seguro de añadir el cómic?</Modal.Header>
         <Modal.Actions>
           <Button color="red" onClick={closeModal}>
             NO

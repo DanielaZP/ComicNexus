@@ -83,8 +83,8 @@ const Navbar = () => {
             <i class="bi bi-person-circle "></i>
           </button>
           <ul class="dropdown-menu" id="main-menu">
-            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-            <li><a class="dropdown-item" href="#">Mis playlists</a></li>
+            {/* <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="#">Mis playlists</a></li> */}
             <li><hr class="dropdown-divider"/></li>
             <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

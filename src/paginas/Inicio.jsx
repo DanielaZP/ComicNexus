@@ -32,7 +32,7 @@ export const Inicio = () => {
     <div className='container'>
           <Container className="text-center my-5">
           <h1 className="display-4">ComicsNexus</h1>
-          <hr className="my-4" style={{ borderColor: 'var(--verdesito)', borderWidth: '2px' }} />
+          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
         </Container>
         <Carrucel/>
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">

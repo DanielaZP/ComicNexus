@@ -65,17 +65,17 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
+            {/* <form className="d-flex" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Spider..."
                 aria-label="Search"
               />
-              <button className="btn desact-btn-color" type="submit">
+              <button className="btn custom-btn-color" type="submit">
                 Buscar
               </button>
-            </form>
+            </form> */}
           </div>
         </div> 
         <div class="dropdown">
@@ -83,8 +83,8 @@ const Navbar = () => {
             <i class="bi bi-person-circle "></i>
           </button>
           <ul class="dropdown-menu" id="main-menu">
-            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-            <li><a class="dropdown-item" href="#">Mis playlists</a></li>
+            {/* <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="#">Mis playlists</a></li> */}
             <li><hr class="dropdown-divider"/></li>
             <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

@@ -21,6 +21,8 @@ export const RegistroComic = () => {
   const [sinopsisCortaError, setSinopsisCortaError] = useState(false);
   const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
   const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
+  const [campoObligatorioPortadaError, setCampoObligatorioPortadaError] = useState(false);
+  const [campoObligatorioCategoriaError, setCampoObligatorioCategoriaError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileExtensionError, setFileExtensionError] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -85,15 +87,19 @@ export const RegistroComic = () => {
     setSinopsisExcedeLimite(false);
     setCampoObligatorioTituloError(false);
     setCampoObligatorioSinopsisError(false);
+    setCampoObligatorioPortadaError(false);
+    setCampoObligatorioCategoriaError(false);
     setImageUrl(""); 
     setHasImage(false);
   };
 
   const handleGuardarClick = () => {
     event.preventDefault();
-    if (titulo.trim() === "" ||sinopsis.trim()==="") {
+    if (titulo.trim() === "" ||sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0 ) {
       setCampoObligatorioTituloError(true);
       setCampoObligatorioSinopsisError(true);
+      setCampoObligatorioPortadaError(true);
+      setCampoObligatorioCategoriaError(true);
       return; 
     }
   
@@ -216,6 +222,7 @@ export const RegistroComic = () => {
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
     setSelectedCategorias(value);
+    setCampoObligatorioCategoriaError(false);
     setData((prevData) => ({
       ...prevData,
       selectedCategorias: value
@@ -224,7 +231,7 @@ export const RegistroComic = () => {
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
-
+    setCampoObligatorioPortadaError(false);
     if (selectedFile) {
       const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
 
@@ -291,6 +298,11 @@ export const RegistroComic = () => {
               >
                 Seleccionar Imagen<span className="text-danger">*</span>
               </button>
+              {campoObligatorioPortadaError && (
+                  <Message size="mini" negative>
+                  <p>Por favor, complete este campo obligatorio.</p>
+                  </Message>
+                )}
             </div>
             <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
           </div>
@@ -363,6 +375,11 @@ export const RegistroComic = () => {
                
                 required
               />
+              {campoObligatorioCategoriaError && (
+                  <Message size="mini" negative>
+                  <p>Por favor, seleccione al menos una categoría.</p>
+                  </Message>
+                )}
             </div>
 
             <div className="field">
@@ -398,6 +415,11 @@ export const RegistroComic = () => {
               {sinopsisExcedeLimite && (
                 <Message size="mini" negative>
                 <p>La sinopsis supera el límite de caracteres.</p>
+                </Message>
+              )}
+              {sinopsisCortaError && (
+                <Message size="mini" negative>
+                <p>La sinopsis es demasiado corta.</p>
                 </Message>
               )}
               {campoObligatorioSinopsisError && (

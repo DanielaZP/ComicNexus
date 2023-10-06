@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
@@ -17,11 +18,49 @@ export const RegistroComic = () => {
   const [mostrarAdvertencia, setMostrarAdvertencia] = useState(false);
   const [sinopsis, setSinopsis] = useState("");
   const [sinopsisExcedeLimite, setSinopsisExcedeLimite] = useState(false);
+  const [sinopsisCortaError, setSinopsisCortaError] = useState(false);
   const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
   const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //const [selectedCategorias, setSelectedCategorias] = useState([]);
+  const [fileExtensionError, setFileExtensionError] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   
+    const url = "/localhost"
+    const [data, setData] = useState({
+      titulo:"",
+      autor:"",
+      sinopsis:"",
+      selectedCategorias:{},
+      fechaPublicacion:"",
+      selectedFile:""
+
+    })
+    function handleSubmit(e){
+      const newdata={...data}
+      newdata[e.target.id] = e.target.value
+      setData(newdata)
+      console.log(newdata)
+    }
+    function submit(e){
+      e.preventDefault();
+      Axios.post(url,{
+        titulo: data.titulo,
+        autor: data.autor,
+        sinopsis: data.sinopsis
+      })
+        .then(res => {
+          console.log(res.date)
+        })
+    }
+  
+  const openErrorModal = () => {
+    setIsErrorModalOpen(true);
+  };
+
+  const closeErrorModal = () => {
+    setIsErrorModalOpen(false);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -74,6 +113,12 @@ export const RegistroComic = () => {
       setMostrarAdvertencia(false); 
     }
 
+    setData((prevData) => ({
+      ...prevData,
+      fechaPublicacion: e.target.value
+    }));
+
+
     setFechaPublicacion(e.target.value);
   };
 
@@ -97,6 +142,10 @@ export const RegistroComic = () => {
 
     if (regex.test(nuevoTitulo) && nuevoTitulo.length <= 60) {
       setTitulo(nuevoTitulo);
+      setData((prevData) => ({
+        ...prevData,
+        titulo: e.target.value
+      }));
     }
   };
 
@@ -118,6 +167,10 @@ export const RegistroComic = () => {
 
     if (regex.test(nuevoAutor) && nuevoAutor.length <= 100) {
       setAutor(nuevoAutor);
+      setData((prevData) => ({
+        ...prevData,
+        autor: e.target.value
+      }));
     }
   };
 
@@ -129,8 +182,20 @@ export const RegistroComic = () => {
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
       setSinopsisExcedeLimite(false); 
+      setSinopsisExcedeLimite(false);
+      setData((prevData) => ({
+        ...prevData,
+        sinopsis: e.target.value
+      }));
+  
+      if (nuevoSinopsis.length < 20) {
+        setSinopsisCortaError(true);
+      } else {
+        setSinopsisCortaError(false);
+      }
     } else {
       setSinopsisExcedeLimite(true);
+      setSinopsisCortaError(false); 
     }
   };
   /*const estiloFondo = {
@@ -151,21 +216,45 @@ export const RegistroComic = () => {
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
     setSelectedCategorias(value);
+    setData((prevData) => ({
+      ...prevData,
+      selectedCategorias: value
+    }));
   };
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
+
     if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imageUrl = event.target.result;
-        setImageUrl(imageUrl);
-        setHasImage(true);
-      };
-      reader.readAsDataURL(selectedFile);
+      const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+
+      if (fileExtension === 'jpg' || fileExtension === 'png') {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target.result;
+          setImageUrl(imageUrl);
+          setHasImage(true);
+          setFileExtensionError(false); 
+          setData((prevData) => ({
+            ...prevData,
+            selectedFile: selectedFile.name, // Puedes almacenar el objeto de archivo completo si es necesario
+            // O solo la URL si eso es suficiente:
+            // selectedFileUrl: imageUrl,
+          }));
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setFileExtensionError(true);
+        openErrorModal();
+      }
     } else {
       setImageUrl("");
       setHasImage(false);
+      setFileExtensionError(false); 
+      setData((prevData) => ({
+        ...prevData,
+        selectedFile: "", // Establecemos el nombre del archivo (path) como cadena vacía
+      }));
     }
   };
 
@@ -216,7 +305,7 @@ export const RegistroComic = () => {
                 placeholder="Ingrese el titulo del comic"
                 name="titulo"
                 type="text"
-                value={titulo}
+                value={data.titulo}
                 onChange={handleTituloChange}
                 maxLength="80"
                 required
@@ -245,7 +334,7 @@ export const RegistroComic = () => {
               placeholder="Ingrese los autores" 
               name="autores" 
               type="text" 
-              value={autor}
+              value={data.autor}
               onChange={handleAutorChange}
             />
             {autorExcedeLimite && (
@@ -269,7 +358,7 @@ export const RegistroComic = () => {
                 options={options}
                 selection
                 multiple
-                value={selectedCategorias}
+                value={data.selectedCategorias}
                 onChange={handleCategoriaChange}
                
                 required
@@ -302,7 +391,7 @@ export const RegistroComic = () => {
                 /*className="form-control"*/
                 id="sinopsis"
                 name="sinopsis"
-                value={sinopsis}
+                value={data.sinopsis}
                 onChange={handleSinopsisChange}
                 required
               />
@@ -342,9 +431,26 @@ export const RegistroComic = () => {
           <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal}>
             NO
           </button>
-          <button className="btn custom-btn-color" onClick={closeModal}>
+          <button className="btn custom-btn-color" onClick={handleSubmit}>
             SÍ
           </button>
+        </Modal.Actions>
+      </Modal>
+      <Modal open={isErrorModalOpen} onClose={closeErrorModal} style={{ 
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '30%', 
+        height: '20%',
+       }}>
+        <Modal.Content>
+          <p>Por favor, seleccione una imagen con extensión .jpg o .png.</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" onClick={closeErrorModal}>
+            Cerrar
+          </Button>
         </Modal.Actions>
       </Modal>
     </div>

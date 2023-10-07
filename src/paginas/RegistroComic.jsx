@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
-
+import Axios from 'axios';
 
 export const RegistroComic = () => {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
@@ -27,6 +26,7 @@ export const RegistroComic = () => {
   const [fileExtensionError, setFileExtensionError] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
   
     const url = "/localhost"
     const [data, setData] = useState({
@@ -73,29 +73,31 @@ export const RegistroComic = () => {
   };
 
   const handleLimpiarClick = () => {
-    setTitulo("");
-    setTituloExcedeLimite(false);
-    setTituloCorto(false);
-    setAutor("");
-    setAutorExcedeLimite(false);
-    setAutorCorto(false);
-    setSelectedCategorias([]); 
-    setFechaPublicacion("");
-    setErrorFecha("");
-    setMostrarAdvertencia(false);
-    setSinopsis("");
-    setSinopsisExcedeLimite(false);
-    setCampoObligatorioTituloError(false);
-    setCampoObligatorioSinopsisError(false);
-    setCampoObligatorioPortadaError(false);
-    setCampoObligatorioCategoriaError(false);
-    setImageUrl(""); 
-    setHasImage(false);
+    console.log("Limpiar haciendo clic");
+    window.location.reload();
+    // setTitulo("");
+    // setTituloExcedeLimite(false);
+    // setTituloCorto(false);
+    // setAutor("");
+    // setAutorExcedeLimite(false);
+    // setAutorCorto(false);
+    // setSelectedCategorias([]); 
+    // setFechaPublicacion("");
+    // setErrorFecha("");
+    // setMostrarAdvertencia(false);
+    // setSinopsis("");
+    // setSinopsisExcedeLimite(false);
+    // setCampoObligatorioTituloError(false);
+    // setCampoObligatorioSinopsisError(false);
+    // setCampoObligatorioPortadaError(false);
+    // setCampoObligatorioCategoriaError(false);
+    // setImageUrl(""); 
+    // setHasImage(false);
   };
 
   const handleGuardarClick = () => {
     event.preventDefault();
-    if (titulo.trim() === "" ||sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0 ) {
+    if (titulo.trim() === "" ||sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0) {
       setCampoObligatorioTituloError(true);
       setCampoObligatorioSinopsisError(true);
       setCampoObligatorioPortadaError(true);
@@ -103,8 +105,20 @@ export const RegistroComic = () => {
       return; 
     }
   
-    // guardar datos bd cambiar el campoobliagatorio personalizado con varios elf is
-    openModal();
+    Axios.get(`https://comic-next-laravel.vercel.app/api/api/tituloExistente/${titulo}`)
+    .then((response) => {
+      if (response.data.exists) {
+        // El título ya existe en la base de datos, muestra un mensaje de error
+        setCampoTituloDuplicado(true);
+        console.log("Titulo ya registrado");
+      } else {
+        // El título no existe en la base de datos, puedes continuar y guardar el cómic
+        openModal();
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   const handleFechaChange = (e) => {
@@ -335,6 +349,11 @@ export const RegistroComic = () => {
                 {campoObligatorioTituloError && (
                   <Message size="mini" negative>
                   <p>Por favor, complete este campo obligatorio.</p>
+                  </Message>
+                )}
+                {campoTituloDuplicado && (
+                  <Message size="mini" negative>
+                  <p>Ya existe un cómic con ese título.</p>
                   </Message>
                 )}
               

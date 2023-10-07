@@ -38,22 +38,62 @@ export const RegistroComic = () => {
       selectedFile:""
 
     })
+    // const toBase64 = (file) =>
+    //   new Promise((resolve, reject) => {
+    //     if (file instanceof Blob) {
+    //       console.log("Inicio de la conversión a base64");
+    //       const reader = new FileReader();
+    //       reader.readAsDataURL(file);
+    //       reader.onload = () => {
+    //         console.log(reader.result); // Imprime el resultado en la consola
+    //         resolve(reader.result);
+    //       };
+    //       reader.onerror = reject;
+    //     } else {
+    //       reject("El parámetro no es un objeto Blob válido.");
+    //     }
+    // });
+
+    // const convertirBase64 =(archivo)=>{
+      
+    //     var reader = new FileReader();
+    //     reader.readAsDataURL(archivo);
+    //     reader.onload=function(){
+    //       var arrayAuxiliar = [];
+    //       var base64 = reader.result;
+    //       arrayAuxiliar=base64.split(',');
+    //       console.log(arrayAuxiliar[1]);
+    //     }
+      
+    // }
     function handleSubmit(e){
       const newdata={...data}
       newdata[e.target.id] = e.target.value
       setData(newdata)
       console.log(newdata)
+      //submit(e)
+      toBase64(newdata.selectedFile)
     }
+
+
     function submit(e){
       e.preventDefault();
-      Axios.post(url,{
+
+      Axios.post('http://localhost/ComicNext_laravel/public/api/registro', {
         titulo: data.titulo,
         autor: data.autor,
-        sinopsis: data.sinopsis
+        sinopsis: data.sinopsis,
+        anio_publicacion: data.fechaPublicacion
+        //portada: data.selectedFile
       })
-        .then(res => {
-          console.log(res.date)
-        })
+      .then((response) => {
+        console.log(response.data);
+        // Aquí puedes manejar la respuesta del servidor
+      })
+      .catch((error) => {
+        console.error(error);
+        // Manejar errores aquí
+      });
     }
   
   const openErrorModal = () => {

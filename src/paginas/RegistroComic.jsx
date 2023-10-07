@@ -28,6 +28,54 @@ export const RegistroComic = () => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
   
+  const handleImageUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    setCampoObligatorioPortadaError(false);
+  
+    if (selectedFile) {
+      const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+  
+      if (fileExtension === 'jpg' || fileExtension === 'png') {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const imageUrl = event.target.result;
+          const codificado = extractBase64Code(imageUrl);
+  
+          setImageUrl(imageUrl);
+          setHasImage(true);
+          setFileExtensionError(false);
+  
+          // Actualiza el estado "portada" con el valor codificado
+          setData((prevData) => ({
+            ...prevData,
+            portada: codificado,
+            selectedFile: selectedFile.name, 
+          }));
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setFileExtensionError(true);
+        openErrorModal();
+      }
+    } else {
+      setImageUrl("");
+      setHasImage(false);
+      setFileExtensionError(false);
+      setData((prevData) => ({
+        ...prevData,
+        portada: "", 
+        selectedFile: "", 
+      }));
+    }
+  };
+  
+  const extractBase64Code = (dataURL) => {
+    const base64Code = dataURL.split(',')[1];
+    return base64Code;
+  };
+  
+  
+  
     const url = "/localhost"
     const [data, setData] = useState({
       titulo:"",
@@ -35,37 +83,11 @@ export const RegistroComic = () => {
       sinopsis:"",
       selectedCategorias:{},
       fechaPublicacion:"",
-      selectedFile:""
+      selectedFile:"",
+      portada:""
 
     })
-    // const toBase64 = (file) =>
-    //   new Promise((resolve, reject) => {
-    //     if (file instanceof Blob) {
-    //       console.log("Inicio de la conversión a base64");
-    //       const reader = new FileReader();
-    //       reader.readAsDataURL(file);
-    //       reader.onload = () => {
-    //         console.log(reader.result); // Imprime el resultado en la consola
-    //         resolve(reader.result);
-    //       };
-    //       reader.onerror = reject;
-    //     } else {
-    //       reject("El parámetro no es un objeto Blob válido.");
-    //     }
-    // });
 
-    // const convertirBase64 =(archivo)=>{
-      
-    //     var reader = new FileReader();
-    //     reader.readAsDataURL(archivo);
-    //     reader.onload=function(){
-    //       var arrayAuxiliar = [];
-    //       var base64 = reader.result;
-    //       arrayAuxiliar=base64.split(',');
-    //       console.log(arrayAuxiliar[1]);
-    //     }
-      
-    // }
     function handleSubmit(e){
       const newdata={...data}
       newdata[e.target.id] = e.target.value
@@ -83,16 +105,17 @@ export const RegistroComic = () => {
         titulo: data.titulo,
         autor: data.autor,
         sinopsis: data.sinopsis,
-        anio_publicacion: data.fechaPublicacion
-        //portada: data.selectedFile
+        anio_publicacion: data.fechaPublicacion,
+        portada: data.portada,
+        categoria: data.selectedCategorias
       })
       .then((response) => {
         console.log(response.data);
-        // Aquí puedes manejar la respuesta del servidor
+        
       })
       .catch((error) => {
         console.error(error);
-        // Manejar errores aquí
+        
       });
     }
   
@@ -283,41 +306,7 @@ export const RegistroComic = () => {
     }));
   };
 
-  const handleImageUpload = (e) => {
-    const selectedFile = e.target.files[0];
-    setCampoObligatorioPortadaError(false);
-    if (selectedFile) {
-      const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-
-      if (fileExtension === 'jpg' || fileExtension === 'png') {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const imageUrl = event.target.result;
-          setImageUrl(imageUrl);
-          setHasImage(true);
-          setFileExtensionError(false); 
-          setData((prevData) => ({
-            ...prevData,
-            selectedFile: selectedFile.name, // Puedes almacenar el objeto de archivo completo si es necesario
-            // O solo la URL si eso es suficiente:
-            // selectedFileUrl: imageUrl,
-          }));
-        };
-        reader.readAsDataURL(selectedFile);
-      } else {
-        setFileExtensionError(true);
-        openErrorModal();
-      }
-    } else {
-      setImageUrl("");
-      setHasImage(false);
-      setFileExtensionError(false); 
-      setData((prevData) => ({
-        ...prevData,
-        selectedFile: "", // Establecemos el nombre del archivo (path) como cadena vacía
-      }));
-    }
-  };
+  
 
   return (
     
@@ -358,8 +347,8 @@ export const RegistroComic = () => {
                   </Message>
                 )}
             </div>
-            <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
-          </div>
+      <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
+    </div>
         </Grid.Column>
 
         <Grid.Column>
@@ -512,7 +501,7 @@ export const RegistroComic = () => {
           <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal}>
             NO
           </button>
-          <button className="btn custom-btn-color" onClick={handleSubmit}>
+          <button className="btn custom-btn-color"  onClick={handleSubmit}>
             SÍ
           </button>
         </Modal.Actions>

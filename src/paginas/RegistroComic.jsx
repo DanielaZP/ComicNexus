@@ -93,8 +93,8 @@ export const RegistroComic = () => {
       newdata[e.target.id] = e.target.value
       setData(newdata)
       console.log(newdata)
-      //submit(e)
-      toBase64(newdata.selectedFile)
+      submit(e)
+      //toBase64(newdata.selectedFile)
     }
 
 

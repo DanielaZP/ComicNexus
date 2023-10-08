@@ -74,94 +74,95 @@ export const RegistroComic = () => {
     const base64Code = dataURL.split(',')[1];
     return base64Code;
   };
+
+
   
+  const url = "/localhost"
+  const [data, setData] = useState({
+    titulo:"",
+    autor:"",
+    sinopsis:"",
+    selectedCategorias:{},
+    fechaPublicacion:"",
+    selectedFile:"",
+    portada:""
+
+  })
   
-  
-    const url = "/localhost"
-    const [data, setData] = useState({
-      titulo:"",
-      autor:"",
-      sinopsis:"",
-      selectedCategorias:{},
-      fechaPublicacion:"",
-      selectedFile:"",
-      portada:""
+  function handleSubmit(e){
+    const newdata={...data}
+    newdata[e.target.id] = e.target.value
+    setData(newdata)
+    console.log(newdata)
+    submit(e)
+    //toBase64(newdata.selectedFile)
+  }
+
+
+  function submit(e){
+    
+    e.preventDefault();
+
+    Axios.post('http://localhost/ComicNext_laravel/public/api/registro', {
+      titulo: data.titulo,
+      autor: data.autor,
+      sinopsis: data.sinopsis,
+      anio_publicacion: data.fechaPublicacion,
+      portada: data.portada,
+      categoria: data.selectedCategorias
+    })
+    .then((response) => {
+      console.log(response.data);
 
     })
+    .catch((error) => {
+      console.error(error);
 
-    function handleSubmit(e){
-      const newdata={...data}
-      newdata[e.target.id] = e.target.value
-      setData(newdata)
-      console.log(newdata)
-      submit(e)
-      //toBase64(newdata.selectedFile)
-    }
-
-
-    function submit(e){
-      e.preventDefault();
-
-      Axios.post('http://localhost/ComicNext_laravel/public/api/registro', {
-        titulo: data.titulo,
-        autor: data.autor,
-        sinopsis: data.sinopsis,
-        anio_publicacion: data.fechaPublicacion,
-        portada: data.portada,
-        categoria: data.selectedCategorias
-      })
-      .then((response) => {
-        console.log(response.data);
-        
-      })
-      .catch((error) => {
-        console.error(error);
-        
-      });
-    }
+    });
+  }
   
   const openErrorModal = () => {
     setIsErrorModalOpen(true);
   };
-
+  
   const closeErrorModal = () => {
     setIsErrorModalOpen(false);
   };
-
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
-
+  
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  
   const handleLimpiarClick = () => {
     console.log("Limpiar haciendo clic");
     window.location.reload();
-    // setTitulo("");
-    // setTituloExcedeLimite(false);
-    // setTituloCorto(false);
-    // setAutor("");
-    // setAutorExcedeLimite(false);
-    // setAutorCorto(false);
-    // setSelectedCategorias([]); 
-    // setFechaPublicacion("");
-    // setErrorFecha("");
-    // setMostrarAdvertencia(false);
-    // setSinopsis("");
-    // setSinopsisExcedeLimite(false);
-    // setCampoObligatorioTituloError(false);
-    // setCampoObligatorioSinopsisError(false);
-    // setCampoObligatorioPortadaError(false);
-    // setCampoObligatorioCategoriaError(false);
-    // setImageUrl(""); 
-    // setHasImage(false);
+    setTitulo("");
+    setTituloExcedeLimite(false);
+    setTituloCorto(false);
+    setAutor("");
+    setAutorExcedeLimite(false);
+    setAutorCorto(false);
+    setSelectedCategorias([]); 
+    setFechaPublicacion("");
+    setErrorFecha("");
+    setMostrarAdvertencia(false);
+    setSinopsis("");
+    setSinopsisExcedeLimite(false);
+    setCampoObligatorioTituloError(false);
+    setCampoObligatorioSinopsisError(false);
+    setCampoObligatorioPortadaError(false);
+    setCampoObligatorioCategoriaError(false);
+    setImageUrl(""); 
+    setHasImage(false);
   };
-
+  
   const handleGuardarClick = () => {
     event.preventDefault();
-    if (titulo.trim() === "" ||sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0) {
+    if (titulo.trim() === "" || sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0) {
       setCampoObligatorioTituloError(true);
       setCampoObligatorioSinopsisError(true);
       setCampoObligatorioPortadaError(true);
@@ -184,11 +185,11 @@ export const RegistroComic = () => {
       console.error(error);
     });
   };
-
+  
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);
     const currentDate = new Date();
-
+  
     if (selectedDate > currentDate) {
       setErrorFecha("La fecha no puede ser posterior a la fecha actual");
       setMostrarAdvertencia(true); 
@@ -196,34 +197,34 @@ export const RegistroComic = () => {
       setErrorFecha("");
       setMostrarAdvertencia(false); 
     }
-
+  
     setData((prevData) => ({
       ...prevData,
       fechaPublicacion: e.target.value
     }));
 
-
+    
     setFechaPublicacion(e.target.value);
   };
 
-
+  
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
     setCampoObligatorioTituloError(false);
     const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| ]*$/;
-
+  
     if (nuevoTitulo.length > 60) {
       setTituloExcedeLimite(true);
     } else {
       setTituloExcedeLimite(false);
     }
-
+  
     if (nuevoTitulo.length < 3) {
       setTituloCorto(true);
     } else {
       setTituloCorto(false);
     }
-
+  
     if (regex.test(nuevoTitulo) && nuevoTitulo.length <= 60) {
       setTitulo(nuevoTitulo);
       setData((prevData) => ({
@@ -232,23 +233,23 @@ export const RegistroComic = () => {
       }));
     }
   };
-
+  
   const handleAutorChange = (e) => {
     const nuevoAutor = e.target.value;
     const regex = /^[a-zA-Z0-9-',. ]*$/;
-
+  
     if (nuevoAutor.length > 100) {
       setAutorExcedeLimite(true);
     } else {
       setAutorExcedeLimite(false);
     }
-
+  
     if (nuevoAutor.length < 3) {
       setAutorCorto(true);
     } else {
       setAutorCorto(false);
     }
-
+  
     if (regex.test(nuevoAutor) && nuevoAutor.length <= 100) {
       setAutor(nuevoAutor);
       setData((prevData) => ({
@@ -257,7 +258,7 @@ export const RegistroComic = () => {
       }));
     }
   };
-
+  
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
@@ -282,7 +283,7 @@ export const RegistroComic = () => {
       setSinopsisCortaError(false); 
     }
   };
-  /*const estiloFondo = {
+    /*const estiloFondo = {
     backgroundImage: `url('/Images/fondoComicNexus.jpg')`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -290,13 +291,14 @@ export const RegistroComic = () => {
     minHeight: "100vh",
     backgroundPosition: "center"
   };*/
-
+  
   const options = [
     { key: "1", value: "Terror", text: "Terror" },
     { key: "2", value: "Accion", text: "Acción" },
     { key: "3", value: "CienciaFiccion", text: "Ciencia Ficción" },
     { key: "4", value: "Comedia", text: "Comedia" },
   ];
+  
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
     setSelectedCategorias(value);
@@ -307,16 +309,16 @@ export const RegistroComic = () => {
     }));
   };
 
-  
 
-  return (
-    
-      <div className="container">
-        <Container className="text-center mt-5">
-          <h3 className="display-4">Registro comic</h3>
-          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
-        </Container>
   
+  return (
+
+    <div className="container">
+      <Container className="text-center mt-5">
+        <h3 className="display-4">Registro comic</h3>
+        <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+      </Container>
+
       <Grid columns={2}>
         <Grid.Column>
           <div className="form-group">
@@ -346,30 +348,30 @@ export const RegistroComic = () => {
                 Seleccionar Imagen<span className="text-danger">*</span>
               </button>
               {campoObligatorioPortadaError && (
-                  <Message size="mini" negative>
+                <Message size="mini" negative>
                   <p>Por favor, complete este campo obligatorio.</p>
-                  </Message>
-                )}
+                </Message>
+              )}
             </div>
-      <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
-    </div>
+            <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
+          </div>
         </Grid.Column>
 
         <Grid.Column>
           <form className="formRegister">
-          <div className="ui large form">
-          <div className="field">
-              <label>Título <span className="text-danger">*</span></label>
-              <Input
-                placeholder="Ingrese el titulo del comic"
-                name="titulo"
-                type="text"
-                value={data.titulo}
-                onChange={handleTituloChange}
-                maxLength="80"
-                required
-              />
-              {tituloExcedeLimite && (
+            <div className="ui large form">
+              <div className="field">
+                <label>Título <span className="text-danger">*</span></label>
+                <Input
+                  placeholder="Ingrese el titulo del comic"
+                  name="titulo"
+                  type="text"
+                  value={data.titulo}
+                  onChange={handleTituloChange}
+                  maxLength="80"
+                  required
+                />
+                {tituloExcedeLimite && (
                   <Message size="mini" negative>
                     <p>El título supera el límite de caracteres.</p>
                   </Message>
@@ -381,27 +383,27 @@ export const RegistroComic = () => {
                 )}
                 {campoObligatorioTituloError && (
                   <Message size="mini" negative>
-                  <p>Por favor, complete este campo obligatorio.</p>
+                    <p>Por favor, complete este campo obligatorio.</p>
                   </Message>
                 )}
                 {campoTituloDuplicado && (
                   <Message size="mini" negative>
-                  <p>Ya existe un cómic con ese título.</p>
+                    <p>Ya existe un cómic con ese título.</p>
                   </Message>
                 )}
-              
-            </div>
 
-          <div className="field">
-              <label>Autores </label>
-              <Input 
-              placeholder="Ingrese los autores" 
-              name="autores" 
-              type="text" 
-              value={data.autor}
-              onChange={handleAutorChange}
-            />
-            {autorExcedeLimite && (
+              </div>
+
+              <div className="field">
+                <label>Autores </label>
+                <Input 
+                  placeholder="Ingrese los autores" 
+                  name="autores" 
+                  type="text" 
+                  value={data.autor}
+                  onChange={handleAutorChange}
+                />
+                {autorExcedeLimite && (
                   <Message size="mini" negative>
                     <p>El nombre supera el límite de caracteres.</p>
                   </Message>
@@ -411,30 +413,30 @@ export const RegistroComic = () => {
                     <p>El nombre es demasiado corto.</p>
                   </Message>
                 )}
-            </div>
-             
-            <div className="field">
-              <label>Categorías <span className="text-danger">*</span></label>
-              <Dropdown
-                placeholder="Seleccione la o las categorias"
-                /*className="form-control"*/
-                name="categorias"
-                options={options}
-                selection
-                multiple
-                value={data.selectedCategorias}
-                onChange={handleCategoriaChange}
-               
-                required
-              />
-              {campoObligatorioCategoriaError && (
+              </div>
+
+              <div className="field">
+                <label>Categorías <span className="text-danger">*</span></label>
+                <Dropdown
+                  placeholder="Seleccione la o las categorias"
+                   /*className="form-control"*/
+                  name="categorias"
+                  options={options}
+                  selection
+                  multiple
+                  value={data.selectedCategorias}
+                  onChange={handleCategoriaChange}
+
+                  required
+                />
+                {campoObligatorioCategoriaError && (
                   <Message size="mini" negative>
-                  <p>Por favor, seleccione al menos una categoría.</p>
+                    <p>Por favor, seleccione al menos una categoría.</p>
                   </Message>
                 )}
-            </div>
+              </div>
 
-            <div className="field">
+              <div className="field">
                 <label>Año de Publicación</label>
                 <Input
                   type="date"
@@ -451,43 +453,43 @@ export const RegistroComic = () => {
                     <p>{errorFecha}</p>
                   </Message>
                 )}
-            </div>
+              </div>
 
-
-            <div className="field">
-              <label>Sinopsis: <span className="text-danger">*</span></label>
-              <TextArea
-                /*className="form-control"*/
-                id="sinopsis"
-                name="sinopsis"
-                value={data.sinopsis}
-                onChange={handleSinopsisChange}
-                required
-              />
-              {sinopsisExcedeLimite && (
-                <Message size="mini" negative>
-                <p>La sinopsis supera el límite de caracteres.</p>
-                </Message>
-              )}
-              {sinopsisCortaError && (
-                <Message size="mini" negative>
-                <p>La sinopsis es demasiado corta.</p>
-                </Message>
-              )}
-              {campoObligatorioSinopsisError && (
+              
+              <div className="field">
+                <label>Sinopsis: <span className="text-danger">*</span></label>
+                <TextArea
+                 /*className="form-control"*/
+                  id="sinopsis"
+                  name="sinopsis"
+                  value={data.sinopsis}
+                  onChange={handleSinopsisChange}
+                  required
+                />
+                {sinopsisExcedeLimite && (
                   <Message size="mini" negative>
-                  <p>Por favor, complete este campo obligatorio.</p>
+                    <p>La sinopsis supera el límite de caracteres.</p>
                   </Message>
                 )}
-            </div>
-            
-            <div className="d-flex justify-content-between">
-            <Link class="btn Warning-btn-color" to= "/">Cancelar</Link>
-            <a href="#" onClick={handleLimpiarClick} class="btn custom-btn-color">Limpiar</a>
-            <button onClick={handleGuardarClick} className="btn custom-btn-color"> Guardar</button>
-            </div>
+                {sinopsisCortaError && (
+                  <Message size="mini" negative>
+                    <p>La sinopsis es demasiado corta.</p>
+                  </Message>
+                )}
+                {campoObligatorioSinopsisError && (
+                  <Message size="mini" negative>
+                    <p>Por favor, complete este campo obligatorio.</p>
+                  </Message>
+                )}
+              </div>
 
-          </div>
+              <div className="d-flex justify-content-between">
+                <Link className="btn Warning-btn-color" to="/">Cancelar</Link>
+                <a href="#" onClick={handleLimpiarClick} className="btn custom-btn-color">Limpiar</a>
+                <button onClick={handleGuardarClick} className="btn custom-btn-color">Guardar</button>
+              </div>
+
+            </div>
           </form>
         </Grid.Column>
       </Grid>
@@ -505,7 +507,7 @@ export const RegistroComic = () => {
           <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal}>
             NO
           </button>
-          <button className="btn custom-btn-color"  onClick={handleSubmit}>
+          <button className="btn custom-btn-color" onClick={handleSubmit}>
             SÍ
           </button>
         </Modal.Actions>

@@ -7,6 +7,8 @@ import CardCat from '../componentes/CardCat'// Importa tu componente Card
 const Accion = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
 useEffect(() => {
   // Realiza una solicitud GET a la API de Laravel para obtener los datos de los cómics
@@ -24,6 +26,11 @@ useEffect(() => {
       setIsLoading(false);
     });
 }, []);
+    const getCurrentComics = () => {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      return comicsData.slice(startIndex, endIndex);
+    };
 
 
   return (
@@ -34,23 +41,42 @@ useEffect(() => {
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container> 
     <div className="container">
-    {isLoading ? (
+        {isLoading ? (
           <p>Cargando cómics...</p>
         ) : comicsData.length === 0 ? (
           <p>No se encontraron cómics en esta categoría.</p>
         ) : (
-          <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
-            {comicsData.map((comic) => (
-              <div className="col-md-4" key={comic.comic.cod_comic}>
-                <CardCat comic={comic} />
+          <div>
+            <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
+              {getCurrentComics().map((comic) => (
+                <div className="col-md-4" key={comic.comic.cod_comic}>
+                  <CardCat comic={comic} />
+                </div>
+              ))}
+            </div>
+            {comicsData.length > itemsPerPage && (
+              <div className="mt-4 text-center">
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Página Anterior
+                </button>
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage * itemsPerPage >= comicsData.length}
+                >
+                  Siguiente Página
+                </button>
               </div>
-            ))}
+            )}
           </div>
         )}
+      </div>
     </div>
-  </div>
-  )
-}
-
+  );
+};
 
 export default Accion

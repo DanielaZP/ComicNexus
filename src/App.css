@@ -115,3 +115,7 @@ button {
   max-height: 470px; 
 }
 
+.mi-color {
+  background-color: rgb(39, 107, 170); /* Puedes poner aquí tu color definido */
+  
+}

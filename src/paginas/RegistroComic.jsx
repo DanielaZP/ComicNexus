@@ -139,7 +139,7 @@ export const RegistroComic = () => {
   
   const handleLimpiarClick = () => {
     console.log("Limpiar haciendo clic");
-    window.location.reload();
+   // window.location.reload();
     setTitulo("");
     setTituloExcedeLimite(false);
     setTituloCorto(false);

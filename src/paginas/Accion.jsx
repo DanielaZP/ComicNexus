@@ -2,13 +2,14 @@ import React from 'react'
 import { Container } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios'; // Importa Axios
+import { Spinner } from 'react-bootstrap';
 import CardCat from '../componentes/CardCat'// Importa tu componente Card
 
 const Accion = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 9;
 
 useEffect(() => {
   // Realiza una solicitud GET a la API de Laravel para obtener los datos de los cómics
@@ -42,7 +43,12 @@ useEffect(() => {
     </Container> 
     <div className="container">
         {isLoading ? (
-          <p>Cargando cómics...</p>
+         <div className="text-center my-3">
+         <Spinner animation="border" variant="primary" role="status">
+           <span className="sr-only">.</span>
+         </Spinner>
+         <p className="mt-2">Cargando cómics...</p>
+       </div>
         ) : comicsData.length === 0 ? (
           <p>No se encontraron cómics en esta categoría.</p>
         ) : (

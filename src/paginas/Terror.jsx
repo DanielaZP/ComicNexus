@@ -3,10 +3,13 @@ import { Container } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios'; // Importa Axios
 import CardCat from '../componentes/CardCat'// Importa tu componente Card
+import { Spinner } from 'react-bootstrap';
 
 const Terror = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
+  const itemsPerPage = 9;
+  const [currentPage, setCurrentPage] = useState(1);
 
 useEffect(() => {
   // Realiza una solicitud GET a la API de Laravel para obtener los datos de los cómics
@@ -24,6 +27,11 @@ useEffect(() => {
         setIsLoading(false);
       });
   }, []);
+  const getCurrentComics = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return comicsData.slice(startIndex, endIndex);
+  };
 
   return (
     <div>
@@ -33,17 +41,42 @@ useEffect(() => {
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container>
     <div className="container">
-    {isLoading ? (
-          <p>Cargando cómics...</p>
+        {isLoading ? (
+         <div className="text-center my-3">
+         <Spinner animation="border" variant="primary" role="status">
+           <span className="sr-only">.</span>
+         </Spinner>
+         <p className="mt-2">Cargando cómics...</p>
+       </div>
         ) : comicsData.length === 0 ? (
           <p>No se encontraron cómics en esta categoría.</p>
         ) : (
-          <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
-            {comicsData.map((comic) => (
-              <div className="col-md-4" key={comic.comic.cod_comic}>
-                <CardCat comic={comic} />
+          <div>
+            <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
+              {getCurrentComics().map((comic) => (
+                <div className="col-md-4" key={comic.comic.cod_comic}>
+                  <CardCat comic={comic} />
+                </div>
+              ))}
+            </div>
+            {comicsData.length > itemsPerPage && (
+              <div className="mt-4 text-center">
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Página Anterior
+                </button>
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage * itemsPerPage >= comicsData.length}
+                >
+                  Siguiente Página
+                </button>
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>

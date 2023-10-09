@@ -76,8 +76,6 @@ export const RegistroComic = () => {
   };
 
 
-  
-  const url = "/localhost"
   const [data, setData] = useState({
     titulo:"",
     autor:"",
@@ -98,12 +96,11 @@ export const RegistroComic = () => {
     //toBase64(newdata.selectedFile)
   }
 
-
   function submit(e){
     
     e.preventDefault();
 
-    Axios.post('http://localhost/ComicNext_laravel/public/api/registro', {
+    Axios.post('https://comic-next-laravel.vercel.app/api/api/registro', {
       titulo: data.titulo,
       autor: data.autor,
       sinopsis: data.sinopsis,

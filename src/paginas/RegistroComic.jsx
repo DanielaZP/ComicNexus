@@ -434,10 +434,10 @@ export const RegistroComic = () => {
                   placeholder="dd/mm/aaaa"
                   id="fechaPublicacion"
                   name="fechaPublicacion"
-                  value={fechaPublicacion}
+                  value={data.fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
-                  min="1985-01-01"  // Establece la fecha mínima
+                  min="1985-01-01"  
                 />
                 {mostrarAdvertencia && (
                   <Message size="mini" negative>

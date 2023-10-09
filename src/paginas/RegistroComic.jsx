@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
-import { Container } from 'react-bootstrap';
+import { Container,Row, Col } from 'react-bootstrap';
 import Axios from 'axios';
 
 export const RegistroComic = () => {
@@ -318,9 +318,9 @@ export const RegistroComic = () => {
         <h3 className="display-4">Registro comic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
-
-      <Grid columns={2}>
-        <Grid.Column>
+       
+      <Row>
+        <Col lg={6} md={12}>
           <div className="form-group">
             <label htmlFor="imagen"></label>
             <div className="image-container">
@@ -355,11 +355,10 @@ export const RegistroComic = () => {
             </div>
             <input type="file" accept="image/*" onChange={handleImageUpload} id="imagen" name="imagen" style={{ display: "none" }} />
           </div>
-        </Grid.Column>
-
-        <Grid.Column>
+        </Col>
+        <Col lg={6} md={12}>
           <form className="formRegister">
-            <div className="ui large form">
+          <div className="ui large form">
               <div className="field">
                 <label>Título <span className="text-danger">*</span></label>
                 <Input
@@ -491,8 +490,9 @@ export const RegistroComic = () => {
 
             </div>
           </form>
-        </Grid.Column>
-      </Grid>
+        </Col>
+      </Row>
+
       <Modal open={isModalOpen} onClose={closeModal} style={{
         position: 'absolute',
         top: '50%',

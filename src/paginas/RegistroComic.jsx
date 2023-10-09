@@ -138,27 +138,19 @@ export const RegistroComic = () => {
   };
   
   const handleLimpiarClick = () => {
-    console.log("Limpiar haciendo clic");
-   // window.location.reload();
-    setTitulo("");
-    setTituloExcedeLimite(false);
-    setTituloCorto(false);
-    setAutor("");
-    setAutorExcedeLimite(false);
-    setAutorCorto(false);
-    setSelectedCategorias([]); 
-    setFechaPublicacion("");
-    setErrorFecha("");
-    setMostrarAdvertencia(false);
-    setSinopsis("");
-    setSinopsisExcedeLimite(false);
-    setCampoObligatorioTituloError(false);
-    setCampoObligatorioSinopsisError(false);
-    setCampoObligatorioPortadaError(false);
-    setCampoObligatorioCategoriaError(false);
-    setImageUrl(""); 
+    setData({
+      titulo: "", 
+      autor: "", 
+      sinopsis: "", 
+      fechaPublicacion: "", 
+      selectedCategorias: [], 
+      
+    });
+
+    setImageUrl(null);
     setHasImage(false);
   };
+  
   
   const handleGuardarClick = () => {
     event.preventDefault();

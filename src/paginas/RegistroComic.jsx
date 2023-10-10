@@ -29,7 +29,7 @@ export const RegistroComic = () => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
   const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
-  //const [errorSubidaComic, setErrorSubidaComic] = useState("");
+  const [errorSubidaComic, setErrorSubidaComic] = useState("");
 
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
@@ -120,7 +120,7 @@ export const RegistroComic = () => {
         console.error(error);
 
         setIsErrorModalOpen(false); // Cierra el modal de error en caso de un error
-       // setErrorSubidaComic("Error al subir el cómic"); // Muestra el mensaje de error
+       setErrorSubidaComic("Error al subir el cómic"); // Muestra el mensaje de error
       });
   }
 

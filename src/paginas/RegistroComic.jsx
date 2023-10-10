@@ -31,6 +31,22 @@ export const RegistroComic = () => {
   const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
   const [errorSubidaComic, setErrorSubidaComic] = useState("");
 
+  const handleCloseComicSubidoConExito = () => {
+    setIsComicSubidoConExito(false); // Cierra el modal de éxito
+  
+    // Restaura los valores iniciales de los campos
+    setData({
+      titulo: "",
+      autor: "",
+      sinopsis: "",
+      fechaPublicacion: "",
+      selectedCategorias: [],
+    });
+  
+    setImageUrl(null);
+    setHasImage(false);
+  };
+
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
     setCampoObligatorioPortadaError(false);
@@ -257,7 +273,7 @@ export const RegistroComic = () => {
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
-    const regex = /^[a-zA-Z-',. ]*$/;
+    const regex = /^[a-zA-Z-',.ñáéíóú!¡ ]*$/;
 
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
@@ -533,13 +549,14 @@ export const RegistroComic = () => {
         height: '20%',
       }}>
         <Modal.Content>
-          <p>Comic subido con éxito.</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button color="green" onClick={() => setIsComicSubidoConExito(false)}>
-            Cerrar
-          </Button>
-        </Modal.Actions>
+    <p>Comic subido con éxito.</p>
+  </Modal.Content>
+  <Modal.Actions>
+    <Button color="green" onClick={handleCloseComicSubidoConExito}>
+      Cerrar
+    </Button>
+  </Modal.Actions>
+
       </Modal>
       <Modal open={errorSubidaComic !== ""} onClose={() => setErrorSubidaComic("")} style={{
         position: 'absolute',

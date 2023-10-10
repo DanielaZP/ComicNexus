@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
-import { Container,Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Axios from 'axios';
 
 export const RegistroComic = () => {
@@ -28,29 +28,31 @@ export const RegistroComic = () => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
-  
+ // const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
+  //const [errorSubidaComic, setErrorSubidaComic] = useState("");
+
   const handleImageUpload = (e) => {
     const selectedFile = e.target.files[0];
     setCampoObligatorioPortadaError(false);
-  
+
     if (selectedFile) {
       const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
-  
+
       if (fileExtension === 'jpg' || fileExtension === 'png') {
         const reader = new FileReader();
         reader.onload = (event) => {
           const imageUrl = event.target.result;
           const codificado = extractBase64Code(imageUrl);
-  
+
           setImageUrl(imageUrl);
           setHasImage(true);
           setFileExtensionError(false);
-  
+
           // Actualiza el estado "portada" con el valor codificado
           setData((prevData) => ({
             ...prevData,
             portada: codificado,
-            selectedFile: selectedFile.name, 
+            selectedFile: selectedFile.name,
           }));
         };
         reader.readAsDataURL(selectedFile);
@@ -64,30 +66,30 @@ export const RegistroComic = () => {
       setFileExtensionError(false);
       setData((prevData) => ({
         ...prevData,
-        portada: "", 
-        selectedFile: "", 
+        portada: "",
+        selectedFile: "",
       }));
     }
   };
-  
+
   const extractBase64Code = (dataURL) => {
     const base64Code = dataURL.split(',')[1];
     return base64Code;
   };
 
-
   const [data, setData] = useState({
-    titulo:"",
-    autor:"",
-    sinopsis:"",
-    selectedCategorias:{},
-    fechaPublicacion:"",
-    selectedFile:"",
-    portada:""
+    titulo: "",
+    autor: "",
+    sinopsis: "",
+    selectedCategorias: {},
+    fechaPublicacion: "",
+    selectedFile: "",
+    portada: ""
 
-  })
-  
-  function handleSubmit(e){
+  });
+
+
+  function handleSubmit(e) {
     const newdata={...data}
     newdata[e.target.id] = e.target.value
     setData(newdata)
@@ -97,7 +99,7 @@ export const RegistroComic = () => {
   }
 
   function submit(e){
-    
+
     e.preventDefault();
 
     Axios.post('https://comic-next-laravel.vercel.app/api/api/registro', {
@@ -108,112 +110,116 @@ export const RegistroComic = () => {
       portada: data.portada,
       categoria: data.selectedCategorias
     })
-    .then((response) => {
-      console.log(response.data);
+      .then((response) => {
+        console.log(response.data);
 
-    })
-    .catch((error) => {
-      console.error(error);
+        setIsModalOpen(false); // Cierra el modal después del envío exitoso
+        //setIsComicSubidoConExito(true); // Muestra el mensaje de éxito
+      })
+      .catch((error) => {
+        console.error(error);
 
-    });
+        setIsErrorModalOpen(false); // Cierra el modal de error en caso de un error
+       // setErrorSubidaComic("Error al subir el cómic"); // Muestra el mensaje de error
+      });
   }
-  
+
   const openErrorModal = () => {
     setIsErrorModalOpen(true);
   };
-  
+
   const closeErrorModal = () => {
     setIsErrorModalOpen(false);
   };
-  
+
   const openModal = () => {
     setIsModalOpen(true);
   };
-  
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
+
   const handleLimpiarClick = () => {
     setData({
-      titulo: "", 
-      autor: "", 
-      sinopsis: "", 
-      fechaPublicacion: "", 
-      selectedCategorias: [], 
-      
+      titulo: "",
+      autor: "",
+      sinopsis: "",
+      fechaPublicacion: "",
+      selectedCategorias: [],
+
     });
 
     setImageUrl(null);
     setHasImage(false);
   };
-  
-  
+
+
   const handleGuardarClick = () => {
     event.preventDefault();
-    if (titulo.trim() === "" || sinopsis.trim()==="" || hasImage == false || data.selectedCategorias.length == 0) {
+    if (titulo.trim() === "" || sinopsis.trim() === "" || hasImage === false || data.selectedCategorias.length === 0) {
       setCampoObligatorioTituloError(true);
       setCampoObligatorioSinopsisError(true);
       setCampoObligatorioPortadaError(true);
       setCampoObligatorioCategoriaError(true);
-      return; 
+      return;
     }
-  
+
     Axios.get(`https://comic-next-laravel.vercel.app/api/api/tituloExistente/${titulo}`)
-    .then((response) => {
-      if (response.data.exists) {
-        // El título ya existe en la base de datos, muestra un mensaje de error
-        setCampoTituloDuplicado(true);
-        console.log("Titulo ya registrado");
-      } else {
-        // El título no existe en la base de datos, puedes continuar y guardar el cómic
-        openModal();
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((response) => {
+        if (response.data.exists) {
+          // El título ya existe en la base de datos, muestra un mensaje de error
+          setCampoTituloDuplicado(true);
+          console.log("Titulo ya registrado");
+        } else {
+          // El título no existe en la base de datos, puedes continuar y guardar el cómic
+          openModal();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  
+
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);
     const currentDate = new Date();
-  
+
     if (selectedDate > currentDate) {
       setErrorFecha("La fecha no puede ser posterior a la fecha actual");
-      setMostrarAdvertencia(true); 
+      setMostrarAdvertencia(true);
     } else {
       setErrorFecha("");
-      setMostrarAdvertencia(false); 
+      setMostrarAdvertencia(false);
     }
-  
+
     setData((prevData) => ({
       ...prevData,
       fechaPublicacion: e.target.value
     }));
 
-    
+
     setFechaPublicacion(e.target.value);
   };
 
-  
+
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
     setCampoObligatorioTituloError(false);
     const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| ]*$/;
-  
+
     if (nuevoTitulo.length > 60) {
       setTituloExcedeLimite(true);
     } else {
       setTituloExcedeLimite(false);
     }
-  
+
     if (nuevoTitulo.length < 3) {
       setTituloCorto(true);
     } else {
       setTituloCorto(false);
     }
-  
+
     if (regex.test(nuevoTitulo) && nuevoTitulo.length <= 60) {
       setTitulo(nuevoTitulo);
       setData((prevData) => ({
@@ -222,23 +228,23 @@ export const RegistroComic = () => {
       }));
     }
   };
-  
+
   const handleAutorChange = (e) => {
     const nuevoAutor = e.target.value;
     const regex = /^[a-zA-Z0-9-',. ]*$/;
-  
+
     if (nuevoAutor.length > 100) {
       setAutorExcedeLimite(true);
     } else {
       setAutorExcedeLimite(false);
     }
-  
+
     if (nuevoAutor.length < 3) {
       setAutorCorto(true);
     } else {
       setAutorCorto(false);
     }
-  
+
     if (regex.test(nuevoAutor) && nuevoAutor.length <= 100) {
       setAutor(nuevoAutor);
       setData((prevData) => ({
@@ -247,21 +253,21 @@ export const RegistroComic = () => {
       }));
     }
   };
-  
+
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
     const regex = /^[a-zA-Z-',. ]*$/;
-    
+
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
-      setSinopsisExcedeLimite(false); 
+      setSinopsisExcedeLimite(false);
       setSinopsisExcedeLimite(false);
       setData((prevData) => ({
         ...prevData,
         sinopsis: e.target.value
       }));
-  
+
       if (nuevoSinopsis.length < 20) {
         setSinopsisCortaError(true);
       } else {
@@ -269,10 +275,10 @@ export const RegistroComic = () => {
       }
     } else {
       setSinopsisExcedeLimite(true);
-      setSinopsisCortaError(false); 
+      setSinopsisCortaError(false);
     }
   };
-    /*const estiloFondo = {
+   /*const estiloFondo = {
     backgroundImage: `url('/Images/fondoComicNexus.jpg')`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -280,14 +286,14 @@ export const RegistroComic = () => {
     minHeight: "100vh",
     backgroundPosition: "center"
   };*/
-  
+
   const options = [
     { key: "1", value: "Terror", text: "Terror" },
     { key: "2", value: "Accion", text: "Acción" },
     { key: "3", value: "CienciaFiccion", text: "Ciencia Ficción" },
     { key: "4", value: "Comedia", text: "Comedia" },
   ];
-  
+
   const [selectedCategorias, setSelectedCategorias] = useState([]);
   const handleCategoriaChange = (e, { value }) => {
     setSelectedCategorias(value);
@@ -299,7 +305,7 @@ export const RegistroComic = () => {
   };
 
 
-  
+
   return (
 
     <div className="container">
@@ -307,7 +313,7 @@ export const RegistroComic = () => {
         <h3 className="display-4">Registro comic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
-       
+
       <Row>
         <Col lg={6} md={12}>
           <div className="form-group">
@@ -347,7 +353,7 @@ export const RegistroComic = () => {
         </Col>
         <Col lg={6} md={12}>
           <form className="formRegister">
-          <div className="ui large form">
+            <div className="ui large form">
               <div className="field">
                 <label>Título <span className="text-danger">*</span></label>
                 <Input
@@ -384,10 +390,10 @@ export const RegistroComic = () => {
 
               <div className="field">
                 <label>Autores </label>
-                <Input 
-                  placeholder="Ingrese los autores" 
-                  name="autores" 
-                  type="text" 
+                <Input
+                  placeholder="Ingrese los autores"
+                  name="autores"
+                  type="text"
                   value={data.autor}
                   onChange={handleAutorChange}
                 />
@@ -407,7 +413,7 @@ export const RegistroComic = () => {
                 <label>Categorías <span className="text-danger">*</span></label>
                 <Dropdown
                   placeholder="Seleccione la o las categorias"
-                   /*className="form-control"*/
+                  /*className="form-control"*/
                   name="categorias"
                   options={options}
                   selection
@@ -434,7 +440,7 @@ export const RegistroComic = () => {
                   value={data.fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
-                  min="1985-01-01"  
+                  min="1985-01-01"
                 />
                 {mostrarAdvertencia && (
                   <Message size="mini" negative>
@@ -443,11 +449,11 @@ export const RegistroComic = () => {
                 )}
               </div>
 
-              
+
               <div className="field">
                 <label>Sinopsis: <span className="text-danger">*</span></label>
                 <TextArea
-                 /*className="form-control"*/
+                  /*className="form-control"*/
                   id="sinopsis"
                   name="sinopsis"
                   value={data.sinopsis}
@@ -487,7 +493,7 @@ export const RegistroComic = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%', 
+        width: '30%',
         height: '20%',
         fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}>
@@ -501,14 +507,14 @@ export const RegistroComic = () => {
           </button>
         </Modal.Actions>
       </Modal>
-      <Modal open={isErrorModalOpen} onClose={closeErrorModal} style={{ 
+      <Modal open={isErrorModalOpen} onClose={closeErrorModal} style={{
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%', 
+        width: '30%',
         height: '20%',
-       }}>
+      }}>
         <Modal.Content>
           <p>Por favor, seleccione una imagen con extensión .jpg o .png.</p>
         </Modal.Content>
@@ -518,7 +524,41 @@ export const RegistroComic = () => {
           </Button>
         </Modal.Actions>
       </Modal>
+      <Modal open={isComicSubidoConExito} onClose={() => setIsComicSubidoConExito(false)} style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '30%',
+        height: '20%',
+      }}>
+        <Modal.Content>
+          <p>Comic subido con éxito.</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="green" onClick={() => setIsComicSubidoConExito(false)}>
+            Cerrar
+          </Button>
+        </Modal.Actions>
+      </Modal>
+      <Modal open={errorSubidaComic !== ""} onClose={() => setErrorSubidaComic("")} style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '30%',
+        height: '20%',
+      }}>
+        <Modal.Content>
+          <p>{errorSubidaComic}</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" onClick={() => setErrorSubidaComic("")}>
+            Cerrar
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
-    
+
   );
 };

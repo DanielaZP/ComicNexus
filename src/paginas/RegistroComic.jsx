@@ -19,7 +19,6 @@ export const RegistroComic = () => {
   const [sinopsis, setSinopsis] = useState("");
   const [sinopsisExcedeLimite, setSinopsisExcedeLimite] = useState(false);
   const [sinopsisCortaError, setSinopsisCortaError] = useState(false);
-  const [sinopsisErrorIngresoNumerico, setSinopsisErrorIngresoNumerico] = useState(false);
   const [campoObligatorioTituloError, setCampoObligatorioTituloError] = useState(false);
   const [campoObligatorioSinopsisError, setCampoObligatorioSinopsisError] = useState(false);
   const [campoObligatorioPortadaError, setCampoObligatorioPortadaError] = useState(false);
@@ -259,28 +258,24 @@ export const RegistroComic = () => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
     const regex = /^[a-zA-Z-',. ]*$/;
-    
-    if (/\d/.test(nuevoSinopsis)) {
-      setSinopsisErrorIngresoNumerico(true);
-    } else {
-      setSinopsisErrorIngresoNumerico(false);
-  
-      if (nuevoSinopsis.length > 500) {
-        setSinopsisExcedeLimite(true);
-      } else {
-        setSinopsisExcedeLimite(false);
-      }
-  
+
+    if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
+      setSinopsis(nuevoSinopsis);
+      setSinopsisExcedeLimite(false);
+      setSinopsisExcedeLimite(false);
+      setData((prevData) => ({
+        ...prevData,
+        sinopsis: e.target.value
+      }));
+
       if (nuevoSinopsis.length < 20) {
         setSinopsisCortaError(true);
       } else {
         setSinopsisCortaError(false);
       }
-  
-      setData((prevData) => ({
-        ...prevData,
-        sinopsis: e.target.value
-      }));
+    } else {
+      setSinopsisExcedeLimite(true);
+      setSinopsisCortaError(false);
     }
   };
    /*const estiloFondo = {
@@ -478,11 +473,6 @@ export const RegistroComic = () => {
                 {campoObligatorioSinopsisError && (
                   <Message size="mini" negative>
                     <p>Por favor, complete este campo obligatorio.</p>
-                  </Message>
-                )}
-                {sinopsisErrorIngresoNumerico && (
-                  <Message size="mini" negative>
-                    <p>No se permiten caracteres numericos.</p>
                   </Message>
                 )}
               </div>

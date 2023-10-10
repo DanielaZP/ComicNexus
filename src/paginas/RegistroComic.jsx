@@ -28,7 +28,7 @@ export const RegistroComic = () => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
- // const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
+  const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
   //const [errorSubidaComic, setErrorSubidaComic] = useState("");
 
   const handleImageUpload = (e) => {
@@ -114,7 +114,7 @@ export const RegistroComic = () => {
         console.log(response.data);
 
         setIsModalOpen(false); // Cierra el modal después del envío exitoso
-        //setIsComicSubidoConExito(true); // Muestra el mensaje de éxito
+        setIsComicSubidoConExito(true); // Muestra el mensaje de éxito
       })
       .catch((error) => {
         console.error(error);

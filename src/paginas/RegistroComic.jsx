@@ -536,9 +536,14 @@ export const RegistroComic = () => {
         height: '20%',
         fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}>
-        <Modal.Header>¿Está seguro de añadir el cómic?</Modal.Header>
-        <Modal.Actions style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-          <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal}>
+        <Modal.Header style={{ textAlign: 'center' }}>
+        <h3 style={{ fontWeight: 'bold' }}>Confirmar</h3>
+        </Modal.Header>
+        <Modal.Content style={{ textAlign: 'center',  marginTop: '-40px' }}>
+        <p>¿Está seguro de añadir el cómic?</p>
+        </Modal.Content>
+        <Modal.Actions style={{ display: 'flex', justifyContent: 'center'}}>
+          <button className="btn Warning-btn-color" style={{ marginRight: '10px'}} onClick={closeModal}>
             NO
           </button>
           <button className="btn custom-btn-color" onClick={handleSubmit}>

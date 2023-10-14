@@ -226,7 +226,7 @@ export const RegistroComic = () => {
     const currentDate = new Date();
 
     if (selectedDate > currentDate) {
-      setErrorFecha("La fecha no puede ser posterior a la fecha actual");
+      setErrorFecha("La fecha no puede ser posterior a la fecha actual.");
       setMostrarAdvertencia(true);
     } else {
       setErrorFecha("");
@@ -348,7 +348,7 @@ export const RegistroComic = () => {
 
     <div className="container">
       <Container className="text-center mt-5">
-        <h3 className="display-4">Registro comic</h3>
+        <h3 className="display-4">Registro Cómic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
 
@@ -427,7 +427,7 @@ export const RegistroComic = () => {
               </div>
 
               <div className="field">
-                <label>Autores </label>
+                <label>Autor(es)</label>
                 <Input
                   placeholder="Ingrese los autores"
                   name="autores"
@@ -448,7 +448,7 @@ export const RegistroComic = () => {
               </div>
 
               <div className="field">
-                <label>Categorías <span className="text-danger">*</span></label>
+                <label>Categoría<span className="text-danger">*</span></label>
                 <Dropdown
                   placeholder="Seleccione la o las categorias"
                   /*className="form-control"*/

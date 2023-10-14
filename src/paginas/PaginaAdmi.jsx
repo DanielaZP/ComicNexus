@@ -13,9 +13,9 @@ function PaginaAdmi() {
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Añadir nuevo comic a la plataforma</h5>
-                <p class="card-text">Para registrar un nuevo comic y agregar sus datos presione el boton de abajo.</p>
-                <Link class="btn custom-btn-color" to="/registro-comic">Añadir comic</Link>
+                <h5 class="card-title">Añadir nuevo cómic a la plataforma</h5>
+                <p class="card-text">Para registrar un nuevo cómic y agregar sus datos presione el botón de abajo.</p>
+                <Link class="btn custom-btn-color" to="/registro-comic">Añadir cómic</Link>
             </div>
             </div>
         </div>

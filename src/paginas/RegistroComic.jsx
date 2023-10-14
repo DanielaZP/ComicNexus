@@ -173,14 +173,38 @@ export const RegistroComic = () => {
 
   const handleGuardarClick = () => {
     event.preventDefault();
-    if (titulo.trim() === "" || sinopsis.trim() === "" || hasImage === false || data.selectedCategorias.length === 0) {
-      setCampoObligatorioTituloError(true);
-      setCampoObligatorioSinopsisError(true);
-      setCampoObligatorioPortadaError(true);
-      setCampoObligatorioCategoriaError(true);
+  
+    // Variables para controlar los errores en cada campo
+    let tituloError = false;
+    let sinopsisError = false;
+    let portadaError = false;
+    let categoriaError = false;
+  
+    // Verificar cada condición y establecer los errores correspondientes
+    if (titulo.trim() === "") {
+      tituloError = true;
+    }
+    if (sinopsis.trim() === "") {
+      sinopsisError = true;
+    }
+    if (!hasImage) {
+      portadaError = true;
+    }
+    if (data.selectedCategorias.length === 0) {
+      categoriaError = true;
+    }
+  
+    // Actualizar las variables de estado para mostrar los errores
+    setCampoObligatorioTituloError(tituloError);
+    setCampoObligatorioSinopsisError(sinopsisError);
+    setCampoObligatorioPortadaError(portadaError);
+    setCampoObligatorioCategoriaError(categoriaError);
+  
+    // Si hay errores, no continuar
+    if (tituloError || sinopsisError || portadaError || categoriaError) {
       return;
     }
-
+  
     Axios.get(`https://comic-next-laravel.vercel.app/api/api/tituloExistente/${titulo}`)
       .then((response) => {
         if (response.data.exists) {
@@ -196,7 +220,7 @@ export const RegistroComic = () => {
         console.error(error);
       });
   };
-
+    
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);
     const currentDate = new Date();
@@ -214,10 +238,8 @@ export const RegistroComic = () => {
       fechaPublicacion: e.target.value
     }));
 
-
     setFechaPublicacion(e.target.value);
   };
-
 
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;

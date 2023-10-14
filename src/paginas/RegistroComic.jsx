@@ -277,7 +277,7 @@ export const RegistroComic = () => {
       setAutorExcedeLimite(false);
     }
 
-    if (nuevoAutor.length < 3) {
+    if (nuevoAutor.length < 3 && nuevoAutor.length != 0 ) {
       setAutorCorto(true);
     } else {
       setAutorCorto(false);
@@ -295,11 +295,10 @@ export const RegistroComic = () => {
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
-    const regex = /^[a-zA-Z-',.ñáéíóú!¡ ]*$/;
+    const regex = /^[a-zA-Z-',.ñáéíóú!¡ \n]*$/;
 
     if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
-      setSinopsisExcedeLimite(false);
       setSinopsisExcedeLimite(false);
       setData((prevData) => ({
         ...prevData,

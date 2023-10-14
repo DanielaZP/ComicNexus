@@ -6,6 +6,12 @@
   --azulito: rgb(0, 85, 124);
 }
 
+.App{
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
 .form-group {
   display: grid;
   margin-bottom: 10px;

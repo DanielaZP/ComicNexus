@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function PaginaAdmi() {
   return (
-    <div>
+    <div  style={{ margin: '20px' }}>
         <Container className="text-center my-5">
             <h1 className="display-4">Panel administrador</h1>
             <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }}/>

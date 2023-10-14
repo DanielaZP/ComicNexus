@@ -4,15 +4,23 @@ function CardCat({ comic }) {
 
   return (
     <div className="card">
-      <img src={portadaUrl} className="card-img-top" alt="Portada" />
-      <div className="card-body">
-        <h5 className="card-title">{titulo}</h5>
-        <p className="card-text">{sinopsis}</p>
-        {/* <a href={`/ver-comic/${cod_comic}`} className="btn custom-btn-color">
-          Ver comic
-        </a> */}
-      </div>
+    <img
+      src={portadaUrl}
+      className="card-img-top"
+      alt="Portada"
+      style={{ width: '100%', height: '500px' }}
+    />
+    <div className="card-body" style={{ height: '150px', overflow: 'hidden' }}>
+      <h5 className="card-title">{titulo}</h5>
+      <hr style={{ margin: '4px 0' }} />
+      <p className="card-text">
+        {sinopsis.length > 150 ? `${sinopsis.substring(0, 150)}...` : sinopsis}
+      </p>
+       {/* <a href={`/ver-comic/${cod_comic}`} className="btn custom-btn-color">
+        Ver comic
+      </a>  */}
     </div>
+  </div>
   );
 }
 

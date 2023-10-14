@@ -349,7 +349,7 @@ export const RegistroComic = () => {
                     alignItems: "center",
                   }}
                 >
-                  Ingrese una imagen de tamaño:
+                  Ingrese una imagen:
                 </div>
               )}
               <button

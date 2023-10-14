@@ -244,7 +244,7 @@ export const RegistroComic = () => {
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
     setCampoObligatorioTituloError(false);
-    const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| ñÑ]*$/;
+    const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| áéíóúÁÉÍÓÚñÑ]*$/;
 
     if (nuevoTitulo.length > 60) {
       setTituloExcedeLimite(true);
@@ -269,7 +269,7 @@ export const RegistroComic = () => {
 
   const handleAutorChange = (e) => {
     const nuevoAutor = e.target.value;
-    const regex = /^[a-zA-Z0-9-',. ñÑ]*$/;
+    const regex = /^[a-zA-Z0-9-',. áéíóúÁÉÍÓÚñÑ]*$/;
 
     if (nuevoAutor.length > 100) {
       setAutorExcedeLimite(true);

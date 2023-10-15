@@ -9,27 +9,40 @@ import {
 
 function Footer() {
   return (
-    <MDBFooter style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }} className='text-center text-lg-left-img-top'>
+    <MDBFooter style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop: '20px'}} className='text-lg-left-img-top'>
     <MDBContainer className='p-4'>
       <MDBRow>
-        <MDBCol lg='6' md='12' className='mb-4 mb-md-0'>
-          <h5 className='text-uppercase'>Footer text</h5>
-
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis molestias.
-            Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam voluptatem veniam,
-            est atque cumque eum delectus sint!
-          </p>
+        <MDBCol lg='6' md='12' className='mb-4 mb-md-0 '>
+          <h5 className='text-uppercase text-center text'>Creadores de la página.</h5>
+          <MDBRow>
+            <MDBCol md='6'>
+            <p className='text-left'>
+                1. Barriga Rios Valeria Michelle
+                <br />
+                2. Huanca Maldonado Rodrigo
+                <br />
+                3. Mercado Rojas Rolando
+                <br />
+                4. Padilla Morales Aron Joel
+              </p>
+            </MDBCol>
+            <MDBCol md='6'>
+            <p className='text-left '>
+                5. Torrico Martinez Leonardo Enrique
+                <br />
+                6. Villanueva Zapata Teresa
+                <br />
+                7. Zapata Pari Daniela
+              </p>
+          </MDBCol>
+          </MDBRow>
         </MDBCol>
-
-        <MDBCol lg='6' md='12' className='mb-4 mb-md-0'>
-          <h5 className='text-uppercase'>Footer text</h5>
-
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis molestias.
-            Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam voluptatem veniam,
-            est atque cumque eum delectus sint!
-          </p>
+        <MDBCol lg='6' md='12' className='mb-4 mb-md-0 text-center text'>
+          <img
+            src='/LogoComicsNexus.png'  
+            alt='Descripción de la imagen'
+            style={{ maxWidth: '20%', height: 'auto' }}  
+          />
         </MDBCol>
       </MDBRow>
     </MDBContainer>

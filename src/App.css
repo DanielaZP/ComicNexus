@@ -1,9 +1,10 @@
 :root {
   --verdesito: rgb(1, 162, 28);
-  --celestito: rgb(148, 184, 215);
+  --celestito: rgb(0, 85, 124);
   --rojito: #ff0000;
   --rojofuerte: rgb(158, 0, 0);
-  --azulito: rgb(0, 85, 124);
+  --azulito:  rgb(148, 184, 215);
+ 
 }
 
 .App{

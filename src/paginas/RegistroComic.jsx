@@ -190,7 +190,7 @@ export const RegistroComic = () => {
     if (!hasImage) {
       portadaError = true;
     }
-    if (data.selectedCategorias.length === 0) {
+    if (data.selectedCategorias.length == 0) {
       categoriaError = true;
     }
   

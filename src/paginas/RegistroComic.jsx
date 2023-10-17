@@ -255,7 +255,7 @@ export const RegistroComic = () => {
       setTituloExcedeLimite(false);
     }
 
-    if (nuevoTitulo.length < 3) {
+    if (nuevoTitulo.length < 3 && /[a-zA-Z]/.test(nuevoTitulo)) {
       setTituloCorto(true);
     } else {
       setTituloCorto(false);

@@ -8,7 +8,7 @@ function CardCat({ comic }) {
       src={portadaUrl}
       className="card-img-top"
       alt="Portada"
-      style={{ width: '100%', height: '500px' }}
+      style={{ width: '100%', objectFit:"cover", aspectRatio:"293/470" }}
     />
     <div className="card-body" style={{ height: '150px', overflow: 'hidden' }}>
       <h5 className="card-title">{titulo}</h5>
@@ -18,7 +18,7 @@ function CardCat({ comic }) {
       </p>
        {/* <a href={`/ver-comic/${cod_comic}`} className="btn custom-btn-color">
         Ver comic
-      </a>  */}
+        </a>  */}
     </div>
   </div>
   );

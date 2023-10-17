@@ -120,6 +120,8 @@ button {
 .imagen-previa {
   max-width: 300px; 
   max-height: 470px; 
+  object-fit: cover;
+  aspect-ratio: 293/470;
 }
 
 .mi-color {

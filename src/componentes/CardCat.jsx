@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function CardCat({ comic }) {
   const { cod_comic, titulo, sinopsis } = comic.comic; // Datos del cómic
   const portadaUrl = comic.portadaUrl; // URL de la portada
@@ -16,9 +18,9 @@ function CardCat({ comic }) {
       <p className="card-text" style= {{ height: '60px'}}>
         {sinopsis.length > 150 ? `${sinopsis.substring(0, 150)}...` : sinopsis}
       </p>
-        <a href={`/ver-comic/${cod_comic}`} className="btn custom-btn-color">
+        <Link to="/vista-comic" className="btn custom-btn-color">
         Ver comic
-        </a>  
+        </Link>  
     </div>
   </div>
   );

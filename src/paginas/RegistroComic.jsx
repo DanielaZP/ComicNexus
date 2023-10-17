@@ -31,6 +31,7 @@ export const RegistroComic = () => {
   const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
   const [errorSubidaComic, setErrorSubidaComic] = useState("");
   const [caracterNoPermitidoSinopsis, setCaracterNoPermitidoSinopsis] = useState(false);
+  const [isLoading , setIsLoading] = useState(false);
 
 
   const handleCloseComicSubidoConExito = () => {
@@ -119,7 +120,7 @@ export const RegistroComic = () => {
   function submit(e){
 
     e.preventDefault();
-
+    setIsLoading(true);
     Axios.post('https://comic-next-laravel.vercel.app/api/api/registro', {
       titulo: data.titulo,
       autor: data.autor,
@@ -130,13 +131,13 @@ export const RegistroComic = () => {
     })
       .then((response) => {
         console.log(response.data);
-
+        setIsLoading(false);
         setIsModalOpen(false); // Cierra el modal después del envío exitoso
         setIsComicSubidoConExito(true); // Muestra el mensaje de éxito
       })
       .catch((error) => {
         console.error(error);
-
+        setIsLoading(false);
         setIsErrorModalOpen(false); // Cierra el modal de error en caso de un error
        setErrorSubidaComic("Error al subir el cómic"); // Muestra el mensaje de error
       });
@@ -574,7 +575,7 @@ export const RegistroComic = () => {
           <button className="btn Warning-btn-color" style={{ marginRight: '10px'}} onClick={closeModal}>
             NO
           </button>
-          <button className="btn custom-btn-color" onClick={handleSubmit}>
+          <button className="btn custom-btn-color" onClick={handleSubmit} disabled={isLoading}>
             SÍ
           </button>
         </Modal.Actions>

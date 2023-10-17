@@ -30,6 +30,8 @@ export const RegistroComic = () => {
   const [campoTituloDuplicado, setCampoTituloDuplicado] = useState(false);
   const [isComicSubidoConExito, setIsComicSubidoConExito] = useState(false);
   const [errorSubidaComic, setErrorSubidaComic] = useState("");
+  const [caracterNoPermitidoSinopsis, setCaracterNoPermitidoSinopsis] = useState(false);
+
 
   const handleCloseComicSubidoConExito = () => {
     setIsComicSubidoConExito(false); // Cierra el modal de éxito
@@ -295,26 +297,46 @@ export const RegistroComic = () => {
   const handleSinopsisChange = (e) => {
     const nuevoSinopsis = e.target.value;
     setCampoObligatorioSinopsisError(false);
-    const regex = /^[a-zA-Z-',.ñáéíóú!¡ \n]*$/;
-
-    if (regex.test(nuevoSinopsis) && nuevoSinopsis.length <= 500) {
+    const regex = /^[a-zA-Z0-9-',.áéíóúÁÉÍÓÚñÑ!¡ \n]*$/;
+  
+    if (nuevoSinopsis.length <= 500) {
       setSinopsis(nuevoSinopsis);
       setSinopsisExcedeLimite(false);
       setData((prevData) => ({
         ...prevData,
         sinopsis: e.target.value
       }));
-
+  
       if (nuevoSinopsis.length < 20) {
         setSinopsisCortaError(true);
       } else {
         setSinopsisCortaError(false);
       }
+  
+      if (regex.test(nuevoSinopsis)) {
+        setCaracterNoPermitidoSinopsis(false); 
+      } else {
+        setCaracterNoPermitidoSinopsis(true); 
+      }
+
     } else {
       setSinopsisExcedeLimite(true);
       setSinopsisCortaError(false);
     }
   };
+
+  const handleSinopsisKeyDown = (e) => {
+    const nuevoCaracter = e.key;
+    const regex = /^[a-zA-Z-',.ñáéíóú!¡ \n]*$/;
+  
+    if (!regex.test(nuevoCaracter)) {
+      e.preventDefault(); 
+      setCaracterNoPermitidoSinopsis(true); 
+    } else {
+      setCaracterNoPermitidoSinopsis(false); 
+    }
+  };
+  
    /*const estiloFondo = {
     backgroundImage: `url('/Images/fondoComicNexus.jpg')`,
     backgroundSize: "cover",
@@ -496,6 +518,7 @@ export const RegistroComic = () => {
                   name="sinopsis"
                   value={data.sinopsis}
                   onChange={handleSinopsisChange}
+                  onKeyDown={handleSinopsisKeyDown}
                   required
                 />
                 {sinopsisExcedeLimite && (
@@ -513,6 +536,12 @@ export const RegistroComic = () => {
                     <p>Por favor, complete este campo obligatorio.</p>
                   </Message>
                 )}
+                 {caracterNoPermitidoSinopsis && (
+                  <Message size="mini" negative>
+                   <p>Ingreso caracteres no permitidos.</p>
+                  </Message>   
+                )}
+
               </div>
 
               <div className="d-flex justify-content-between">

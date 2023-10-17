@@ -307,7 +307,7 @@ export const RegistroComic = () => {
         sinopsis: e.target.value
       }));
   
-      if (nuevoSinopsis.length < 20) {
+      if (nuevoSinopsis.length < 20 && /[a-zA-Z]/.test(nuevoSinopsis)) {
         setSinopsisCortaError(true);
       } else {
         setSinopsisCortaError(false);

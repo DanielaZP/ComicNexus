@@ -128,3 +128,23 @@ button {
   background-color: rgb(39, 107, 170); /* Puedes poner aquí tu color definido */
   
 }
+
+.btn-registro{
+   background-color: #0e0d0d;
+   color: #fff;
+}
+
+.btn-inicio{
+  background-color: #0e0d0d;
+  color: #fff;
+}
+
+.btn-registro:hover{
+  background-color: var(--azulito); 
+  color: #fff;
+}
+
+.btn-inicio:hover{
+ background-color: var(--azulito); 
+ color: #fff;
+}

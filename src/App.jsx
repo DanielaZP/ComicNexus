@@ -29,7 +29,7 @@ function App() {
               <Route path='/comedia' element={<Comedia/>}/>
               <Route path='/ciencia-ficcion' element={<CienciaFiccion/>}/>
               <Route path='/pagina-admi' element={<PaginaAdmi/>}/>
-              <Route path='/vista-comic' element={<VistaComic/>}/>
+              <Route path='/vista-comic/:id' element={<VistaComic/>}/>
           </Routes>
         <Footer/>
       </BrowserRouter>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg fixed-top bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             ComicsNexus
@@ -28,7 +28,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/lista-comics">
-                  Lista cómics
+                  Lista comics
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -39,7 +39,7 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Categorías
+                  Categorias
                 </a>
                 <ul className="dropdown-menu">
                   <li>
@@ -49,12 +49,12 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/accion">
-                      Acción
+                      Accion
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/ciencia-ficcion">
-                      Ciencia ficción
+                      Ciencia ficcion
                     </Link>
                   </li>
                   <li>
@@ -65,17 +65,17 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
-            {/* <form className="d-flex" role="search">
+            <form className="d-flex" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Spider..."
                 aria-label="Search"
               />
-              <button className="btn custom-btn-color" type="submit">
-                Buscar
+              <button className="btn esact-btn-color" type="submit">
+              <i class="bi bi-search"></i>
               </button>
-            </form> */}
+            </form>
           </div>
         </div> 
         <div class="dropdown">
@@ -83,8 +83,8 @@ const Navbar = () => {
             <i class="bi bi-person-circle "></i>
           </button>
           <ul class="dropdown-menu" id="main-menu">
-            {/* <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-            <li><a class="dropdown-item" href="#">Mis playlists</a></li> */}
+            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+            <li><a class="dropdown-item" href="#">Mis playlists</a></li>
             <li><hr class="dropdown-divider"/></li>
             <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

@@ -76,6 +76,16 @@ const Navbar = () => {
               <i class="bi bi-search"></i>
               </button>
             </form>
+
+            
+            <Link className="btn btn-registro" to="/registro-usuario" style={{ marginLeft: '10px'}}>
+                 Registro
+            </Link>
+            <Link className="btn btn-inicio" style={{ marginLeft: '10px' }}>
+                 Inicio de Sesión
+            </Link>
+           
+            
           </div>
         </div> 
         <div class="dropdown">

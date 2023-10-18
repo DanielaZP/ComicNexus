@@ -13,7 +13,7 @@ import { RegistroComic } from './paginas/RegistroComic';
 import { Inicio } from './paginas/Inicio';
 import Footer from './componentes/Footer';
 import VistaComic from './paginas/VistaComic';
-
+import RegistroUsuario from './paginas/RegistroUsuario';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
               <Route path='/ciencia-ficcion' element={<CienciaFiccion/>}/>
               <Route path='/pagina-admi' element={<PaginaAdmi/>}/>
               <Route path='/vista-comic/:id' element={<VistaComic/>}/>
+              <Route path='/registro-usuario' element={<RegistroUsuario/>}/>
           </Routes>
         <Footer/>
       </BrowserRouter>

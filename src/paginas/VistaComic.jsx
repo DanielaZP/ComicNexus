@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Spinner,Row,  Col} from 'react-bootstrap';
+import { Container, Spinner,Row,Col,Button} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -41,7 +41,7 @@ function VistaComic() {
         //mostrar datos del comic
         <Row>
             {/* Columna izquierda para la imagen */}
-            <Col lg={6} md={12} className="text-center image-container">
+            <Col lg={5} md={12} className="text-center image-container">
               <img
                 src={comic.portadaUrl}
                 alt="Portada"
@@ -51,11 +51,14 @@ function VistaComic() {
             {/* Columna derecha para título, autor, año y sinopsis */}
             <Col lg={6} md={12} className="ui large form" >
               <div >
-              <h3>Titulo: {comic.comic.titulo}</h3>
-              <p>Autor(es): {comic.comic.autor}</p>
-              <p>Año de Publicación: {comic.comic.anio_publicacion}</p>
-              <p >Sinopsis: {comic.comic.sinopsis}</p>
+              <h3>Título: {comic.comic.titulo}</h3>
+              <p><strong>Autor(es): </strong>{comic.comic.autor}</p>
+              <p><strong>Año de Publicación: </strong>{comic.comic.anio_publicacion}</p>
+              <p className="text-justify"><strong>Sinopsis: </strong>{comic.comic.sinopsis}</p>
               </div>
+                <Button className='btn custom-btn-color' style={{ marginTop: '50px' }}>
+                  Añadir cómic a playlist
+               </Button>
             </Col>
           </Row>
       ) : (

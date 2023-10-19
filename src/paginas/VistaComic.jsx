@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+import { Container, Spinner,Row,  Col} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -29,7 +29,7 @@ function VistaComic() {
     <Container className="text-center my-5">
       <h1 className="display-4">Vista del cómic</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
-
+      </Container>
       {isLoading ? (
         <div className="text-center my-3">
           <Spinner animation="border" variant="primary" role="status">
@@ -38,21 +38,29 @@ function VistaComic() {
           <p className="mt-2">Cargando cómic...</p>
         </div>
       ) : comic ? (
-        <div>
-          <h2>{comic.comic.titulo}</h2>
-          <h2>{id}</h2>
-          <p>{comic.comic.sinopsis}</p>
-          {/* Puedes mostrar la portada u otras informaciones del cómic aquí */}
-          <img
-            src={comic.portadaUrl}
-            alt="Portada"
-            style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
-          />
-        </div>
+        //mostrar datos del comic
+        <Row>
+            {/* Columna izquierda para la imagen */}
+            <Col lg={6} md={12} className="text-center image-container">
+              <img
+                src={comic.portadaUrl}
+                alt="Portada"
+                style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
+              />
+            </Col>
+            {/* Columna derecha para título, autor, año y sinopsis */}
+            <Col lg={6} md={12} className="ui large form" >
+              <div >
+              <h3>Titulo: {comic.comic.titulo}</h3>
+              <p>Autor(es): {comic.comic.autor}</p>
+              <p>Año de Publicación: {comic.comic.anio_publicacion}</p>
+              <p >Sinopsis: {comic.comic.sinopsis}</p>
+              </div>
+            </Col>
+          </Row>
       ) : (
-        <p>No se encontraron datos del cómic.</p>
+        <p className='text-center'>No se encontraron datos del cómic.</p>
       )}
-    </Container>
   </div>
   );
 }

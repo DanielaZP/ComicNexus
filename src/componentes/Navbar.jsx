@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NavComponent from "./NavComponent.jsx";
 
 const Navbar = () => {
   return (
@@ -65,19 +66,9 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Spider..."
-                aria-label="Search"
-              />
-              <button className="btn esact-btn-color" type="submit">
-              <i class="bi bi-search"></i>
-              </button>
-            </form>
 
-            
+            <NavComponent/>
+
             <Link className="btn btn-registro" to="/registro-usuario" style={{ marginLeft: '10px'}}>
                  Registro
             </Link>

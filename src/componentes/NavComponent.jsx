@@ -48,7 +48,7 @@ const NavComponent = () => {
                     
                 </form>
                     <button className="btn esact-btn-color"
-                    onClick={hideInput} >Cerrar</button>
+                    onClick={hideInput} ><i class="bi bi-x-circle"></i></button>
             </form> 
         </>
       )}

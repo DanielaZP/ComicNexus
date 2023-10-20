@@ -85,7 +85,7 @@ const Navbar = () => {
           </button>
           <ul class="dropdown-menu" id="main-menu">
             <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-            <li><Link class="dropdown-item" to="/playlist">Mis playlists</Link></li>
+            <li><Link class="dropdown-item" to="/playlists">Mis playlists</Link></li>
             <li><hr class="dropdown-divider"/></li>
             <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

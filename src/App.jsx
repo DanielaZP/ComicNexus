@@ -14,7 +14,7 @@ import { Inicio } from './paginas/Inicio';
 import Footer from './componentes/Footer';
 import VistaComic from './paginas/VistaComic';
 import RegistroUsuario from './paginas/RegistroUsuario';
-import Playlist from './paginas/playlist';
+import Playlist from './paginas/Playlist';
 function App() {
   return (
     <div className="App">
@@ -31,7 +31,7 @@ function App() {
               <Route path='/pagina-admi' element={<PaginaAdmi/>}/>
               <Route path='/vista-comic/:id' element={<VistaComic/>}/>
               <Route path='/registro-usuario' element={<RegistroUsuario/>}/>
-              <Route path='/playlist' element={<Playlist/>}/>
+              <Route path='/playlists' element={<Playlist/>}/>
           </Routes>
         <Footer/>
       </BrowserRouter>

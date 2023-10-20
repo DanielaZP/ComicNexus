@@ -41,11 +41,20 @@ function VistaComic() {
         //mostrar datos del comic
         <Row>
             {/* Columna izquierda para la imagen */}
-            <Col lg={5} md={12} className="text-center image-container">
+            <Col lg={5} md={12} className="text-center">
               <img
+              className='imagen-previa text-center'
                 src={comic.portadaUrl}
                 alt="Portada"
-                style={{ width: '100%', maxWidth: '300px', height: 'auto' }}
+                style={{
+                  width: "300px",
+                  height: "470px",
+                  border: "1px dashed #ccc",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginLeft: "200px"
+                }}
               />
             </Col>
             {/* Columna derecha para título, autor, año y sinopsis */}

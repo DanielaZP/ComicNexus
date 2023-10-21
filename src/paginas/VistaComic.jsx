@@ -81,7 +81,7 @@ function VistaComic() {
               <h3>Título: {comic.comic.titulo}</h3>
               <p><strong>Autor(es): </strong>{comic.comic.autor}</p>
               <p><strong>Año de Publicación: </strong>{comic.comic.anio_publicacion}</p>
-              <p className="text-justify"><strong>Sinopsis: </strong>{comic.comic.sinopsis}</p>
+              <p className="text-justify "><strong>Sinopsis: </strong>{comic.comic.sinopsis}</p>
               </div>
               <Button
                 className='btn custom-btn-color'

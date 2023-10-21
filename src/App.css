@@ -222,3 +222,10 @@ button:hover {
   cursor: pointer;
 }
 
+@font-face {
+  font-family: badabb;
+  src: url(../public/BADABB__.TTF);
+}
+.badabb{
+  font-family: badabb;
+}

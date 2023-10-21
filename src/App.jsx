@@ -1,6 +1,5 @@
 import './App.css';
-import '../src/index.css';
-import {Route,Routes,BrowserRouter} from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Outlet, Navigate } from 'react-router-dom';
 import Navbar from './componentes/Navbar';
 import Accion from './paginas/Accion';
 import Terror from './paginas/Terror';
@@ -15,6 +14,7 @@ import Footer from './componentes/Footer';
 import VistaComic from './paginas/VistaComic';
 import RegistroUsuario from './paginas/RegistroUsuario';
 import Playlist from './paginas/Playlist';
+
 function App() {
   const estiloFondo = {
     backgroundImage: `url('src/Imagenes/Fondo2.avif')`,
@@ -27,21 +27,30 @@ function App() {
   return (
     <div className="App" style={estiloFondo}>
       <BrowserRouter>
-        <Navbar/>
-          <Routes>
-              <Route path='/' element={<Inicio/>}/>
-              <Route path='/accion' element={<Accion/>}/>
-              <Route path='/registro-comic' element={<RegistroComic/>}/>
-              <Route path='/lista-comics' element={<ListaComics/>}/>
-              <Route path='/terror' element={<Terror/>}/>
-              <Route path='/comedia' element={<Comedia/>}/>
-              <Route path='/ciencia-ficcion' element={<CienciaFiccion/>}/>
-              <Route path='/pagina-admi' element={<PaginaAdmi/>}/>
-              <Route path='/vista-comic/:id' element={<VistaComic/>}/>
-              <Route path='/registro-usuario' element={<RegistroUsuario/>}/>
-              <Route path='/playlists' element={<Playlist/>}/>
-          </Routes>
-        <Footer/>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Outlet />
+                <Footer />
+              </>
+            }
+          >
+            <Route index element={<Inicio />} />
+            <Route path="accion" element={<Accion />} />
+            <Route path="registro-comic" element={<RegistroComic />} />
+            <Route path="lista-comics" element={<ListaComics />} />
+            <Route path="terror" element={<Terror />} />
+            <Route path="comedia" element={<Comedia />} />
+            <Route path="ciencia-ficcion" element={<CienciaFiccion />} />
+            <Route path="pagina-admi" element={<PaginaAdmi />} />
+            <Route path="vista-comic/:id" element={<VistaComic />} />
+            <Route path="playlists" element={<Playlist />} />
+          </Route>
+          <Route path="registro-usuario" element={<RegistroUsuario />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

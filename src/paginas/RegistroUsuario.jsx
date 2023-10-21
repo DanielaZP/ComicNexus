@@ -26,7 +26,7 @@ function RegistroUsuario() {
   };
 
   return (
-    <div className="registration-form-container">
+    <div className="registration-form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="registration-form">
         <h2 className="form-title">Registro de Usuario</h2>
         <div className="form-group">

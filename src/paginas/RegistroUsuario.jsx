@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function RegistroUsuario() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
+    showPassword: false, 
   });
+
+  const togglePasswordVisibility = () => {
+    setFormData({ ...formData, showPassword: !formData.showPassword });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,7 +21,7 @@ function RegistroUsuario() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Realizar acciones de registro aquí
+    // bd
     console.log(formData);
   };
 
@@ -51,12 +58,19 @@ function RegistroUsuario() {
         </div>
         <div className="form-group">
           <label>Contraseña:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div className="password-input">
+            <input
+              type={formData.showPassword ? 'text' : 'password'}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <FontAwesomeIcon
+              icon={formData.showPassword ? faEye : faEyeSlash}
+              onClick={togglePasswordVisibility}
+              className="password-toggle"
+            />
+          </div>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Registrarse</button>

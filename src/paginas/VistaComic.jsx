@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Spinner,Row,Col,Button} from 'react-bootstrap';
+import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function VistaComic() {
   const [comic, setComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,22 +25,39 @@ function VistaComic() {
         setIsLoading(false);
       });
   }, [id]);
+  const handleAddToPlaylist = () => {
+    // Lógica para añadir el cómic a la playlist
+    // Puedes realizar la lógica de tu aplicación aquí
+    // Por ahora, solo abrimos el modal
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
-    <Container className="text-center my-5">
+    {/* <Container className="text-center my-5">
       <h1 className="display-4">Vista del cómic</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
-      </Container>
+      </Container> */}
       {isLoading ? (
-        <div className="text-center my-3">
-          <Spinner animation="border" variant="primary" role="status">
-            <span className="sr-only"></span>
-          </Spinner>
-          <p className="mt-2">Cargando cómic...</p>
-        </div>
+        <Container className="text-center my-5">
+          <div className="text-center my-3">
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="sr-only"></span>
+            </Spinner>
+            <p className="mt-2">Cargando cómic...</p>
+          </div>
+        </Container>
       ) : comic ? (
         //mostrar datos del comic
         <Row>
+          <Container className="text-center my-5">
+          <h1 className="display-4">{comic.comic.titulo}</h1>
+          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+          </Container>
             {/* Columna izquierda para la imagen */}
             <Col lg={5} md={12} className="text-center">
               <img
@@ -59,19 +77,50 @@ function VistaComic() {
             </Col>
             {/* Columna derecha para título, autor, año y sinopsis */}
             <Col lg={6} md={12} className="ui large form" >
-              <div >
+              <div>
               <h3>Título: {comic.comic.titulo}</h3>
               <p><strong>Autor(es): </strong>{comic.comic.autor}</p>
               <p><strong>Año de Publicación: </strong>{comic.comic.anio_publicacion}</p>
               <p className="text-justify"><strong>Sinopsis: </strong>{comic.comic.sinopsis}</p>
               </div>
-                <Button className='btn custom-btn-color' style={{ marginTop: '50px' }}>
-                  Añadir cómic a playlist
-               </Button>
+              <Button
+                className='btn custom-btn-color'
+                style={{
+                  marginTop: '50px',
+                  width: '200px',  // Ajusta el ancho según tus necesidades
+                  height: '80px',  // Ajusta la altura según tus necesidades
+                  // Otros estilos si es necesario
+                }}
+                onClick={handleAddToPlaylist}
+              >
+                Añadir cómic a playlist
+              </Button>
             </Col>
+            <Modal show={showModal} onHide={handleCloseModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Añadir a la playlist cómic: {comic.comic.titulo}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {/* Contenido del modal */}
+                <p>Lista de playlists</p>
+                {/* Puedes agregar más contenido según tus necesidades */}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="btn Warning-btn-color" onClick={handleCloseModal}>
+                  Cancelar
+                </Button>
+                {/* Agrega la lógica para realmente añadir el cómic a la playlist */}
+                {/* <Button variant="btn custom-btn-color" onClick={handleCloseModal}>
+                  Añadir a la Playlist
+                </Button> */}
+              </Modal.Footer>
+            </Modal>
           </Row>
       ) : (
-        <p className='text-center'>No se encontraron datos del cómic.</p>
+        <Container className="text-center my-5">
+          <h1 className="display-4">Error: Cómic no encontrado</h1>
+          <hr className="my-4" style={{ borderColor: 'var(--rojito)', borderWidth: '2px' }} />
+        </Container> 
       )}
   </div>
   );

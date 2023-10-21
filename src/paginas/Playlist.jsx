@@ -53,7 +53,7 @@ function Playlist() {
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">
-        <Button variant="primary" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
+        <Button variant="btn custom-btn-color" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
           Crear playlist
         </Button>
 
@@ -103,7 +103,7 @@ function Playlist() {
                     />
                   </div>
                   <Button
-                    variant="primary"
+                    variant="btn custom-btn-color"
                     onClick={() => imageUploadRef.current.click()}
                     style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}
                   >
@@ -127,10 +127,10 @@ function Playlist() {
 
                   {/* Botones de Guardar y Cancelar */}
                   <div style={{ marginTop: '50px' }}>
-                    <Button variant="secondary" onClick={handleClose} style={{ marginLeft: '-45px' }}>
+                    <Button variant="btn Warning-btn-color" onClick={handleClose} style={{ marginLeft: '-45px' }}>
                       Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
+                    <Button variant="btn custom-btn-color" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
                       Guardar
                     </Button>
                   </div>

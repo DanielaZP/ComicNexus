@@ -1,8 +1,8 @@
 import './App.css';
+import '../src/index.css';
 import {Route,Routes,BrowserRouter} from 'react-router-dom';
 import Navbar from './componentes/Navbar';
 import Accion from './paginas/Accion';
-import Destacados from './paginas/Destacados';
 import Terror from './paginas/Terror';
 import CienciaFiccion from './paginas/CienciaFiccion';
 import Comedia from './paginas/Comedia';
@@ -16,8 +16,16 @@ import VistaComic from './paginas/VistaComic';
 import RegistroUsuario from './paginas/RegistroUsuario';
 import Playlist from './paginas/Playlist';
 function App() {
+  const estiloFondo = {
+    backgroundImage: `url('src/Imagenes/Fondo2.avif')`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    minHeight: "100vh",
+    backgroundPosition: "center"
+  };
   return (
-    <div className="App">
+    <div className="App" style={estiloFondo}>
       <BrowserRouter>
         <Navbar/>
           <Routes>

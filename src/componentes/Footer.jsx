@@ -9,7 +9,7 @@ import {
 
 function Footer() {
   return (
-    <MDBFooter style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)',marginTop: '20px'}} className='text-lg-left-img-top'>
+    <MDBFooter style={{ backgroundColor: 'white',marginTop: '20px'}} className='text-lg-left-img-top'>
     <MDBContainer className='p-4'>
       <MDBRow>
         <MDBCol lg='6' md='12' className='mb-4 mb-md-0 '>

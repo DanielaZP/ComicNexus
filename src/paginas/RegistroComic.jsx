@@ -338,14 +338,14 @@ export const RegistroComic = () => {
     }
   };
   
-   /*const estiloFondo = {
-    backgroundImage: `url('/Images/fondoComicNexus.jpg')`,
+   const estiloFondo = {
+    backgroundImage: `url('src/Imagenes/Fondo.jpeg')`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
     minHeight: "100vh",
     backgroundPosition: "center"
-  };*/
+  };
 
   const options = [
     { key: "1", value: "Terror", text: "Terror" },
@@ -368,7 +368,7 @@ export const RegistroComic = () => {
 
   return (
 
-    <div className="container">
+    <div className="container" >
       <Container className="text-center mt-5">
         <h3 className="display-4">Registro Cómic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />

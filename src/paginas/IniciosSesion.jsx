@@ -60,6 +60,7 @@ function InicioSesion(){
           <input
             type="text"
             name="username"
+            placeholder='Ingrese un nombre de usuario'
             value={formData.username}
             onChange={handleChange}
             placeholder="Nombre de usuario"
@@ -76,19 +77,20 @@ function InicioSesion(){
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
+              placeholder='Ingrese una contraseña'
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"
             />
-            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
-              {errors.password}
-            </p>
             <FontAwesomeIcon
               icon={formData.showPassword ? faEye : faEyeSlash}
               onClick={togglePasswordVisibility}
               className="password-toggle"
             />
-          </div>
+            </div>
+            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+              {errors.password}
+            </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Iniciar Sesion</button>

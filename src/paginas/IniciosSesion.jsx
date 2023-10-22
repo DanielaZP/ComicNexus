@@ -89,7 +89,7 @@ function InicioSesion(){
           <button type="submit">Iniciar Sesion</button>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          ¿No tienes cuenta? <Link to="/registro-usuario"> Registrate.</Link>
+          ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
         </div>
       </form>
     </div>

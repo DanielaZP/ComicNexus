@@ -15,6 +15,7 @@ import VistaComic from './paginas/VistaComic';
 import RegistroUsuario from './paginas/RegistroUsuario';
 import Playlist from './paginas/Playlist';
 import VistaPlaylist from './paginas/VistaPlaylist';
+import InicioSesion from './paginas/IniciosSesion';
 
 function App() {
   const estiloFondo = {
@@ -52,6 +53,7 @@ function App() {
             <Route path="vista-playlist" element={<VistaPlaylist />} />
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
+          <Route path="inicio-sesion" element={<InicioSesion />} />
         </Routes>
       </BrowserRouter>
     </div>

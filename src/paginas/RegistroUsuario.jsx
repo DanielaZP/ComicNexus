@@ -27,8 +27,8 @@ function RegistroUsuario() {
   };
 
   return (
-    <div className="registration-form-container" style={{ width: '600px', margin: 'auto' }}>
-      <form onSubmit={handleSubmit} className="registration-form">
+    <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
+      <form onSubmit={handleSubmit} className="form">
         <h2 className="form-title">Registro de Usuario</h2>
         <div className="image-container">
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />

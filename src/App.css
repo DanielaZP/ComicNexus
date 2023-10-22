@@ -158,7 +158,7 @@ button {
 }
 
 /*registro*/
-.registration-form-container {
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,7 +167,7 @@ button {
   margin: -100px;
 }
 
-.registration-form {
+.form {
   background-color: #f2f2f2;
   border: 1px solid #ccc;
   border-radius: 5px;

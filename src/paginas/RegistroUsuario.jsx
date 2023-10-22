@@ -7,10 +7,21 @@ function RegistroUsuario() {
   const history = useHistory(); // Importa el objeto history para redireccionar
 
   const [formData, setFormData] = useState({
+    name: '',
     username: '',
     email: '',
     password: '',
     showPassword: false,
+  });
+
+  const [errors, setErrors] = useState({
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+
+    showPassword: false,
+
   });
 
   const [message, setMessage] = useState(''); // Mensaje para mostrar respuestas del servidor
@@ -21,12 +32,13 @@ function RegistroUsuario() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+   
     try {
       const response = await fetch('/registro-usuario', {
         method: 'POST',
@@ -49,6 +61,28 @@ function RegistroUsuario() {
       // Error de conexión o del servidor
       setMessage('Error al conectar con el servidor.');
     }
+
+    const newErrors = {};
+    if (!formData.name) {
+      newErrors.name = 'El nombre completo es obligatorio.';
+    }
+    if (!formData.username) {
+      newErrors.username = 'El nombre de usuario es obligatorio.';
+    }
+    if (!formData.email) {
+      newErrors.email = 'El correo electrónico es obligatorio.';
+    }
+    if (!formData.password) {
+      newErrors.password = 'La contraseña es obligatoria.';
+    }
+
+    if (Object.keys(newErrors).length === 0) {
+      // Lógica de registro
+      console.log('Registro exitoso con:', formData);
+    }
+
+    setErrors(newErrors);
+
   };
 
   return (
@@ -59,38 +93,51 @@ function RegistroUsuario() {
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>
         <div className="form-group">
-          <label>Nombre completo:</label>
+          <label>Nombre completo<span className="text-danger">*</span></label>
           <input
             type="text"
             name="name"
+            placeholder='Ingrese su nombre'
             value={formData.name}
             onChange={handleChange}
           />
+          <p className={`error-message ${errors.name ? '' : 'hidden'}`}>
+            {errors.name}
+          </p>
         </div>
         <div className="form-group">
-          <label>Nombre de usuario:</label>
+          <label>Nombre de usuario<span className="text-danger">*</span></label>
           <input
             type="text"
             name="username"
+            placeholder='Ingrese un nombre de usuario'
             value={formData.username}
             onChange={handleChange}
           />
+          <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
+            {errors.username}
+          </p>
         </div>
         <div className="form-group">
-          <label>Correo electrónico:</label>
+          <label>Correo electrónico<span className="text-danger">*</span></label>
           <input
             type="email"
             name="email"
+            placeholder='Ingrese un correo electrónico'
             value={formData.email}
             onChange={handleChange}
           />
+          <p className={`error-message ${errors.email ? '' : 'hidden'}`}>
+            {errors.email}
+          </p>
         </div>
         <div className="form-group">
-          <label>Contraseña:</label>
+          <label>Contraseña<span className="text-danger">*</span></label>
           <div className="password-input">
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
+              placeholder='Ingrese una contraseña'
               value={formData.password}
               onChange={handleChange}
             />
@@ -100,13 +147,16 @@ function RegistroUsuario() {
               className="password-toggle"
             />
           </div>
+          <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+            {errors.password}
+          </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Registrarse</button>
         </div>
         {message && <div className="error-message">{message}</div>}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          ¿Ya tienes cuenta? <Link to="/inicio-sesion"> Inicia sesión.</Link>
+          ¿Ya tienes cuenta? <Link to="/inicio-sesion">Inicia sesión aquí.</Link>
         </div>
       </form>
     </div>

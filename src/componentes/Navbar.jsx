@@ -72,7 +72,7 @@ const Navbar = () => {
             <Link className="btn btn-registro" to="/registro-usuario" style={{ marginLeft: '10px'}}>
                  Registro
             </Link>
-            <Link className="btn btn-inicio" style={{ marginLeft: '10px' }}>
+            <Link className="btn btn-inicio" to="/inicio-sesion" style={{ marginLeft: '10px' }}>
                  Inicio de Sesión
             </Link>
            

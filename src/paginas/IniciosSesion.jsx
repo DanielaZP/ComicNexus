@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 function InicioSesion(){
@@ -54,19 +54,23 @@ function InicioSesion(){
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>
         <div className="form-group">
-          <label>Nombre de usuario:</label>
+          <label>
+            <FontAwesomeIcon icon={faUser} /> Nombre de usuario:
+          </label>
           <input
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
           />
-         <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
-    {errors.username}
-  </p>
+          <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
+            {errors.username}
+          </p>
         </div>
         <div className="form-group">
-          <label>Contraseña:</label>
+          <label>
+            <FontAwesomeIcon icon={faLock} /> Contraseña:
+          </label>
           <div className="password-input">
             <input
               type={formData.showPassword ? 'text' : 'password'}
@@ -74,10 +78,9 @@ function InicioSesion(){
               value={formData.password}
               onChange={handleChange}
             />
-
-<p className={`error-message ${errors.password ? '' : 'hidden'}`}>
-      {errors.password}
-    </p>
+            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+              {errors.password}
+            </p>
             <FontAwesomeIcon
               icon={formData.showPassword ? faEye : faEyeSlash}
               onClick={togglePasswordVisibility}

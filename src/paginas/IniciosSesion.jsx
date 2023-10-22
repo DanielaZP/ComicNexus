@@ -55,7 +55,7 @@ function InicioSesion(){
         </div>
         <div className="form-group">
           <label>
-            <FontAwesomeIcon icon={faUser} /> Nombre de usuario:
+            <FontAwesomeIcon icon={faUser} /> Nombre de usuario<span className="text-danger">*</span>
           </label>
           <input
             type="text"
@@ -70,7 +70,7 @@ function InicioSesion(){
         </div>
         <div className="form-group">
           <label>
-            <FontAwesomeIcon icon={faLock} /> Contraseña:
+            <FontAwesomeIcon icon={faLock} /> Contraseña<span className="text-danger">*</span>
           </label>
           <div className="password-input">
             <input

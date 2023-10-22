@@ -76,7 +76,6 @@ function InicioSesion(){
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
-              placeholder='Ingrese una contraseña'
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"

@@ -19,12 +19,12 @@ function CardCat({ comic }) {
       <div className="card-body" style={{ overflow: 'hidden' }}>
         <h5 className="card-title">{titulo}</h5>
         <hr style={{ margin: '4px 0' }} />
-        <p className="card-text" style={{ height: '60px' }}>
+        <p className="card-text" style={{ height: '70px' }}>
           {sinopsis.length > 150 ? `${sinopsis.substring(0, 150)}...` : sinopsis}
         </p>
         {/* Usar Link con la URL que incluye el ID del cómic */}
         <Link to={url} className="btn custom-btn-color">
-          Ver comic
+          Ver cómic
         </Link>
       </div>
     </div>

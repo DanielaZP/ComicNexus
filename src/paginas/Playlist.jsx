@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
 function Playlist() {
   const [showModal, setShowModal] = useState(false);
@@ -41,10 +42,30 @@ function Playlist() {
     } else if (!selectedImage) {
       setNameError('Sube una imagen válida.');
     } else {
-      console.log('Nombre de la playlist:', playlistName);
-      console.log('Imagen:', selectedImage);
-      handleClose();
+      const base64Image = extractBase64Code(selectedImage);
+
+      // Crea un objeto con los datos que quieres enviar
+      const data = {
+        nombre_playlist: playlistName,
+        imagen_playlist: base64Image,
+        cod_usuario: 1
+      };
+
+      // Haz la solicitud POST utilizando Axios
+      axios.post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
+        .then((response) => {
+          console.log('Respuesta del servidor:', response.data);
+          handleClose();
+        })
+        .catch((error) => {
+          console.error('Error al enviar los datos:', error);
+        });
     }
+  };
+
+  const extractBase64Code = (dataURL) => {
+    const base64Code = dataURL.split(',')[1];
+    return base64Code;
   };
 
   return (
@@ -53,13 +74,13 @@ function Playlist() {
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">
-        <Button variant="primary" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
+        <Button variant="btn custom-btn-color" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
           Crear playlist
         </Button>
 
         <Modal show={showModal} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title style={{  margin: '0 auto', marginLeft: '310px' }}>Editar Información</Modal.Title>
+            <Modal.Title style={{ margin: '0 auto', marginLeft: '310px' }}>Editar Información</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -103,7 +124,7 @@ function Playlist() {
                     />
                   </div>
                   <Button
-                    variant="primary"
+                    variant="btn custom-btn-color"
                     onClick={() => imageUploadRef.current.click()}
                     style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}
                   >
@@ -127,10 +148,10 @@ function Playlist() {
 
                   {/* Botones de Guardar y Cancelar */}
                   <div style={{ marginTop: '50px' }}>
-                    <Button variant="secondary" onClick={handleClose} style={{ marginLeft: '-45px' }}>
+                    <Button variant="btn Warning-btn-color" onClick={handleClose} style={{ marginLeft: '-45px' }}>
                       Cancelar
                     </Button>
-                    <Button variant="primary" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
+                    <Button variant="btn custom-btn-color" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
                       Guardar
                     </Button>
                   </div>

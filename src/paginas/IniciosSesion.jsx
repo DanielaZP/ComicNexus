@@ -60,7 +60,6 @@ function InicioSesion(){
           <input
             type="text"
             name="username"
-            placeholder='Ingrese un nombre de usuario'
             value={formData.username}
             onChange={handleChange}
             placeholder="Nombre de usuario"
@@ -93,7 +92,7 @@ function InicioSesion(){
             </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
-          <button type="submit">Iniciar Sesion</button>
+          <button type="submit">Iniciar Sesión</button>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>

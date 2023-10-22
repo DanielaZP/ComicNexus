@@ -60,7 +60,6 @@ function InicioSesion(){
           <input
             type="text"
             name="username"
-            placeholder='Ingrese un nombre de usuario'
             value={formData.username}
             onChange={handleChange}
             placeholder="Nombre de usuario"
@@ -77,7 +76,6 @@ function InicioSesion(){
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
-              placeholder='Ingrese una contraseña'
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"

@@ -78,15 +78,15 @@ function InicioSesion(){
               value={formData.password}
               onChange={handleChange}
             />
-            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
-              {errors.password}
-            </p>
             <FontAwesomeIcon
               icon={formData.showPassword ? faEye : faEyeSlash}
               onClick={togglePasswordVisibility}
               className="password-toggle"
             />
-          </div>
+            </div>
+            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+              {errors.password}
+            </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Iniciar Sesion</button>

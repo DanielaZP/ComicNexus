@@ -66,6 +66,7 @@ function RegistroUsuario() {
           <input
             type="text"
             name="name"
+            placeholder='Ingrese su nombre'
             value={formData.name}
             onChange={handleChange}
           />
@@ -78,6 +79,7 @@ function RegistroUsuario() {
           <input
             type="text"
             name="username"
+            placeholder='Ingrese un nombre de usuario'
             value={formData.username}
             onChange={handleChange}
           />
@@ -90,6 +92,7 @@ function RegistroUsuario() {
           <input
             type="email"
             name="email"
+            placeholder='Ingrese un correo electrónico'
             value={formData.email}
             onChange={handleChange}
           />
@@ -103,6 +106,7 @@ function RegistroUsuario() {
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
+              placeholder='Ingrese una contraseña'
               value={formData.password}
               onChange={handleChange}
             />

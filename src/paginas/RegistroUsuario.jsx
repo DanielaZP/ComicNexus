@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function RegistroUsuario() {
+  const history = useHistory(); // Importa el objeto history para redireccionar
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
-    showPassword: false, 
+    showPassword: false,
   });
+
+  const [message, setMessage] = useState(''); // Mensaje para mostrar respuestas del servidor
 
   const togglePasswordVisibility = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
@@ -20,10 +24,31 @@ function RegistroUsuario() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // bd
-    console.log(formData);
+    
+    try {
+      const response = await fetch('/registro-usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Registro exitoso, redirige a la página de inicio de sesión u otra página
+        setMessage('Usuario registrado con éxito.');
+        history.push('/inicio-sesion'); // Redirige a la página de inicio de sesión
+      } else {
+        // Maneja errores del servidor
+        const data = await response.json();
+        setMessage(data.message); // Mensaje de error desde el servidor
+      }
+    } catch (error) {
+      // Error de conexión o del servidor
+      setMessage('Error al conectar con el servidor.');
+    }
   };
 
   return (
@@ -79,6 +104,7 @@ function RegistroUsuario() {
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Registrarse</button>
         </div>
+        {message && <div className="error-message">{message}</div>}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Ya tienes cuenta? <Link to="/inicio-sesion"> Inicia sesión.</Link>
         </div>

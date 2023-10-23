@@ -43,7 +43,7 @@ function RegistroUsuario() {
     if (Object.keys(newErrors).length === 0) {
       try {
         // Realizar la solicitud POST con Axios
-        const response = axios.post('http://127.0.0.1:8000/api/registro-usuario', formData);
+        const response = axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
   
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);

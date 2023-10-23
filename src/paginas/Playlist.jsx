@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
+import PlaylistCard from '../componentes/PlaylistCard';
 
 function Playlist() {
   const [showModal, setShowModal] = useState(false);
@@ -13,7 +13,18 @@ function Playlist() {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const imageUploadRef = useRef(null);
+
+  useEffect(() => {
+    axios.get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
+      .then(response => {
+        setPlaylists(response.data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        console.error('Error al obtener playlists:', error);
+      });
+  }, []);
 
   const handleClose = () => {
     setShowModal(false);
@@ -23,11 +34,6 @@ function Playlist() {
   };
 
   const handleShow = () => setShowModal(true);
-
-  const handlePlaylistNameChange = (e) => {
-    setPlaylistName(e.target.value);
-    setNameError('');
-  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -42,7 +48,6 @@ function Playlist() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result);
-        // Limpiar el mensaje de error cuando se selecciona una imagen válida
         setNameError('');
       };
       reader.readAsDataURL(file);
@@ -50,20 +55,6 @@ function Playlist() {
       setSelectedImage(null);
     }
   };
-
-  useEffect(() => {
-    axios
-      .get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
-      .then((response) => {
-        setPlaylists(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
 
   const handleSavePlaylist = () => {
     if (!playlistName.trim()) {
@@ -75,6 +66,10 @@ function Playlist() {
     }
   };
 
+  const handleVisualizePlaylist = (playlist) => {
+    console.log('Visualizar playlist:', playlist);
+  };
+
   const handleConfirmSave = () => {
     const base64Image = extractBase64Code(selectedImage);
     const data = {
@@ -83,8 +78,7 @@ function Playlist() {
       cod_usuario: 1
     };
 
-    axios
-      .post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
+    axios.post('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1', data)
       .then(() => {
         setSuccessModalVisible(true);
         handleClose();
@@ -151,7 +145,6 @@ function Playlist() {
                     <input
                       type="file"
                       accept=".png, .jpg, .jpeg"
-                      ref={imageUploadRef}
                       style={{
                         display: 'none',
                         position: 'absolute',
@@ -164,8 +157,8 @@ function Playlist() {
                   </div>
                   <Button
                     variant="btn custom-btn-color"
-                    onClick={() => imageUploadRef.current.click()}
                     style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}
+                    onClick={() => document.querySelector('input[type="file"]').click()}
                   >
                     Agregar Imagen
                   </Button>
@@ -177,7 +170,7 @@ function Playlist() {
                       type="text"
                       placeholder="Ingrese el nombre de la playlist"
                       value={playlistName}
-                      onChange={handlePlaylistNameChange}
+                      onChange={(e) => setPlaylistName(e.target.value)}
                       isInvalid={!!nameError}
                       style={{ marginTop: '10px', marginLeft: '-100px' }}
                     />
@@ -234,11 +227,14 @@ function Playlist() {
             <p>No se encontraron playlists.</p>
           ) : (
             playlists.map((playlist) => (
-              <Col key={playlist.cod_playlist} md={2} className="mb-4">
+              <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4">
                 <div className="card">
-                  <img src={playlist.portadaUrl} className="card-img-top" alt={playlist.nombre_playlist} />
+                  <img src={playlist.portadaUrl} className="card-img-top" alt={playlist.playlist.nombre_playlist} />
                   <div className="card-body">
-                    <h5 className="card-title">{playlist.nombre_playlist}</h5>
+                    <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
+                    <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
+                      Visualizar Playlist
+                    </Button>
                   </div>
                 </div>
               </Col>

@@ -55,7 +55,7 @@ function VistaComic() {
         //mostrar datos del comic
         <Row>
           <Container className="text-center my-5">
-          <h1 className="display-4">{comic.comic.titulo}</h1>
+          <h1 className="display-4 badabb">{comic.comic.titulo}</h1>
           <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
           </Container>
             {/* Columna izquierda para la imagen */}

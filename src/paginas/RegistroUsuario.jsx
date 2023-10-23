@@ -18,17 +18,21 @@ function RegistroUsuario() {
     email: '',
     password: '',
   });
+
   const togglePasswordVisibility = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
+
     if (!formData.name) {
       newErrors.name = 'El nombre completo es obligatorio.';
     }
@@ -40,7 +44,14 @@ function RegistroUsuario() {
     }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
+
     if (Object.keys(newErrors).length === 0) {
       try {
         // Realizar la solicitud POST con Axios
@@ -56,8 +67,10 @@ function RegistroUsuario() {
       // Lógica de registro
       console.log('Registro exitoso con:', formData);
     }
+
     setErrors(newErrors);
   };
+
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
@@ -134,4 +147,5 @@ function RegistroUsuario() {
     </div>
   );
 }
+
 export default RegistroUsuario;

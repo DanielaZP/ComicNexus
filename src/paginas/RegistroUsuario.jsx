@@ -4,6 +4,20 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const ZEROBOUNCE_API_KEY = '1090cb61970442a6b5a5f3370c37eb68'; 
+
+async function validateEmail(email) {
+  const zeroBounceUrl = `https://api.zerobounce.net/v2/validate?api_key=${ZEROBOUNCE_API_KEY}&email=${email}`;
+
+  try {
+    const response = await axios.get(zeroBounceUrl);
+    return response.data;
+  } catch (error) {
+    console.error('Error al validar el correo electrónico:', error);
+    return null;
+  }
+}
+
 function RegistroUsuario() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -30,34 +44,19 @@ function RegistroUsuario() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = {};
+    const newErrors = { ...errors };
 
-    if (!formData.name) {
-      newErrors.name = 'El nombre completo es obligatorio.';
-    }
-    if (!formData.username) {
-      newErrors.username = 'El nombre de usuario es obligatorio.';
-    }
-    if (!formData.email) {
-      newErrors.email = 'El correo electrónico es obligatorio.';
-    }
-    if (!formData.password) {
-      newErrors.password = 'La contraseña es obligatoria.';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
-    } else if (!/[A-Z]/.test(formData.password)) {
-      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
-    } else if (!/\d/.test(formData.password)) {
-      newErrors.password = 'La contraseña debe contener al menos un número.';
-    }
+    // Validar el correo electrónico con ZeroBounce
+    const emailValidationResult = await validateEmail(formData.email);
 
-    if (Object.keys(newErrors).length === 0) {
+    if (emailValidationResult && emailValidationResult.status === 'Valid') {
+      // El correo electrónico es válido, continuar con el envío de datos al servidor
       try {
         // Realizar la solicitud POST con Axios
-        const response = axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
-  
+        const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
+
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);
         console.log('Respuesta del servidor:', response.data);
@@ -66,6 +65,10 @@ function RegistroUsuario() {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);
       }
+    } else {
+      // El correo electrónico no es válido, muestra un mensaje de error
+      newErrors.email = 'El correo electrónico no es válido.';
+
       // Lógica de registro
       console.log('Registro exitoso con:', formData);
     }

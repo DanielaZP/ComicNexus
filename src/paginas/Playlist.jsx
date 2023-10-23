@@ -80,7 +80,7 @@ const Playlist = () => {
     };
 
     axios
-      .post('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1', data)
+      .post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
       .then(() => {
         setSuccessModalVisible(true);
         handleClose();

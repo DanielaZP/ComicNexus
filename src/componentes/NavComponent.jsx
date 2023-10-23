@@ -1,31 +1,45 @@
 import React, { Component, useState } from "react";
 import { Navbar, Button, Input } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons"
+import { faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom'; 
 
 const NavComponent = () => {
-  // Creamos un estado para controlar si el input está visible o no
+  let navigate = useNavigate();
+  const [inputValue, setInputValue] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  // Creamos una función para cambiar el estado del input al presionar el botón de lupa
   const showInput = () => {
     setInputVisible(true);
   };
 
-  // Creamos una función para cambiar el estado del input al presionar el botón de cruz
   const hideInput = () => {
     setInputVisible(false);
+    navigate(-1);
   };
 
-  const [inputValue, setInputValue] = useState('');
-
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    if(value.length <= 30) {
+      setInputValue(value);
+      setShowAlert(false);
+      console.log(value)
+    } else {
+      setShowAlert(true);
+    }
+    navigate('/buscar');
   };
 
   const handleLimpiarClick = () => {
     setInputValue('');
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+    }
+  }
 
   return (
     <Navbar>
@@ -42,10 +56,10 @@ const NavComponent = () => {
                 <div className="input-wrapper" style={{ position: 'relative' }}>
                   <div style={{position: "absolute", marginLeft:"9px", marginTop:"5px"}}>  
                     <FontAwesomeIcon icon={faMagnifyingGlass} /> </div>
-                      <Input className="form-control me-2" maxLength="30"
+                      <Input className="form-control me-2" 
                           type="search" placeholder="¿Que quiere leer?" 
                           value={inputValue} aria-label="Search"
-                          onChange={(e) => setInputValue(e.target.value)}
+                          onChange={handleInputChange} onKeyDown={handleKeyPress}
                           style={{border: "2px solid #ccc", borderRadius: "15px", 
                           padding: "10px 0px 10px 25px", width: "295px", height: "30px", 
                           outline:"none",   backgroundColor: "#F6F5F5", // Color de fondo cuando no está enfocado
@@ -58,10 +72,18 @@ const NavComponent = () => {
                           transform: 'translateY(-50%)',cursor: 'pointer',fontSize: '30px',   
                         }}
                       >&times;</span>
-                      )}
+                      )}{showAlert && (
+                        <div class="alert alert-danger d-flex align-items-center" role="alert" 
+                             style={{position:"absolute", height:"25px", top:"34px"}}>
+                          <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" 
+                              viewBox="0 0 16 16" role="img" aria-label="Warning:" style={{width: "16px", height: "16px"}}>
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                          </svg>
+                          <div> No puede ingresar más de 30 caracteres </div>
+                        </div> )}               
                 </div>
                 </form>
-                <button className="btn esact-btn-color"
+                <button className="btn esact-btn-color" 
                   style={{ fontSize: '18px',padding: '2px 5px', color: '#969696'  }}
                   onClick={hideInput}> <i className="bi bi-x-circle"></i>
                 </button>
@@ -73,3 +95,4 @@ const NavComponent = () => {
 };
 
 export default NavComponent;
+

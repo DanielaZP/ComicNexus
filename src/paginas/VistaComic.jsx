@@ -55,7 +55,7 @@ function VistaComic() {
         //mostrar datos del comic
         <Row>
           <Container className="text-center my-5">
-          <h1 className="display-4">{comic.comic.titulo}</h1>
+          <h1 className="display-4 badabb">{comic.comic.titulo}</h1>
           <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
           </Container>
             {/* Columna izquierda para la imagen */}
@@ -76,7 +76,7 @@ function VistaComic() {
               />
             </Col>
             {/* Columna derecha para título, autor, año y sinopsis */}
-            <Col lg={6} md={12} className="ui large form" >
+            <Col lg={6} md={12}>
               <div>
               <h3>Título: {comic.comic.titulo}</h3>
               <p><strong>Autor(es): </strong>{comic.comic.autor}</p>

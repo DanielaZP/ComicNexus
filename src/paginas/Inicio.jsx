@@ -34,7 +34,7 @@ export const Inicio = () => {
   return (
     <div className='container'>
           <Container className="text-center my-5">
-          <h1 className="display-4 badabb">ComicsNexus</h1>
+          <h1 className="display-4 badabb">ComicNexus</h1>
           <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
         </Container>
         <Carrucel/>

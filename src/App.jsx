@@ -20,7 +20,7 @@ import BusquedaTodo from './paginas/BusquedaTodo';
 
 function App() {
   const estiloFondo = {
-    backgroundImage: `url('src/Imagenes/Fondo2.avif')`,
+    backgroundImage: `url('src/Imagenes/fondo4.jpg')`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",

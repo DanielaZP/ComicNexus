@@ -232,10 +232,11 @@ button:hover {
 
 @font-face {
   font-family: badabb;
-  src: url(../public/BADABB__.TTF);
+  src: url(/ComickBook_Simple.ttf);
 }
 .badabb{
   font-family: badabb;
+  color: #153f59; -webkit-text-stroke: 2px white;
 }
 
 /*imagen del registro*/

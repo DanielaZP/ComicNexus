@@ -7,7 +7,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            ComicsNexus
+            ComicNexus
           </a>
           <button
             className="navbar-toggler"

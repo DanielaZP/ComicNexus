@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 function RegistroUsuario() {
   const [formData, setFormData] = useState({
     name: '',
@@ -40,6 +41,17 @@ function RegistroUsuario() {
       newErrors.password = 'La contraseña es obligatoria.';
     }
     if (Object.keys(newErrors).length === 0) {
+      try {
+        // Realizar la solicitud POST con Axios
+        const response = axios.post('http://127.0.0.1:8000/api/registro-usuario', formData);
+  
+        // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
+        console.log('Registro exitoso con:', formData);
+        console.log('Respuesta del servidor:', response.data);
+      } catch (error) {
+        // Manejar errores de la solicitud, como una respuesta de error del servidor.
+        console.error('Error al registrar:', error);
+      }
       // Lógica de registro
       console.log('Registro exitoso con:', formData);
     }

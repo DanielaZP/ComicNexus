@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function RegistroUsuario() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -11,7 +13,6 @@ function RegistroUsuario() {
     password: '',
     showPassword: false,
   });
-
   const [errors, setErrors] = useState({
     name: '',
     username: '',
@@ -31,8 +32,8 @@ function RegistroUsuario() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newErrors = {};
+
     if (!formData.name) {
       newErrors.name = 'El nombre completo es obligatorio.';
     }
@@ -44,9 +45,27 @@ function RegistroUsuario() {
     }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
 
     if (Object.keys(newErrors).length === 0) {
+      try {
+        // Realizar la solicitud POST con Axios
+        const response = axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
+  
+        // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
+        console.log('Registro exitoso con:', formData);
+        console.log('Respuesta del servidor:', response.data);
+        navigate('/inicio-sesion');
+      } catch (error) {
+        // Manejar errores de la solicitud, como una respuesta de error del servidor.
+        console.error('Error al registrar:', error);
+      }
       // Lógica de registro
       console.log('Registro exitoso con:', formData);
     }
@@ -57,7 +76,7 @@ function RegistroUsuario() {
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="form-title">Registro de Usuario</h2>
+        <h2 className="form-title badabb">Registro de Usuario</h2>
         <div className="image-container">
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>

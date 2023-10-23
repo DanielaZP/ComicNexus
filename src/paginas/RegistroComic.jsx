@@ -370,7 +370,7 @@ export const RegistroComic = () => {
 
     <div className="container" >
       <Container className="text-center mt-5">
-        <h3 className="display-4">Registro Cómic</h3>
+        <h3 className="display-4 badabb">Registro Cómic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
 

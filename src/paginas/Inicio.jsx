@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Carrucel from '../componentes/Carrucel'
 import CardCat from '../componentes/CardCat'
 import { Container,Row, Col } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 
 export const Inicio = () => {
@@ -38,13 +39,22 @@ export const Inicio = () => {
         </Container>
         <Carrucel/>
         <h3 className="display-4 badabb fs-1">Comics que te recomendamos</h3>
+        {isLoading ? (
+        <div className="text-center my-3">
+         <Spinner animation="border" variant="primary" role="status">
+           <span className="sr-only"></span>
+         </Spinner>
+         <p className="mt-2">Cargando cómics...</p>
+       </div>
+      ) : (
         <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
-        {getRandomComics().map((comic) => (
-                <Col md={3} key={comic.comic.cod_comic}> 
-                  <CardCat comic={comic} />
-              </Col>
-              ))}
+          {getRandomComics().map((comic) => (
+            <Col md={3} key={comic.comic.cod_comic}>
+              <CardCat comic={comic} />
+            </Col>
+          ))}
         </div>
+      )}
     </div>
   )
 }

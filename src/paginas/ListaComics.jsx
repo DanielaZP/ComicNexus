@@ -37,7 +37,7 @@ function ListaComics() {
   return (
     <div>
       <Container className="text-center my-5">
-      <h1 className="display-4 ">Listado de cómics</h1>
+      <h1 className="display-4 badabb ">Listado de cómics</h1>
       <p className="lead">Explora y descubre contenido increíble</p>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container> 
@@ -45,7 +45,7 @@ function ListaComics() {
         {isLoading ? (
          <div className="text-center my-3">
          <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only">.</span>
+           <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
        </div>

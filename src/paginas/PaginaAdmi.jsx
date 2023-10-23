@@ -6,7 +6,7 @@ function PaginaAdmi() {
   return (
     <div  style={{ margin: '20px' }}>
         <Container className="text-center my-5">
-            <h1 className="display-4">Panel administrador</h1>
+            <h1 className="display-4 badabb">Panel administrador</h1>
             <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }}/>
         </Container>
         <div class="row">

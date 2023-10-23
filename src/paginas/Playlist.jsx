@@ -77,7 +77,7 @@ function Playlist() {
 
   return (
     <Container className="text-center my-5">
-      <h1 className="display-4">Mis playlists de comics</h1>
+      <h1 className="display-4 badabb">Mis playlists de comics</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">

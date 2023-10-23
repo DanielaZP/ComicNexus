@@ -3,9 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-const redirectToHome = () => {
-  window.location.href = '/'; 
-};
+
 function RegistroUsuario() {
   const [formData, setFormData] = useState({
     name: '',
@@ -51,7 +49,6 @@ function RegistroUsuario() {
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);
         console.log('Respuesta del servidor:', response.data);
-        redirectToHome();
       } catch (error) {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);

@@ -15,6 +15,12 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (playlistName.trim()) {  
+      setNameError('');
+    }
+  }, [playlistName]); // Este efecto se ejecutará cada vez que playlistName cambie
+
+  useEffect(() => {
     axios
       .get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
       .then((response) => {

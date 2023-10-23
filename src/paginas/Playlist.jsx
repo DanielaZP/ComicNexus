@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap';
+import { Button, Modal, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
+import CardCat from '../componentes/CardCat';
 
 function Playlist() {
   const [showModal, setShowModal] = useState(false);
@@ -11,8 +11,14 @@ function Playlist() {
   const [playlistName, setPlaylistName] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameError, setNameError] = useState('');
-  const [playlists, setPlaylists] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [playlists, setPlaylists] = useState([
+    {
+      id: 1,
+      nombre_playlist: 'Playlist 1',
+      imagen_playlist: './playlist_prueba.png'
+    }
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
   const imageUploadRef = useRef(null);
 
   const handleClose = () => {
@@ -42,7 +48,6 @@ function Playlist() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result);
-        // Limpiar el mensaje de error cuando se selecciona una imagen válida
         setNameError('');
       };
       reader.readAsDataURL(file);
@@ -50,20 +55,6 @@ function Playlist() {
       setSelectedImage(null);
     }
   };
-
-  useEffect(() => {
-    axios
-      .get('https://comic-next-laravel.vercel.app/api/api/listasplaylists')
-      .then((response) => {
-        setPlaylists(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
 
   const handleSavePlaylist = () => {
     if (!playlistName.trim()) {
@@ -223,7 +214,7 @@ function Playlist() {
         </Modal>
 
         <Row>
-          {isLoading ? (
+        {isLoading ? (
             <div className="text-center my-3">
               <Spinner animation="border" variant="primary" role="status">
                 <span className="sr-only">.</span>
@@ -235,12 +226,7 @@ function Playlist() {
           ) : (
             playlists.map((playlist) => (
               <Col key={playlist.id} md={2} className="mb-4">
-                <div className="card">
-                  <img src={playlist.imagen_playlist} className="card-img-top" alt={playlist.nombre_playlist} />
-                  <div className="card-body">
-                    <h5 className="card-title">{playlist.nombre_playlist}</h5>
-                  </div>
-                </div>
+                <CardCat comic={{ comic: { cod_comic: playlist.id, titulo: playlist.nombre_playlist, sinopsis: '' }, portadaUrl: playlist.imagen_playlist }} />
               </Col>
             ))
           )}

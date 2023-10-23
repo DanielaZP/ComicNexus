@@ -213,20 +213,20 @@ const Playlist = () => {
           </Modal.Footer>
         </Modal>
 
-        <Row style={{ marginLeft: '-100px', marginRight: '-100px' }}>
-          {isLoading ? (
-            <div className="text-center my-3">
-              <Spinner animation="border" variant="primary" role="status">
-                <span className="sr-only">.</span>
-              </Spinner>
-              <p className="mt-2">Cargando playlists...</p>
-            </div>
-          ) : playlists.length === 0 ? (
-            <p>No se encontraron playlists.</p>
-          ) : (
-            playlists.map((playlist) => (
-              <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" >
-                <Card style={{ width: '200px', height: '300px', marginBottom: '10px', marginRight: '0px'  }}>
+        <Row style={{ marginLeft: '-70px', marginRight: '-90px', flexWrap: 'wrap' }}>
+        {isLoading ? (
+          <div className="text-center my-3">
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="sr-only">.</span>
+            </Spinner>
+            <p className="mt-2">Cargando playlists...</p>
+          </div>
+        ) : playlists.length === 0 ? (
+          <p>No se encontraron playlists.</p>
+        ) : (
+          playlists.map((playlist) => (
+            <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
+                <Card style={{ width: '210px', height: '300px', marginBottom: '20px', marginRight: '0px'  }}>
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}

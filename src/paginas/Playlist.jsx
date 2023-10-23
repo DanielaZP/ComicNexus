@@ -4,6 +4,7 @@ import axios from 'axios';
 
 function Playlist() {
   const [showModal, setShowModal] = useState(false);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [playlistName, setPlaylistName] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameError, setNameError] = useState('');
@@ -26,6 +27,13 @@ function Playlist() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      const allowedExtensions = /(\.png|\.jpg)$/i;
+      if (!allowedExtensions.exec(file.name)) {
+        window.alert('Por favor, selecciona un archivo de imagen válido (png o jpg).');
+        e.target.value = ''; // Limpiar la selección del archivo
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result);
@@ -44,20 +52,19 @@ function Playlist() {
     } else {
       const base64Image = extractBase64Code(selectedImage);
 
-      // Crea un objeto con los datos que quieres enviar
       const data = {
         nombre_playlist: playlistName,
         imagen_playlist: base64Image,
         cod_usuario: 1
       };
 
-      // Haz la solicitud POST utilizando Axios
       axios.post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
-        .then((response) => {
-          console.log('Respuesta del servidor:', response.data);
+        .then(() => {
+          setSuccessModalVisible(true);
           handleClose();
         })
         .catch((error) => {
+          window.alert('¡Error al subir la playlist!');
           console.error('Error al enviar los datos:', error);
         });
     }
@@ -80,13 +87,12 @@ function Playlist() {
 
         <Modal show={showModal} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title style={{ margin: '0 auto', marginLeft: '310px' }}>Editar Información</Modal.Title>
+            <Modal.Title>Editar Información</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Row>
                 <Col md={6}>
-                  {/* Cuadro de visualización */}
                   <div
                     style={{
                       width: '220px',
@@ -132,7 +138,6 @@ function Playlist() {
                   </Button>
                 </Col>
                 <Col md={6}>
-                  {/* Campo del nombre de la playlist */}
                   <Form.Group controlId="playlistName">
                     <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre de la Playlist</Form.Label>
                     <Form.Control
@@ -141,12 +146,10 @@ function Playlist() {
                       value={playlistName}
                       onChange={handlePlaylistNameChange}
                       isInvalid={!!nameError}
-                      style={{ marginTop: '10px', marginLeft: '-100px' }} // Ajuste de margen superior y izquierdo
+                      style={{ marginTop: '10px', marginLeft: '-100px' }}
                     />
                     <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>
                   </Form.Group>
-
-                  {/* Botones de Guardar y Cancelar */}
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleClose} style={{ marginLeft: '-45px' }}>
                       Cancelar
@@ -159,6 +162,17 @@ function Playlist() {
               </Row>
             </Form>
           </Modal.Body>
+        </Modal>
+
+        <Modal show={successModalVisible} onHide={() => setSuccessModalVisible(false)} centered>
+          <Modal.Body>
+            <h4>¡La playlist se ha subido con éxito!</h4>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setSuccessModalVisible(false)}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
         </Modal>
       </div>
     </Container>

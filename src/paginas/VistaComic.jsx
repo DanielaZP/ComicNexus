@@ -76,7 +76,7 @@ function VistaComic() {
               />
             </Col>
             {/* Columna derecha para título, autor, año y sinopsis */}
-            <Col lg={6} md={12} className="ui large form" >
+            <Col lg={6} md={12}>
               <div>
               <h3>Título: {comic.comic.titulo}</h3>
               <p><strong>Autor(es): </strong>{comic.comic.autor}</p>

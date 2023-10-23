@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function RegistroUsuario() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -18,17 +19,21 @@ function RegistroUsuario() {
     email: '',
     password: '',
   });
+
   const togglePasswordVisibility = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
+
     if (!formData.name) {
       newErrors.name = 'El nombre completo es obligatorio.';
     }
@@ -40,7 +45,14 @@ function RegistroUsuario() {
     }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
+
     if (Object.keys(newErrors).length === 0) {
       try {
         // Realizar la solicitud POST con Axios
@@ -49,6 +61,7 @@ function RegistroUsuario() {
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);
         console.log('Respuesta del servidor:', response.data);
+        navigate('/inicio-sesion');
       } catch (error) {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);
@@ -56,8 +69,10 @@ function RegistroUsuario() {
       // Lógica de registro
       console.log('Registro exitoso con:', formData);
     }
+
     setErrors(newErrors);
   };
+
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
@@ -134,4 +149,5 @@ function RegistroUsuario() {
     </div>
   );
 }
+
 export default RegistroUsuario;

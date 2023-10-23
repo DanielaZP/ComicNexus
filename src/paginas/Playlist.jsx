@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, Modal, Form, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Form, Container, Row, Col, Spinner, Card } from 'react-bootstrap';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
+import PlaylistCard from '../componentes/PlaylistCard';
 
-function Playlist() {
+const Playlist = () => {
   const [showModal, setShowModal] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -13,7 +13,19 @@ function Playlist() {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const imageUploadRef = useRef(null);
+
+  useEffect(() => {
+    axios
+      .get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
+      .then((response) => {
+        setPlaylists(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error('Error al obtener playlists:', error);
+      });
+  }, []);
 
   const handleClose = () => {
     setShowModal(false);
@@ -23,11 +35,6 @@ function Playlist() {
   };
 
   const handleShow = () => setShowModal(true);
-
-  const handlePlaylistNameChange = (e) => {
-    setPlaylistName(e.target.value);
-    setNameError('');
-  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -42,7 +49,6 @@ function Playlist() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result);
-        // Limpiar el mensaje de error cuando se selecciona una imagen válida
         setNameError('');
       };
       reader.readAsDataURL(file);
@@ -50,20 +56,6 @@ function Playlist() {
       setSelectedImage(null);
     }
   };
-
-  useEffect(() => {
-    axios
-      .get('https://comic-next-laravel.vercel.app/api/api/listasplaylists')
-      .then((response) => {
-        setPlaylists(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
 
   const handleSavePlaylist = () => {
     if (!playlistName.trim()) {
@@ -75,16 +67,20 @@ function Playlist() {
     }
   };
 
+  const handleVisualizePlaylist = (playlist) => {
+    console.log('Visualizar playlist:', playlist);
+  };
+
   const handleConfirmSave = () => {
     const base64Image = extractBase64Code(selectedImage);
     const data = {
       nombre_playlist: playlistName,
       imagen_playlist: base64Image,
-      cod_usuario: 1
+      cod_usuario: 1,
     };
 
     axios
-      .post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
+      .post('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1', data)
       .then(() => {
         setSuccessModalVisible(true);
         handleClose();
@@ -110,11 +106,7 @@ function Playlist() {
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">
-        <Button
-          variant="btn custom-btn-color"
-          onClick={handleShow}
-          style={{ marginTop: '-155px', marginLeft: '900px' }}
-        >
+        <Button variant="btn custom-btn-color" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
           Crear playlist
         </Button>
 
@@ -136,7 +128,7 @@ function Playlist() {
                       alignItems: 'center',
                       flexDirection: 'column',
                       marginBottom: '20px',
-                      position: 'relative'
+                      position: 'relative',
                     }}
                   >
                     {selectedImage ? (
@@ -151,21 +143,20 @@ function Playlist() {
                     <input
                       type="file"
                       accept=".png, .jpg, .jpeg"
-                      ref={imageUploadRef}
                       style={{
                         display: 'none',
                         position: 'absolute',
                         bottom: 0,
                         left: '50%',
-                        transform: 'translateX(-50%)'
+                        transform: 'translateX(-50%)',
                       }}
                       onChange={handleImageChange}
                     />
                   </div>
                   <Button
                     variant="btn custom-btn-color"
-                    onClick={() => imageUploadRef.current.click()}
                     style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}
+                    onClick={() => document.querySelector('input[type="file"]').click()}
                   >
                     Agregar Imagen
                   </Button>
@@ -177,7 +168,7 @@ function Playlist() {
                       type="text"
                       placeholder="Ingrese el nombre de la playlist"
                       value={playlistName}
-                      onChange={handlePlaylistNameChange}
+                      onChange={(e) => setPlaylistName(e.target.value)}
                       isInvalid={!!nameError}
                       style={{ marginTop: '10px', marginLeft: '-100px' }}
                     />
@@ -222,25 +213,32 @@ function Playlist() {
           </Modal.Footer>
         </Modal>
 
-        <Row>
-          {isLoading ? (
-            <div className="text-center my-3">
-              <Spinner animation="border" variant="primary" role="status">
-                <span className="sr-only">.</span>
-              </Spinner>
-              <p className="mt-2">Cargando playlists...</p>
-            </div>
-          ) : playlists.length === 0 ? (
-            <p>No se encontraron playlists.</p>
-          ) : (
-            playlists.map((playlist) => (
-              <Col key={playlist.id} md={2} className="mb-4">
-                <div className="card">
-                  <img src={playlist.imagen_playlist} className="card-img-top" alt={playlist.nombre_playlist} />
-                  <div className="card-body">
-                    <h5 className="card-title">{playlist.nombre_playlist}</h5>
-                  </div>
-                </div>
+        <Row style={{ marginLeft: '-70px', marginRight: '-90px', flexWrap: 'wrap' }}>
+        {isLoading ? (
+          <div className="text-center my-3">
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="sr-only">.</span>
+            </Spinner>
+            <p className="mt-2">Cargando playlists...</p>
+          </div>
+        ) : playlists.length === 0 ? (
+          <p>No se encontraron playlists.</p>
+        ) : (
+          playlists.map((playlist) => (
+            <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
+                <Card style={{ width: '210px', height: '300px', marginBottom: '20px', marginRight: '0px'  }}>
+                  <Card.Img
+                    variant="top"
+                    src={playlist.portadaUrl}
+                    style={{ height: '200px', objectFit: 'cover' }}
+                  />
+                  <Card.Body>
+                    <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
+                    <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
+                      Visualizar Playlist
+                    </Button>
+                  </Card.Body>
+                </Card>
               </Col>
             ))
           )}
@@ -248,6 +246,6 @@ function Playlist() {
       </div>
     </Container>
   );
-}
+};
 
 export default Playlist;

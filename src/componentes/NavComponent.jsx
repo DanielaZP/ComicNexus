@@ -19,12 +19,12 @@ const NavComponent = () => {
     setInputVisible(false);
     setShowAlert(false);
     setInputValue('');
-    navigate(-1);
+    //navigate(-1);
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    const otro = 'zzz'
+    const otro = '¡'
     if(value == 0){
       setInputValue(value);
       setShowAlert(false);
@@ -39,7 +39,10 @@ const NavComponent = () => {
   };
 
   const handleLimpiarClick = () => {
+    setShowAlert(false);
     setInputValue('');
+    const otro = '¡';
+    navigate(`/buscar?search=${otro}`);
   };
 
   const handleKeyPress = (e) => {

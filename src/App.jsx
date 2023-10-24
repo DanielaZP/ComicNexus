@@ -17,6 +17,7 @@ import Playlist from './paginas/Playlist';
 import VistaPlaylist from './paginas/VistaPlaylist';
 import InicioSesion from './paginas/IniciosSesion';
 import BusquedaTodo from './paginas/BusquedaTodo';
+import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
 
 function App() {
   const estiloFondo = {
@@ -56,6 +57,7 @@ function App() {
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route path="inicio-sesion" element={<InicioSesion />} />
+          <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
         </Routes>
       </BrowserRouter>
     </div>

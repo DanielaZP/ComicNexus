@@ -18,7 +18,7 @@ const NavComponent = () => {
   const hideInput = () => {
     setInputVisible(false);
     setShowAlert(false);
-    setInputValue('');
+    //setInputValue('');
     //navigate(-1);
   };
 

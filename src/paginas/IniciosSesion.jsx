@@ -97,6 +97,7 @@ function InicioSesion(){
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
+          <p><strong><Link to="/solicitud-restablecimiento-contraseña"style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>
         </div>
       </form>
     </div>

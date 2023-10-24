@@ -4,7 +4,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ZEROBOUNCE_API_KEY = '1090cb61970442a6b5a5f3370c37eb68'; 
+const ZEROBOUNCE_API_KEY = '1090cb61970442a6b5a5f3370c37eb68';
 
 async function validateEmail(email) {
   const zeroBounceUrl = `https://api.zerobounce.net/v2/validate?api_key=${ZEROBOUNCE_API_KEY}&email=${email}`;

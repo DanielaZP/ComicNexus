@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+//import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 function InicioSesion(){
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    showPassword: false, 
+    showPassword: false,
   });
 
   const [errors, setErrors] = useState({
@@ -22,12 +26,12 @@ function InicioSesion(){
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -37,12 +41,37 @@ function InicioSesion(){
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
     }
-  
-    if (Object.keys(newErrors).length === 0) {
-      // No hay errores enviar el formulario 
 
-      console.log(formData);
+
+    if (Object.keys(newErrors).length === 0) {
+      // No hay errores, enviar el formulario
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/verificar-credenciales', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
+
+        if (response.ok) {
+          // Autenticación exitosa
+          const data = await response.json();
+          console.log('Autenticación exitosa. Código de usuario:', data.cod_usuario);
+        } else {
+          // Autenticación fallida
+          const data = await response.json();
+          console.error('Error de autenticación:', data.error);
+        }
+      } catch (error) {
+        console.error('Error al enviar la solicitud:', error);
+      }
+            console.log(formData);
       navigate('/');
+
     }
     setErrors(newErrors);
   };
@@ -86,10 +115,10 @@ function InicioSesion(){
               onClick={togglePasswordVisibility}
               className="password-toggle"
             />
-            </div>
-            <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
-              {errors.password}
-            </p>
+          </div>
+          <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+            {errors.password}
+          </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Iniciar Sesión</button>

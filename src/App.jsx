@@ -17,10 +17,11 @@ import Playlist from './paginas/Playlist';
 import VistaPlaylist from './paginas/VistaPlaylist';
 import InicioSesion from './paginas/IniciosSesion';
 import BusquedaTodo from './paginas/BusquedaTodo';
+import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
 
 function App() {
   const estiloFondo = {
-    backgroundImage: `url('src/Imagenes/fondo4.jpg')`,
+    backgroundImage: `url('fondos/fondo4.jpg')`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",
@@ -51,11 +52,12 @@ function App() {
             <Route path="pagina-admi" element={<PaginaAdmi />} />
             <Route path="vista-comic/:id" element={<VistaComic />} />
             <Route path="playlists" element={<Playlist />} />
-            <Route path="vista-playlist" element={<VistaPlaylist />} />
+            <Route path="vista-playlist/:id" element={<VistaPlaylist />} />
             <Route path='buscar' element={<BusquedaTodo/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route path="inicio-sesion" element={<InicioSesion />} />
+          <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
         </Routes>
       </BrowserRouter>
     </div>

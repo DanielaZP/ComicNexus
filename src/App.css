@@ -254,3 +254,34 @@ button:hover {
 .error-message.hidden {
   visibility: hidden;
 }
+/* Agrega este estilo para el modal */
+.custom-modal {
+  max-height: 80vh;
+}
+
+/* Agrega este estilo para la lista de playlists */
+.playlist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Agrega este estilo para cada elemento de la lista */
+.playlist-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Línea de separación entre elementos */
+}
+
+/* Agrega este estilo para la imagen de la playlist */
+.playlist-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+/* Agrega este estilo para el título de la playlist */
+.playlist-title {
+  flex-grow: 1; /* Hace que el título ocupe todo el espacio restante */
+}

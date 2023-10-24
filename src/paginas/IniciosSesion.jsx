@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function InicioSesion() {
+import { Link, useNavigate } from 'react-router-dom';
+
+function InicioSesion(){
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -38,6 +42,7 @@ function InicioSesion() {
       newErrors.password = 'La contraseña es obligatoria.';
     }
 
+
     if (Object.keys(newErrors).length === 0) {
       // No hay errores, enviar el formulario
       try {
@@ -64,6 +69,9 @@ function InicioSesion() {
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
       }
+            console.log(formData);
+      navigate('/');
+
     }
     setErrors(newErrors);
   };
@@ -117,6 +125,7 @@ function InicioSesion() {
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
+          <p><strong><Link to="/solicitud-restablecimiento-contraseña"style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>
         </div>
       </form>
     </div>

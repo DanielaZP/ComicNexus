@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Container, Row, Col, Spinner, Card } from 'react-bootstrap';
 import axios from 'axios';
-import PlaylistCard from '../componentes/PlaylistCard';
+import { Link } from 'react-router-dom';
 
 const Playlist = () => {
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -13,12 +14,12 @@ const Playlist = () => {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     if (playlistName.trim()) {  
       setNameError('');
     }
-  }, [playlistName]); // Este efecto se ejecutará cada vez que playlistName cambie
+  }, [playlistName]);
 
   useEffect(() => {
     axios
@@ -32,6 +33,7 @@ const Playlist = () => {
         console.error('Error al obtener playlists:', error);
       });
   }, []);
+
 
   const handleClose = () => {
     setShowModal(false);
@@ -78,6 +80,19 @@ const Playlist = () => {
   };
 
   const handleConfirmSave = () => {
+    if (loading) {
+      return;
+    }
+
+    const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
+
+    if (playlistExists) {
+      window.alert('¡Ya existe una playlist con este nombre!');
+      return;
+    }
+
+    setLoading(true);
+
     const base64Image = extractBase64Code(selectedImage);
     const data = {
       nombre_playlist: playlistName,
@@ -90,12 +105,24 @@ const Playlist = () => {
       .then(() => {
         setSuccessModalVisible(true);
         handleClose();
+
+        setPlaylists(prevPlaylists => [
+          ...prevPlaylists,
+          {
+            portadaUrl: base64Image,
+            playlist: {
+              cod_playlist: prevPlaylists.length + 1,
+              nombre_playlist: playlistName,
+            }
+          }
+        ]);
       })
       .catch((error) => {
         window.alert('¡Error al subir la playlist!');
         console.error('Error al enviar los datos:', error);
       })
       .finally(() => {
+        setLoading(false);
         setConfirmModalVisible(false);
         setConfirmed(false);
       });
@@ -118,7 +145,7 @@ const Playlist = () => {
 
         <Modal show={showModal} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>Editar Información</Modal.Title>
+            <Modal.Title>Crear playlist</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -228,7 +255,7 @@ const Playlist = () => {
             <p className="mt-2">Cargando playlists...</p>
           </div>
         ) : playlists.length === 0 ? (
-          <p>No se encontraron playlists.</p>
+          <p>No tienes playlist creadas.</p>
         ) : (
           playlists.map((playlist) => (
             <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
@@ -240,9 +267,12 @@ const Playlist = () => {
                   />
                   <Card.Body>
                     <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
-                    <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
+                    <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
+                       Ver playlist {playlist.playlist.cod_playlist}
+                    </Link> 
+                    {/* <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
                       Visualizar Playlist
-                    </Button>
+                    </Button> */}
                   </Card.Body>
                 </Card>
               </Col>

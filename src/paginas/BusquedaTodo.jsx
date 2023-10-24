@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios'; // Importa Axios
 import CardCat from '../componentes/CardCat'// Importa tu componente Card
 
@@ -11,9 +11,9 @@ function BusquedaTodo() {
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
-  let navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(true);
     console.log(search)
     axios.get('https://comic-next-laravel.vercel.app/api/api/buscar/'+search)
       .then((response) => {

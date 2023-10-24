@@ -27,10 +27,11 @@ function RegistroUsuario() {
     password: '',
     showPassword: false,
   });
+
   const [errors, setErrors] = useState({
     name: '',
     username: '',
-    email: '',
+    email: '', 
     password: '',
   });
 
@@ -47,14 +48,32 @@ function RegistroUsuario() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = { ...errors };
+    
+    if (!formData.name) {
+      newErrors.name = 'El nombre es obligatorio.';
+    }
+    if (!formData.username) {
+      newErrors.username = 'El nombre de usuario es obligatorio.';
+    }
+    
+    if (!formData.email) {
+      newErrors.email = 'El correo electrónico es obligatorio.';
+    } else {
+      const emailValidationResult = await validateEmail(formData.email);
 
-    // Validar el correo electrónico con ZeroBounce
-    const emailValidationResult = await validateEmail(formData.email);
+      if (emailValidationResult && emailValidationResult.status !== 'Valid') {
+        newErrors.email = 'El correo electrónico no es válido.';
+      }
+    }
 
-    if (emailValidationResult && emailValidationResult.status === 'Valid') {
-      // El correo electrónico es válido, continuar con el envío de datos al servidor
+    if (!formData.password) {
+      newErrors.password = 'La contraseña es obligatoria.';
+    }
+
+    if (Object.values(newErrors).every((error) => !error)) {
+      // Si no hay errores, continúa con el envío de datos al servidor
       try {
-        // Realizar la solicitud POST con Axios
+        // Realiza la solicitud POST con Axios
         const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
 
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
@@ -65,12 +84,6 @@ function RegistroUsuario() {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);
       }
-    } else {
-      // El correo electrónico no es válido, muestra un mensaje de error
-      newErrors.email = 'El correo electrónico no es válido.';
-
-      // Lógica de registro
-      console.log('Registro exitoso con:', formData);
     }
 
     setErrors(newErrors);
@@ -88,7 +101,7 @@ function RegistroUsuario() {
           <input
             type="text"
             name="name"
-            placeholder='Ingrese su nombre'
+            placeholder="Ingrese su nombre"
             value={formData.name}
             onChange={handleChange}
           />
@@ -101,7 +114,7 @@ function RegistroUsuario() {
           <input
             type="text"
             name="username"
-            placeholder='Ingrese un nombre de usuario'
+            placeholder="Ingrese un nombre de usuario"
             value={formData.username}
             onChange={handleChange}
           />
@@ -114,7 +127,7 @@ function RegistroUsuario() {
           <input
             type="email"
             name="email"
-            placeholder='Ingrese un correo electrónico'
+            placeholder="Ingrese un correo electrónico"
             value={formData.email}
             onChange={handleChange}
           />
@@ -128,7 +141,7 @@ function RegistroUsuario() {
             <input
               type={formData.showPassword ? 'text' : 'password'}
               name="password"
-              placeholder='Ingrese una contraseña'
+              placeholder="Ingrese una contraseña"
               value={formData.password}
               onChange={handleChange}
             />

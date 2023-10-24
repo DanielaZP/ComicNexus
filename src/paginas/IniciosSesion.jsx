@@ -7,7 +7,6 @@ function InicioSesion(){
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
     showPassword: false, 
   });

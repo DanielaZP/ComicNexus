@@ -239,6 +239,12 @@ button:hover {
   color: #153f59; -webkit-text-stroke: 2px white;
 }
 
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("./Comic_Sans_MS.woff") format("woff");
+}
+
+
 /*imagen del registro*/
 .image-container{
   display: flex;

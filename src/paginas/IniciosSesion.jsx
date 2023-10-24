@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faUser, faLock, faRoad } from '@fortawesome/free-solid-svg-icons';
 //import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { Link, useNavigate } from 'react-router-dom';
 
-function InicioSesion(){
+function InicioSesion() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -46,18 +46,10 @@ function InicioSesion(){
     if (Object.keys(newErrors).length === 0) {
       // No hay errores, enviar el formulario
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/verificar-credenciales', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: formData.username,
-            password: formData.password,
-          }),
-        });
+        const response = await axios.get(`http://localhost:8000/api/verificar-credenciales?nombre_u=${formData.username}& password=${formData.password}`)
+        console.log(response)
 
-        if (response.ok) {
+        /* if (response.ok) {
           // Autenticación exitosa
           const data = await response.json();
           console.log('Autenticación exitosa. Código de usuario:', data.cod_usuario);
@@ -65,13 +57,11 @@ function InicioSesion(){
           // Autenticación fallida
           const data = await response.json();
           console.error('Error de autenticación:', data.error);
-        }
+        } */
+        navigate('/');
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
       }
-            console.log(formData);
-      navigate('/');
-
     }
     setErrors(newErrors);
   };
@@ -94,7 +84,7 @@ function InicioSesion(){
             onChange={handleChange}
             placeholder="Nombre de usuario"
           />
-          <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
+          <p className={`error - message ${ errors.username ? '' : 'hidden' } `}>
             {errors.username}
           </p>
         </div>
@@ -116,7 +106,7 @@ function InicioSesion(){
               className="password-toggle"
             />
           </div>
-          <p className={`error-message ${errors.password ? '' : 'hidden'}`}>
+          <p className={`error - message ${ errors.password ? '' : 'hidden' } `}>
             {errors.password}
           </p>
         </div>
@@ -125,7 +115,7 @@ function InicioSesion(){
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
-          <p><strong><Link to="/solicitud-restablecimiento-contraseña"style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>
+          <p><strong><Link to="/solicitud-restablecimiento-contraseña" style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>
         </div>
       </form>
     </div>

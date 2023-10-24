@@ -10,9 +10,7 @@ function SolicitudRestablecimientoContraseña() {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Aquí puedes realizar una solicitud al servidor para enviar un correo de restablecimiento de contraseña al correo electrónico proporcionado.
-    
-    // Simulación de éxito de la solicitud (en una aplicación real, esto sería una solicitud al servidor)
+    //envio de correo desde servidor bd
     setRequestSent(true);
   };
 

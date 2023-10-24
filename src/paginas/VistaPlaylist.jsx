@@ -1,23 +1,15 @@
 import React from 'react';
+import { Container } from 'react-bootstrap'; // Asegúrate de importar el componente Container de react-bootstrap
 
-const VistaPlaylist = ({ match }) => {
-  const playlistId = match.params.id;
-  
-  // Lógica para mostrar mensajes personalizados basados en playlistId
-  let message = '';
-  if (playlistId === '1') {
-    message = '¡Hola! Estás viendo la Playlist 1. ¡Bienvenido!';
-  } else if (playlistId === '2') {
-    message = '¡Hola! Estás viendo la Playlist 2. Esperamos que te guste.';
-  } else {
-    message = `¡Hola! Estás viendo la Playlist con ID: ${playlistId}. ¡Esperamos que disfrutes!`;
-  }
-
+const VistaPlaylist = () => {
   return (
-    <div>
-      <h2>Mensaje Especial</h2>
-      <p>{message}</p>
-    </div>
+    <Container className="text-center my-5">
+      <h1 className="display-4 badabb">playlists</h1>
+      <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+      <div className="content-container">
+        <h2>Página de Playlist</h2>
+      </div>
+    </Container>
   );
 };
 

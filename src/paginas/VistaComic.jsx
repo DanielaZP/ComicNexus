@@ -7,6 +7,7 @@ function VistaComic() {
   const [comic, setComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
 
@@ -45,7 +46,11 @@ function VistaComic() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  const modalExito = () => {
+    setShowModal(false);
+    setSuccessModalVisible(true);
 
+  }
   return (
     <div>
     {/* <Container className="text-center my-5">
@@ -123,6 +128,7 @@ function VistaComic() {
                         <span className="playlist-title">{playlist.playlist.nombre_playlist}</span>
                         <Button
                           variant="btn custom-btn-color"
+                          onClick={modalExito}
                           >
                           Añadir
                         </Button>
@@ -137,6 +143,16 @@ function VistaComic() {
                 </Button>
               </Modal.Footer>
             </Modal>
+            <Modal show={successModalVisible} onHide={() => setSuccessModalVisible(false)} centered>
+          <Modal.Body>
+            <h4>El cómic: {comic.comic.titulo} se subio con exito a la playlist</h4>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className='btn Warning-btn-color' onClick={() => setSuccessModalVisible(false)}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
           </Row>
       ) : (
         <Container className="text-center my-5">

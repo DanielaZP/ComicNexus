@@ -145,7 +145,7 @@ const Playlist = () => {
 
         <Modal show={showModal} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>Editar Información</Modal.Title>
+            <Modal.Title>Crear playlist</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>

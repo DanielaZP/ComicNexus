@@ -31,7 +31,7 @@ function RegistroUsuario() {
   const [errors, setErrors] = useState({
     name: '',
     username: '',
-    email: '', // Inicialmente, no hay error en el campo del correo
+    email: '', 
     password: '',
   });
 
@@ -59,7 +59,6 @@ function RegistroUsuario() {
     if (!formData.email) {
       newErrors.email = 'El correo electrónico es obligatorio.';
     } else {
-      // Validar el correo electrónico solo si se proporciona
       const emailValidationResult = await validateEmail(formData.email);
 
       if (emailValidationResult && emailValidationResult.status !== 'Valid') {

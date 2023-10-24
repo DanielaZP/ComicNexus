@@ -255,7 +255,7 @@ const Playlist = () => {
             <p className="mt-2">Cargando playlists...</p>
           </div>
         ) : playlists.length === 0 ? (
-          <p>No se encontraron playlists.</p>
+          <p>No tienes playlist creadas.</p>
         ) : (
           playlists.map((playlist) => (
             <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
@@ -268,7 +268,7 @@ const Playlist = () => {
                   <Card.Body>
                     <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
                     <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
-                       Ver playlist
+                       Ver playlist {playlist.playlist.cod_playlist}
                     </Link> 
                     {/* <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
                       Visualizar Playlist

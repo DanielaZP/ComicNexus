@@ -7,6 +7,7 @@ function VistaComic() {
   const [comic, setComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,10 +26,19 @@ function VistaComic() {
         setIsLoading(false);
       });
   }, [id]);
+  useEffect(() => {
+    axios
+      .get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
+      .then((response) => {
+        setPlaylists(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error('Error al obtener playlists:', error);
+      });
+  }, []);
   const handleAddToPlaylist = () => {
-    // Lógica para añadir el cómic a la playlist
-    // Puedes realizar la lógica de tu aplicación aquí
-    // Por ahora, solo abrimos el modal
     setShowModal(true);
   };
 
@@ -55,7 +65,7 @@ function VistaComic() {
         //mostrar datos del comic
         <Row>
           <Container className="text-center my-5">
-          <h1 className="display-4 badabb">{comic.comic.titulo}</h1>
+          <h1 className="display-4 badabb"><strong>{comic.comic.titulo}</strong></h1>
           <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
           </Container>
             {/* Columna izquierda para la imagen */}
@@ -96,23 +106,35 @@ function VistaComic() {
                 Añadir cómic a playlist
               </Button>
             </Col>
-            <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal show={showModal} onHide={handleCloseModal} dialogClassName="custom-modal">
               <Modal.Header closeButton>
-                <Modal.Title>Añadir a la playlist cómic: {comic.comic.titulo}</Modal.Title>
+                <Modal.Title>¿A qué playlist quieres añadir el cómic: {comic.comic.titulo}?</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                {/* Contenido del modal */}
-                <p>Lista de playlists</p>
-                {/* Puedes agregar más contenido según tus necesidades */}
+              <Modal.Body style={{ maxHeight: 'calc(80vh - 130px)', overflowY: 'auto' }}>
+                <ul className="playlist-list">
+                  {playlists.map((playlist) => (
+                    <li key={playlist.playlist.cod_playlist} onClick={() => handleAddToPlaylist(playlist)}>
+                      <div className="playlist-item">
+                        <img
+                          src={playlist.portadaUrl}  
+                          alt={`Imagen de ${playlist.playlist.nombre_playlist}`}
+                          className="playlist-image"
+                        />
+                        <span className="playlist-title">{playlist.playlist.nombre_playlist}</span>
+                        <Button
+                          variant="btn custom-btn-color"
+                          >
+                          Añadir
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="btn Warning-btn-color" onClick={handleCloseModal}>
                   Cancelar
                 </Button>
-                {/* Agrega la lógica para realmente añadir el cómic a la playlist */}
-                {/* <Button variant="btn custom-btn-color" onClick={handleCloseModal}>
-                  Añadir a la Playlist
-                </Button> */}
               </Modal.Footer>
             </Modal>
           </Row>

@@ -66,7 +66,7 @@ const NavComponent = () => {
             <form style={{display:"flex", alignItems:"center", gap: "10px"}}>
               <form className="d-flex" role="search" style={{display:"flex", alignItems:"center"}}>
                 <div className="input-wrapper" style={{ position: 'relative' }}>
-                  <div style={{position: "absolute", marginLeft:"9px", marginTop:"5px"}}>  
+                  <div style={{position: "absolute", marginLeft:"9px", marginTop:"5px", color: "darkgray"}}>  
                     <FontAwesomeIcon icon={faMagnifyingGlass} /> </div>
                       <Input className="form-control me-2" 
                           type="search" placeholder="¿Que quiere leer?" 

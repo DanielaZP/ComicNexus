@@ -46,13 +46,60 @@ function BusquedaTodo() {
     return comicsData.slice(startIndex, endIndex);
   };
 
+  const getCurrentComicsTitulo = () => {
+    const startIndex = (currentPage - 1) * 3;
+    const endIndex = startIndex + 3;
+    return comicsData.slice(startIndex, endIndex);
+  };
+
   return (
     <div>
       <Container className="text-center my-5">
       <h1 className="display-4 badabb">Resultados</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container>
-    <div className="container">
+    
+      <div className="TabB"  >
+       <Nav tabs>
+         <NavItem>
+           <NavLink 
+           className={(activeTab=="1" ? "activeTab baseTab" : "baseTab" )}
+           onClick={()=>cambiarTab("1")}style={{ textShadow: "2px 2px 4px black", color: activeTab === "1" ? 
+            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+             Todo
+           </NavLink>
+         </NavItem>
+
+         <NavItem>
+           <NavLink 
+              className={(activeTab=="2" ? "activeTab baseTab" : "baseTab" )}
+           onClick={()=>cambiarTab("2")}style={{ textShadow: "2px 2px 4px black",color: activeTab === "2" ? 
+            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px",fontWeight: "bold"}}>
+             Títulos
+           </NavLink>
+         </NavItem>
+
+         <NavItem>
+           <NavLink 
+              className={(activeTab=="3" ? "activeTab baseTab" : "baseTab" )}
+           onClick={()=>cambiarTab("3")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "3" ? 
+            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+            Artistas
+           </NavLink>
+         </NavItem>
+
+       </Nav>
+
+
+
+
+
+       <TabContent activeTab={activeTab} style={{ margin: "0 auto" }}>
+         <TabPane tabId="1">
+           <div className='container'>
+           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
+                 textShadow: "2px 2px 4px darkgray"}}>Títulos</h1>
+             <div className="container">
         {isLoading ? (
          <div className="text-center my-3">
          <Spinner animation="border" variant="primary" role="status">
@@ -62,7 +109,53 @@ function BusquedaTodo() {
        </div>
         ) : comicsData.length === 0 ? (
           <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-           fontSize: "20px" }}>No se han encontraron resultados para "..."</p>
+            fontSize: "20px" }}>No se han encontraron resultados para "..."</p>
+        ) : (
+          <div>
+            <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
+              {getCurrentComicsTitulo().map((comic) => (
+                <div className="col-md-4" key={comic.comic.cod_comic}>
+                  <CardCat comic={comic} />
+                </div>
+              ))}
+            </div>
+            {comicsData.length > itemsPerPage && (
+              <div className="mt-4 text-center">
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}>
+                  Página Anterior
+                </button>
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage * itemsPerPage >= comicsData.length}
+                >
+                  Siguiente Página
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+           </div>
+
+         </TabPane>
+
+         <TabPane tabId="2">
+        
+             <div className="container">
+        {isLoading ? (
+         <div className="text-center my-3">
+         <Spinner animation="border" variant="primary" role="status">
+           <span className="sr-only">.</span>
+         </Spinner>
+         <p className="mt-2">Cargando cómics...</p>
+       </div>
+        ) : comicsData.length === 0 ? (
+          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
+            fontSize: "20px" }}>No se han encontraron resultados para "..."</p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -92,57 +185,7 @@ function BusquedaTodo() {
           </div>
         )}
       </div>
-      <div className="TabB"  style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-       <Nav tabs style={{ display: "flex", flexDirection: "row" }}>
-         <NavItem>
-           <NavLink 
-           className={(activeTab=="1" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("1")}style={{ color: activeTab === "1" ? 
-            "#61dafb" : "black", borderRadius: "20px" , marginRight: "20px"}}>
-             Parrafo Sencillo
-           </NavLink>
-         </NavItem>
-
-         <NavItem>
-           <NavLink 
-              className={(activeTab=="2" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("2")}style={{ color: activeTab === "2" ? 
-            "#61dafb" : "black", borderRadius: "20px" , marginRight: "20px"}}>
-             Logo BorjaScript
-           </NavLink>
-         </NavItem>
-
-         <NavItem>
-           <NavLink 
-              className={(activeTab=="3" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("3")}style={{ color: activeTab === "3" ? 
-            "#61dafb" : "black", borderRadius: "20px" , marginRight: "20px" }}>
-            Tabla Últimos Vídeos
-           </NavLink>
-         </NavItem>
-
-       </Nav>
-
-
-
-
-
-       <TabContent activeTab={activeTab} style={{ margin: "0 auto" }}>
-         <TabPane tabId="1">
-           <div className='container'>
-             <br />
-             <p>Este es un párrafo sencillo</p>
-           </div>
-
-         </TabPane>
-
-         <TabPane tabId="2">
-           <div className='container'>
-             <br />
-             <img src='https://lh3.googleusercontent.com/a-/AOh14GjjMfH-BpCvLrIU7AoboHTinGSIgLowZtLIGrJTFg=s360-p-rw-no'
-              width={300} height={300}
-              />
-           </div>
+          
 
          </TabPane>
 

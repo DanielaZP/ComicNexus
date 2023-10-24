@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Container, Row, Col, Spinner, Card } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Playlist = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ const Playlist = () => {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     if (playlistName.trim()) {  
       setNameError('');
@@ -32,6 +33,7 @@ const Playlist = () => {
         console.error('Error al obtener playlists:', error);
       });
   }, []);
+
 
   const handleClose = () => {
     setShowModal(false);
@@ -265,9 +267,12 @@ const Playlist = () => {
                   />
                   <Card.Body>
                     <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
-                    <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
+                    <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
+                       Ver playlist
+                    </Link> 
+                    {/* <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
                       Visualizar Playlist
-                    </Button>
+                    </Button> */}
                   </Card.Body>
                 </Card>
               </Col>

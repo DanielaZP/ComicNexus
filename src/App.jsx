@@ -51,7 +51,7 @@ function App() {
             <Route path="pagina-admi" element={<PaginaAdmi />} />
             <Route path="vista-comic/:id" element={<VistaComic />} />
             <Route path="playlists" element={<Playlist />} />
-            <Route path="vista-playlist" element={<VistaPlaylist />} />
+            <Route path="vista-playlist/:id" element={<VistaPlaylist />} />
             <Route path='buscar' element={<BusquedaTodo/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />

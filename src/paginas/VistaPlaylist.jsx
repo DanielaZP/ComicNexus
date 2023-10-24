@@ -1,13 +1,24 @@
-import React from 'react'
-import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
-function VistaPlaylist() {
-  return (
-    <Container className="text-center my-5">
-          <h1 className="display-4 badabb">Titulo playlist</h1>
-          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
-    </Container>
-    //contenido de la pagina
-  )
-}
+import React from 'react';
 
-export default VistaPlaylist
+const VistaPlaylist = ({ match }) => {
+  const playlistId = match.params.id;
+  
+  // Lógica para mostrar mensajes personalizados basados en playlistId
+  let message = '';
+  if (playlistId === '1') {
+    message = '¡Hola! Estás viendo la Playlist 1. ¡Bienvenido!';
+  } else if (playlistId === '2') {
+    message = '¡Hola! Estás viendo la Playlist 2. Esperamos que te guste.';
+  } else {
+    message = `¡Hola! Estás viendo la Playlist con ID: ${playlistId}. ¡Esperamos que disfrutes!`;
+  }
+
+  return (
+    <div>
+      <h2>Mensaje Especial</h2>
+      <p>{message}</p>
+    </div>
+  );
+};
+
+export default VistaPlaylist;

@@ -7,9 +7,10 @@ const VistaPlaylist = () => {
   const [playlist, setPlaylist] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const codUsuario = localStorage.getItem('cod_usuario');
 
   useEffect(() => {
-    axios.get(`https://comic-next-laravel.vercel.app/api/api/playlist/${id}`)
+    axios.get(`https://comic-next-laravel.vercel.app/api/api/playlist/${codUsuario}/${id}`)
       .then((response) => {
         console.log(response.data);
         setPlaylist(response.data[0]);

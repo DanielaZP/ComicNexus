@@ -15,6 +15,8 @@ const Playlist = () => {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
+
   
   useEffect(() => {
     if (playlistName.trim()) {  
@@ -57,7 +59,11 @@ const Playlist = () => {
     if (file) {
       const allowedExtensions = /(\.png|\.jpg)$/i;
       if (!allowedExtensions.exec(file.name)) {
-        window.alert('Por favor, selecciona un archivo de imagen válido (png o jpg).');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Por favor, selecciona un archivo de imagen válido (png o jpg).',
+        });
         e.target.value = '';
         return;
       }
@@ -91,6 +97,14 @@ const Playlist = () => {
     if (loading) {
       return;
     }
+
+    const handleCancelPlaylist = () => {
+      if (playlistName || selectedImage) {
+        setCancelModalVisible(true);
+      } else {
+        handleClose();
+      }
+    };
 
     const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
 
@@ -147,7 +161,7 @@ const Playlist = () => {
 
   return (
     <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Mis playlists de comics</h1>
+      <h1 className="display-4 badabb">Mis playlists de cómics</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">

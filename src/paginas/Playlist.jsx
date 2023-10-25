@@ -8,6 +8,7 @@ const Playlist = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [playlistName, setPlaylistName] = useState('');
@@ -15,8 +16,6 @@ const Playlist = () => {
   const [nameError, setNameError] = useState('');
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [cancelModalVisible, setCancelModalVisible] = useState(false);
-
   
   useEffect(() => {
     if (playlistName.trim()) {  
@@ -26,7 +25,6 @@ const Playlist = () => {
 
   useEffect(() => {
     const codUsuario = localStorage.getItem('cod_usuario');
-    console.log(codUsuario);
     axios
       .get(`https://comic-next-laravel.vercel.app/api/api/listasPlaylist/${codUsuario}`)
       .then((response) => {
@@ -39,17 +37,11 @@ const Playlist = () => {
       });
   }, []);
 
-
   const handleClose = () => {
     setShowModal(false);
     setSelectedImage(null);
     setPlaylistName('');
     setNameError('');
-  };
-
-  const handleCloseSuccessModal = () => {
-    setSuccessModalVisible(false);
-    window.location.reload(); // Recargar la página al cerrar el modal de éxito
   };
 
   const handleShow = () => setShowModal(true);
@@ -89,22 +81,23 @@ const Playlist = () => {
     }
   };
 
-  const handleVisualizePlaylist = (playlist) => {
-    console.log('Visualizar playlist:', playlist);
+  const handleCloseSuccessModal = () => {
+    setSuccessModalVisible(false);
+    handleClose();
+  };
+
+  const handleCancelPlaylist = () => {
+    if (playlistName || selectedImage) {
+      setCancelModalVisible(true);
+    } else {
+      handleClose();
+    }
   };
 
   const handleConfirmSave = () => {
     if (loading) {
       return;
     }
-
-    const handleCancelPlaylist = () => {
-      if (playlistName || selectedImage) {
-        setCancelModalVisible(true);
-      } else {
-        handleClose();
-      }
-    };
 
     const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
 
@@ -150,6 +143,7 @@ const Playlist = () => {
       .finally(() => {
         setLoading(false);
         setConfirmModalVisible(false);
+        setCancelModalVisible(false);
         setConfirmed(false);
       });
   };
@@ -157,6 +151,10 @@ const Playlist = () => {
   const extractBase64Code = (dataURL) => {
     const base64Code = dataURL.split(',')[1];
     return base64Code;
+  };
+
+  const handleVisualizePlaylist = (playlist) => {
+    console.log('Visualizar playlist:', playlist);
   };
 
   return (
@@ -234,7 +232,7 @@ const Playlist = () => {
                     <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>
                   </Form.Group>
                   <div style={{ marginTop: '50px' }}>
-                    <Button variant="btn Warning-btn-color" onClick={handleClose} style={{ marginLeft: '-45px' }}>
+                    <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
                       Cancelar
                     </Button>
                     <Button variant="btn custom-btn-color" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
@@ -256,6 +254,20 @@ const Playlist = () => {
               No
             </Button>
             <Button variant="success" onClick={handleConfirmSave}>
+              Sí
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
+          <Modal.Body>
+            <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={() => setCancelModalVisible(false)}>
+              No
+            </Button>
+            <Button variant="success" onClick={() => { setCancelModalVisible(false); handleClose(); }}>
               Sí
             </Button>
           </Modal.Footer>

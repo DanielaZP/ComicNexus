@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Container, Row, Col, Spinner, Card } from 'react-bootstrap';
+import { Button, Modal, Form, Container, Row, Col, Spinner, Card, Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -14,9 +14,28 @@ const Playlist = () => {
   const [playlistName, setPlaylistName] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameError, setNameError] = useState('');
+  const [minLengthError, setMinLengthError] = useState(false);
+  const [maxLengthError, setMaxLengthError] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const playlistsPerPage = 15;
+
+  useEffect(() => {
+    if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {  
+      setMinLengthError(false);
+      setMaxLengthError(false);
+    } else {
+      if (playlistName.trim().length < 3) {
+        setMinLengthError(true);
+        setMaxLengthError(false);
+      } else if (playlistName.trim().length > 50) {
+        setMinLengthError(false);
+        setMaxLengthError(true);
+      }
+    }
+  }, [playlistName]);
+
   useEffect(() => {
     if (playlistName.trim()) {  
       setNameError('');
@@ -42,6 +61,8 @@ const Playlist = () => {
     setSelectedImage(null);
     setPlaylistName('');
     setNameError('');
+    setMinLengthError(false);
+    setMaxLengthError(false);
   };
 
   const handleShow = () => setShowModal(true);
@@ -64,6 +85,13 @@ const Playlist = () => {
       reader.onloadend = () => {
         setSelectedImage(reader.result);
         setNameError('');
+        // Mostrar el mensaje de éxito al cargar la imagen
+        Swal.fire({
+          icon: 'success',
+          title: '¡Imagen subida exitosamente!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       };
       reader.readAsDataURL(file);
     } else {
@@ -72,11 +100,21 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
-    if (!playlistName.trim()) {
-      setNameError('El nombre de la playlist es obligatorio.');
+    if (playlistName.trim().length < 3) {
+      setMinLengthError(true);
+      setMaxLengthError(false);
+      setNameError('');
+    } else if (playlistName.trim().length > 50) {
+      setMinLengthError(false);
+      setMaxLengthError(true);
+      setNameError('');
     } else if (!selectedImage) {
       setNameError('Sube una imagen válida.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
     } else {
+      setMinLengthError(false);
+      setMaxLengthError(false);
       setConfirmModalVisible(true);
     }
   };
@@ -84,6 +122,7 @@ const Playlist = () => {
   const handleCloseSuccessModal = () => {
     setSuccessModalVisible(false);
     handleClose();
+    window.location.reload();
   };
 
   const handleCancelPlaylist = () => {
@@ -157,6 +196,14 @@ const Playlist = () => {
     console.log('Visualizar playlist:', playlist);
   };
 
+  const indexOfLastPlaylist = currentPage * playlistsPerPage;
+  const indexOfFirstPlaylist = indexOfLastPlaylist - playlistsPerPage;
+  const currentPlaylists = playlists.slice(indexOfFirstPlaylist, indexOfLastPlaylist);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <Container className="text-center my-5">
       <h1 className="display-4 badabb">Mis playlists de cómics</h1>
@@ -226,11 +273,12 @@ const Playlist = () => {
                       placeholder="Ingrese el nombre de la playlist"
                       value={playlistName}
                       onChange={(e) => setPlaylistName(e.target.value)}
-                      isInvalid={!!nameError}
+                      isInvalid={!!nameError || minLengthError || maxLengthError}
                       style={{ marginTop: '10px', marginLeft: '-100px' }}
                     />
-                    <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>
-                  </Form.Group>
+                      {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
+                      {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                    </Form.Group>
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
                       Cancelar
@@ -245,19 +293,19 @@ const Playlist = () => {
           </Modal.Body>
         </Modal>
 
-        <Modal show={confirmModalVisible} onHide={() => setConfirmModalVisible(false)} centered>
-          <Modal.Body>
-            <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
-              No
-            </Button>
-            <Button variant="success" onClick={handleConfirmSave}>
-              Sí
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Modal show={confirmModalVisible} centered backdrop="static" keyboard={false}>
+        <Modal.Body>
+          <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
+            No
+          </Button>
+          <Button variant="success" onClick={handleConfirmSave}>
+            Sí
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
         <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
           <Modal.Body>
@@ -273,30 +321,35 @@ const Playlist = () => {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={successModalVisible} onHide={() => setSuccessModalVisible(false)} centered>
+        <Modal
+          show={successModalVisible}
+          onHide={() => {}}
+          backdrop="static"
+          keyboard={false}
+          centered
+        >
           <Modal.Body>
             <h4>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseSuccessModal}>
+            <Button variant="secondary" onClick={() => setSuccessModalVisible(false)}>
               Cerrar
             </Button>
           </Modal.Footer>
         </Modal>
-
         <Row style={{ marginLeft: '-70px', marginRight: '-90px', flexWrap: 'wrap' }}>
-        {isLoading ? (
-          <div className="text-center my-3">
-            <Spinner animation="border" variant="primary" role="status">
-              <span className="sr-only">.</span>
-            </Spinner>
-            <p className="mt-2">Cargando playlists...</p>
-          </div>
-        ) : playlists.length === 0 ? (
-          <p>No tienes playlist creadas.</p>
-        ) : (
-          playlists.map((playlist) => (
-            <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
+          {isLoading ? (
+            <div className="text-center my-3">
+              <Spinner animation="border" variant="primary" role="status">
+                <span className="sr-only">.</span>
+              </Spinner>
+              <p className="mt-2">Cargando playlists...</p>
+            </div>
+          ) : playlists.length === 0 ? (
+            <p>No tienes playlist creadas.</p>
+          ) : (
+            currentPlaylists.map((playlist) => (
+              <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
                 <Card style={{ width: '210px', height: '300px', marginBottom: '20px', marginRight: '0px'  }}>
                   <Card.Img
                     variant="top"
@@ -306,17 +359,25 @@ const Playlist = () => {
                   <Card.Body>
                     <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
                     <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
-                       Ver playlist {playlist.playlist.cod_playlist}
-                    </Link> 
-                    {/* <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
-                      Visualizar Playlist
-                    </Button> */}
+                      Ver playlist {playlist.playlist.cod_playlist}
+                    </Link>
                   </Card.Body>
                 </Card>
               </Col>
             ))
           )}
         </Row>
+
+        <Pagination className="justify-content-center mt-3">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={indexOfLastPlaylist >= playlists.length}
+          />
+        </Pagination>
       </div>
     </Container>
   );

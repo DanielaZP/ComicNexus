@@ -186,7 +186,7 @@ function VistaComic() {
           </Modal>
           <Modal show={successModalVisible} onHide={() => setSuccessModalVisible(false)} centered>
             <Modal.Body>
-              <h4>El cómic: {comic.comic.titulo} se subió con éxito a la playlist</h4>
+              <h4 className='text-center'>El cómic: {comic.comic.titulo} se subió con éxito a la playlist</h4>
             </Modal.Body>
             <Modal.Footer>
               <Button className="btn Warning-btn-color" onClick={() => setSuccessModalVisible(false)}>
@@ -196,7 +196,7 @@ function VistaComic() {
           </Modal>
           <Modal show={Errormodalvisible} onHide={() => setErrormodalvisible(false)} centered>
             <Modal.Body>
-              <h4>El cómic: {comic.comic.titulo} No se subió a la playlist intenelo de nuevo dentro de unos minutos</h4>
+              <h4 className='text-center'>El cómic: {comic.comic.titulo} No se subió a la playlist porque ya existe dentro de la playlist</h4>
             </Modal.Body>
             <Modal.Footer>
               <Button className="btn Warning-btn-color" onClick={() => setErrormodalvisible(false)}>

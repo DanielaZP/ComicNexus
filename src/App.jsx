@@ -42,7 +42,7 @@ function App() {
               </>
             }
           >
-            <Route index element={<Inicio />} />
+            <Route path='inicio' element={<Inicio />} />
             <Route path="accion" element={<Accion />} />
             <Route path="registro-comic" element={<RegistroComic />} />
             <Route path="lista-comics" element={<ListaComics />} />
@@ -56,7 +56,7 @@ function App() {
             <Route path='buscar' element={<BusquedaTodo/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
-          <Route path="inicio-sesion" element={<InicioSesion />} />
+          <Route index element={<InicioSesion />} />
           <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavComponent from "./NavComponent.jsx";
+import NavComponent from "./filtrado/NavComponent";
 
 const Navbar = () => {
   return (

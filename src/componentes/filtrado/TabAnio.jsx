@@ -6,7 +6,7 @@ import CardCat from '../CardCat'// Importa tu componente Card
 import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
-const TabArtista = () => {
+const TabAnio = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
   const itemsPerPage = 9;
@@ -14,23 +14,28 @@ const TabArtista = () => {
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
 
-useEffect(() => {
-  setIsLoading(true);
-  console.log(search)
-  axios.get('https://comic-next-laravel.vercel.app/api/api/artista/'+search)
-      .then((response) => {
-        // Almacena los datos JSON en el estado local
-        console.log(response.data);
-        setComicsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      })
-      .finally(() => {
-        // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
-        setIsLoading(false);
-      });
+  useEffect(() => {
+    // Si el usuario no ingresa nada durante 300 ms, realizar la solicitud
+    const delay = setTimeout(() => {
+      setIsLoading(true);
+      axios.get('https://comic-next-laravel.vercel.app/api/api/anio/' + search)
+        .then((response) => {
+          console.log(response.data);
+          setComicsData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error al obtener datos:', error);
+          setComicsData([]);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }, 300); // 300 ms de retraso
+
+    // Limpiar el temporizador si el usuario sigue escribiendo
+    return () => clearTimeout(delay);
   }, [search]);
+  
   const getCurrentComics = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -85,4 +90,4 @@ useEffect(() => {
   )
 }
 
-export default  TabArtista 
+export default  TabAnio 

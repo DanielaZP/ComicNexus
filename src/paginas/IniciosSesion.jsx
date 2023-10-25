@@ -40,6 +40,12 @@ function InicioSesion() {
     }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
 
 
@@ -88,7 +94,7 @@ function InicioSesion() {
             onChange={handleChange}
             placeholder="Nombre de usuario"
           />
-          <p className={`error - message ${ errors.username ? '' : 'hidden' } `}>
+          <p className={`error-message ${ errors.username ? '' : 'hidden' } `}>
             {errors.username}
           </p>
         </div>
@@ -110,7 +116,7 @@ function InicioSesion() {
               className="password-toggle"
             />
           </div>
-          <p className={`error - message ${ errors.password ? '' : 'hidden' } `}>
+          <p className={`error-message ${ errors.password ? '' : 'hidden' } `}>
             {errors.password}
           </p>
         </div>

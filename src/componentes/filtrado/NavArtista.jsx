@@ -48,8 +48,10 @@ useEffect(() => {
          <p className="mt-2">Cargando cómics...</p>
        </div>
         ) : comicsData.length === 0 ? (
-            <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-            fontSize: "20px" }}>No se han encontraron resultados para "{search}"</p>
+            <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
+          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+          : 'No se han encontraron resultados para ""'}
+        </p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">

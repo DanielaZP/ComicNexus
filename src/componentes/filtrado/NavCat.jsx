@@ -6,10 +6,10 @@ import CardCat from '../CardCat'// Importa tu componente Card
 import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
-const TabArtista = () => {
+const NavCat = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
-  const itemsPerPage = 9;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
@@ -17,7 +17,7 @@ const TabArtista = () => {
 useEffect(() => {
   setIsLoading(true);
   console.log(search)
-  axios.get('https://comic-next-laravel.vercel.app/api/api/artista/'+search)
+  axios.get('https://comic-next-laravel.vercel.app/api/api/cat/'+search)
       .then((response) => {
         // Almacena los datos JSON en el estado local
         console.log(response.data);
@@ -48,7 +48,7 @@ useEffect(() => {
          <p className="mt-2">Cargando cómics...</p>
        </div>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
+            <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
           {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
           : 'No se han encontraron resultados para ""'}
         </p>
@@ -61,28 +61,11 @@ useEffect(() => {
                 </div>
               ))}
             </div>
-            {comicsData.length > itemsPerPage && (
-              <div className="mt-4 text-center">
-                <button
-                  className="btn custom-btn-color mx-2"
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Página Anterior
-                </button>
-                <button
-                  className="btn custom-btn-color mx-2"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={currentPage * itemsPerPage >= comicsData.length}
-                >
-                  Siguiente Página
-                </button>
-              </div>
-            )}
+            
           </div>
         )}
       </div>
   )
 }
 
-export default  TabArtista 
+export default  NavCat 

@@ -22,12 +22,12 @@ import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecim
 function App() {
   const estiloFondo = {
     // backgroundImage: `url('fondos/fondo4.jpg')`,
-    backgroundColor: "#999999", 
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
-    minHeight: "100vh",
-    backgroundPosition: "center"
+       backgroundColor: "#999999", 
+    // backgroundSize: "cover",
+    // backgroundRepeat: "no-repeat",
+    // backgroundAttachment: "fixed",
+    // minHeight: "100vh",
+    // backgroundPosition: "center"
   };
   return (
     <div className="App" style={estiloFondo}>

@@ -323,7 +323,7 @@ const Playlist = () => {
 
         <Modal
           show={successModalVisible}
-          onHide={() => {}}
+          onHide={handleCloseSuccessModal} 
           backdrop="static"
           keyboard={false}
           centered
@@ -332,7 +332,7 @@ const Playlist = () => {
             <h4>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setSuccessModalVisible(false)}>
+            <Button variant="secondary" onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>
           </Modal.Footer>

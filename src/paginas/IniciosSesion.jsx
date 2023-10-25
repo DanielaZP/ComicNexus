@@ -47,18 +47,21 @@ function InicioSesion() {
       // No hay errores, enviar el formulario
       try {
         const response = await axios.get(`http://localhost:8000/api/verificar-credenciales?nombre_u=${formData.username}& password=${formData.password}`)
-        console.log(response)
-
-        /* if (response.ok) {
+        if (response.status === 200) {
           // Autenticación exitosa
-          const data = await response.json();
-          console.log('Autenticación exitosa. Código de usuario:', data.cod_usuario);
+          const data = response.data; // Obtén los datos de la respuesta
+          const codUsuario = data.cod_usuario; // Obten el valor 'cod_usuario'
+          localStorage.setItem('cod_usuario', codUsuario);
+          console.log('Autenticación exitosa. Código de usuario:', codUsuario);
+          // Guarda el valor en una variable o en el estado de tu componente si es necesario.
+          // this.setState({ codUsuario });
+          // O usa el hook useState si estás en una función componente.
+          // setCodUsuario(codUsuario);
+          navigate('/');
         } else {
           // Autenticación fallida
-          const data = await response.json();
-          console.error('Error de autenticación:', data.error);
-        } */
-        navigate('/');
+          console.error('Error de autenticación:', response.data.error);
+        }
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
       }

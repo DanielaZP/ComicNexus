@@ -306,7 +306,7 @@ const Playlist = () => {
                   <Card.Body>
                     <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
                     <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
-                       Ver playlist {playlist.playlist.cod_playlist}
+                       Ver playlist 
                     </Link> 
                     {/* <Button variant="btn custom-btn-color" onClick={() => handleVisualizePlaylist(playlist)}>
                       Visualizar Playlist

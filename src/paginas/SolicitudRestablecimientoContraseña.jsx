@@ -68,7 +68,7 @@ function SolicitudRestablecimientoContraseña() {
         )}
         {requestSent ? null : ( 
           <div style={{ textAlign: 'center', marginTop: '10px' }}>
-            ¿Recuerdas tu contraseña? <Link to="/inicio-sesion">Inicia sesión.</Link>
+            ¿Recuerdas tu contraseña? <Link to="/">Inicia sesión.</Link>
           </div>
         )}
       </form>

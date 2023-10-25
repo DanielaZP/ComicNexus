@@ -94,12 +94,12 @@ const Playlist = () => {
     }
 
     setLoading(true);
-
+    const codUsuario = localStorage.getItem('cod_usuario');
     const base64Image = extractBase64Code(selectedImage);
     const data = {
       nombre_playlist: playlistName,
       imagen_playlist: base64Image,
-      cod_usuario: 1,
+      cod_usuario: codUsuario,
     };
 
     axios

@@ -72,7 +72,7 @@ function InicioSesion() {
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="form-title badabb">Inicio Sesión</h2>
+        <h2 className="form-title badabbm">Inicio Sesión</h2>
         <div className="image-container">
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>

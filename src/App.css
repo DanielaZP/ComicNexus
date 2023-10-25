@@ -238,6 +238,10 @@ button:hover {
   font-family: badabb;
   color: #153f59; -webkit-text-stroke: 2px white;
 }
+.badabbm{
+  font-family: badabb;
+  color: -webkit-text-stroke 2px white;
+}
 
 @font-face {
   font-family: "Comic Sans MS";

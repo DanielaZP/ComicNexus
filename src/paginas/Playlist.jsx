@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Container, Row, Col, Spinner, Card } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Playlist = () => {
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,11 @@ const Playlist = () => {
     setSelectedImage(null);
     setPlaylistName('');
     setNameError('');
+  };
+
+  const handleCloseSuccessModal = () => {
+    setSuccessModalVisible(false);
+    window.location.reload(); // Recargar la página al cerrar el modal de éxito
   };
 
   const handleShow = () => setShowModal(true);
@@ -89,7 +95,11 @@ const Playlist = () => {
     const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
 
     if (playlistExists) {
-      window.alert('¡Ya existe una playlist con este nombre!');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Ya existe una playlist con este nombre!',
+      });
       return;
     }
 
@@ -242,7 +252,7 @@ const Playlist = () => {
             <h4>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setSuccessModalVisible(false)}>
+            <Button variant="secondary" onClick={handleCloseSuccessModal}>
               Cerrar
             </Button>
           </Modal.Footer>

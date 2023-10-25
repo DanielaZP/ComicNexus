@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import NavComponent from "./NavComponent.jsx";
+import NavComponent from "./filtrado/NavComponent";
 
 const Navbar = () => {
   return (
     <div style={{ marginBottom: '30px' }}>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
+          <a className="navbar-brand" href="/inicio">
             ComicNexus
           </a>
           <button
@@ -23,7 +23,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link active" aria-current="page" to="/inicio">
                   Inicio
                 </Link>
               </li>
@@ -68,14 +68,6 @@ const Navbar = () => {
             </ul>
 
             <NavComponent/>
-
-            <Link className="btn btn-registro" to="/registro-usuario" style={{ marginLeft: '10px'}}>
-                 Registro
-            </Link>
-            <Link className="btn btn-inicio" to="/inicio-sesion" style={{ marginLeft: '10px' }}>
-                 Inicio de Sesión
-            </Link>
-           
             
           </div>
         </div> 

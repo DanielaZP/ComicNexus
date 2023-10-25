@@ -57,7 +57,7 @@ function InicioSesion() {
           // this.setState({ codUsuario });
           // O usa el hook useState si estás en una función componente.
           // setCodUsuario(codUsuario);
-          navigate('/');
+          navigate('/inicio');
         } else {
           // Autenticación fallida
           console.error('Error de autenticación:', response.data.error);

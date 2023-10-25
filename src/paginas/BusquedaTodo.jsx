@@ -4,6 +4,8 @@ import {TabContent, TabPane, Nav, NavItem, NavLink} from "reactstrap";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios'; // Importa Axios
 import CardCat from '../componentes/CardCat'// Importa tu componente Card
+import TabArtista from '../componentes/filtrado/TabArtista';
+import NavArtista from '../componentes/filtrado/NavArtista';
 
 function BusquedaTodo() {
   const [comicsData, setComicsData] = useState([]);
@@ -86,17 +88,27 @@ function BusquedaTodo() {
            </NavLink>
          </NavItem>
 
+         {/* <NavItem>
+           <NavLink 
+              className={(activeTab=="4" ? "activeTab baseTab" : "baseTab" )}
+           onClick={()=>cambiarTab("4")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "4" ? 
+            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+            Categorias
+           </NavLink>
+         </NavItem> */}
+
+
        </Nav>
 
 
 
 
 
-       <TabContent activeTab={activeTab} style={{ margin: "0 auto" }}>
+       <TabContent activeTab={activeTab} style={{ margin: "0 auto" }} lazy={true}>
          <TabPane tabId="1">
            <div className='container'>
-           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
-                 textShadow: "2px 2px 4px darkgray"}}>Títulos</h1>
+           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",color:"white",
+                 textShadow: "2px 2px 4px black"}}>Títulos</h1>
              <div className="container">
         {isLoading ? (
          <div className="text-center my-3">
@@ -107,7 +119,7 @@ function BusquedaTodo() {
        </div>
         ) : comicsData.length === 0 ? (
           <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-            fontSize: "20px" }}>No se han encontraron resultados para "..."</p>
+            fontSize: "20px" }}>No se han encontraron resultados para "{search}"</p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -121,9 +133,11 @@ function BusquedaTodo() {
         )}
       </div>
      </div>
-          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
-                 textShadow: "2px 2px 4px darkgray"}}>Artistas</h1>
+          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
+                color:"white", textShadow: "2px 2px 4px black"}}>Artistas</h1>
           </div> 
+
+          <NavArtista/>
              
          </TabPane>
 
@@ -139,7 +153,7 @@ function BusquedaTodo() {
        </div>
         ) : comicsData.length === 0 ? (
           <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-            fontSize: "20px" }}>No se han encontraron resultados para "..."</p>
+            fontSize: "20px" }}>No se han encontraron resultados para "{search}"</p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -175,37 +189,16 @@ function BusquedaTodo() {
 
 
          <TabPane tabId="3">
-           <div className='container'>
-             <br />
-             <table className='table table-bordered table-sm'>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Fecha de Subida</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Cómo Solucionar el Error pickAlgorithm en React || Fix Cannot read property 'pickAlgorithm' of null</td>
-                    <td>21/04/2022</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Autocomplete Sencillo en React JS || React Hooks || Tutorial en Español</td>
-                    <td>27/04/2022</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Autocomplete con Web Api en React JS || Api Rest || Tutorial en Español</td>
-                    <td>05/05/2022</td>
-                  </tr>
-                </tbody>
-              </table>
-           </div>
-
+           
+             <TabArtista/>
+           
          </TabPane>
+
+         {/* <TabPane tabId="4">
+           
+             <TabArtista/>
+           
+         </TabPane> */}
 
        </TabContent>
     </div>

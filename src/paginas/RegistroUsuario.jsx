@@ -159,7 +159,7 @@ function RegistroUsuario() {
           <button type="submit">Registrarse</button>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          ¿Ya tienes cuenta? <Link to="/inicio-sesion">Inicia sesión aquí.</Link>
+          ¿Ya tienes cuenta? <Link to="/">Inicia sesión aquí.</Link>
         </div>
       </form>
     </div>

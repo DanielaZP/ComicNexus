@@ -137,7 +137,7 @@ button {
   
 }
 
-.btn-registro{
+/* .btn-registro{
   background-color: var(--celestito);
   color: #fff;
 }
@@ -155,7 +155,7 @@ button {
 .btn-inicio:hover{
  background-color: var(--azulito); 
  color: #fff;
-}
+} */
 
 /*registro*/
 .form-container {

@@ -138,12 +138,12 @@ button {
 }
 
 .btn-registro{
-  background-color: #0e0d0d;
+  background-color: var(--celestito);
   color: #fff;
 }
 
 .btn-inicio{
-  background-color: #0e0d0d;
+  background-color: var(--celestito);
   color: #fff;
 }
 

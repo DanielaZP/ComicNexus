@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function InicioSesion() {
   const navigate = useNavigate();
-
+  const [errorMensaje, setErrorMensaje] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -64,6 +64,7 @@ function InicioSesion() {
         }
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
+        setErrorMensaje('Error al iniciar sesión. Por favor, verifica tus credenciales.');
       }
     }
     setErrors(newErrors);
@@ -116,6 +117,11 @@ function InicioSesion() {
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Iniciar Sesión</button>
         </div>
+        {errorMensaje && (
+        <div className="error-message" style={{ textAlign: 'center', color: 'red' }}>
+           {errorMensaje}
+        </div>
+           )}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
           <p><strong><Link to="/solicitud-restablecimiento-contraseña" style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>

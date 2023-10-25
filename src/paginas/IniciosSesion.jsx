@@ -46,7 +46,7 @@ function InicioSesion() {
     if (Object.keys(newErrors).length === 0) {
       // No hay errores, enviar el formulario
       try {
-        const response = await axios.get(`http://localhost:8000/api/verificar-credenciales?nombre_u=${formData.username}& password=${formData.password}`)
+        const response = await axios.get(`https://comic-next-laravel.vercel.app/api/api/verificar-credenciales?nombre_u=${formData.username}& password=${formData.password}`)
         if (response.status === 200) {
           // Autenticación exitosa
           const data = response.data; // Obtén los datos de la respuesta

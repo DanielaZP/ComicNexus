@@ -22,6 +22,7 @@ import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecim
 function App() {
   const estiloFondo = {
     // backgroundImage: `url('fondos/fondo4.jpg')`,
+    backgroundColor: "#999999",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundAttachment: "fixed",

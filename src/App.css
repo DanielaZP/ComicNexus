@@ -342,12 +342,12 @@ button:hover {
   }
   
   .baseTab:hover{
-    background-color: black !important;
+    background-color: var(--azulito) !important;
     color: white !important;
   }
   
   .activeTab{
-    background-color: black !important;
+    background-color: var(--celestito) !important;
     color: white !important;
   }
   

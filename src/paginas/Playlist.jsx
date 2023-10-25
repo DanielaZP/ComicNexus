@@ -22,11 +22,11 @@ const Playlist = () => {
   const playlistsPerPage = 15;
 
   useEffect(() => {
-    if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {  
+    if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
       setMinLengthError(false);
       setMaxLengthError(false);
     } else {
-      if (playlistName.trim().length < 3) {
+      if (playlistName.trim().length < 3 && playlistName.trim().length > 0) {
         setMinLengthError(true);
         setMaxLengthError(false);
       } else if (playlistName.trim().length > 50) {

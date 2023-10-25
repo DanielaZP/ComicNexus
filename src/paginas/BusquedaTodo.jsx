@@ -8,6 +8,8 @@ import TabArtista from '../componentes/filtrado/TabArtista';
 import NavArtista from '../componentes/filtrado/NavArtista';
 import TabAnio from '../componentes/filtrado/TabAnio';
 import NavAnio from '../componentes/filtrado/NavAnio';
+import TabCat from '../componentes/filtrado/TabCat';
+import NavCat from '../componentes/filtrado/NavCat';
 
 function BusquedaTodo() {
   const [comicsData, setComicsData] = useState([]);
@@ -155,7 +157,7 @@ function BusquedaTodo() {
                 color:"white", textShadow: "2px 2px 4px black"}}>Categorías</h1>
           </div> 
 
-
+            <NavCat/>
 
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
                 color:"white", textShadow: "2px 2px 4px black"}}>Año de publicación</h1>
@@ -222,7 +224,7 @@ function BusquedaTodo() {
 
          <TabPane tabId="4">
            
-             <p>Aun no funciona</p>
+             <TabCat/>
            
          </TabPane>
 

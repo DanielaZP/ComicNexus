@@ -79,7 +79,7 @@ function RegistroUsuario() {
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);
         console.log('Respuesta del servidor:', response.data);
-        navigate('/inicio-sesion');
+        navigate('/');
       } catch (error) {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);

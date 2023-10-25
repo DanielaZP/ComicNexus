@@ -22,8 +22,10 @@ const Playlist = () => {
   }, [playlistName]);
 
   useEffect(() => {
+    const codUsuario = localStorage.getItem('cod_usuario');
+    console.log(codUsuario);
     axios
-      .get('https://comic-next-laravel.vercel.app/api/api/listasPlaylist/1')
+      .get(`https://comic-next-laravel.vercel.app/api/api/listasPlaylist/${codUsuario}`)
       .then((response) => {
         setPlaylists(response.data);
         setIsLoading(false);

@@ -4,7 +4,7 @@ import NavComponent from "./NavComponent.jsx";
 const Navbar = () => {
   return (
     <div style={{ marginBottom: '30px' }}>
-      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#E0E0E0', color: '#FFFFFF' }}>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             ComicNexus

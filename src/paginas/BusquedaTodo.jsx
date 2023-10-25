@@ -6,6 +6,8 @@ import axios from 'axios'; // Importa Axios
 import CardCat from '../componentes/CardCat'// Importa tu componente Card
 import TabArtista from '../componentes/filtrado/TabArtista';
 import NavArtista from '../componentes/filtrado/NavArtista';
+import TabAnio from '../componentes/filtrado/TabAnio';
+import NavAnio from '../componentes/filtrado/NavAnio';
 
 function BusquedaTodo() {
   const [comicsData, setComicsData] = useState([]);
@@ -88,15 +90,23 @@ function BusquedaTodo() {
            </NavLink>
          </NavItem>
 
-         {/* <NavItem>
+         <NavItem>
            <NavLink 
               className={(activeTab=="4" ? "activeTab baseTab" : "baseTab" )}
            onClick={()=>cambiarTab("4")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "4" ? 
             "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
-            Categorias
+            Categorías
            </NavLink>
-         </NavItem> */}
+         </NavItem>
 
+         <NavItem>
+           <NavLink 
+              className={(activeTab=="5" ? "activeTab baseTab" : "baseTab" )}
+           onClick={()=>cambiarTab("5")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "5" ? 
+            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+            Año de publicación
+           </NavLink>
+         </NavItem>
 
        </Nav>
 
@@ -118,8 +128,10 @@ function BusquedaTodo() {
          <p className="mt-2">Cargando cómics...</p>
        </div>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-            fontSize: "20px" }}>No se han encontraron resultados para "{search}"</p>
+          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
+          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+          : 'No se han encontraron resultados para ""'}
+        </p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -138,7 +150,19 @@ function BusquedaTodo() {
           </div> 
 
           <NavArtista/>
+
+          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
+                color:"white", textShadow: "2px 2px 4px black"}}>Categorías</h1>
+          </div> 
+
+
+
+          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
+                color:"white", textShadow: "2px 2px 4px black"}}>Año de publicación</h1>
+          </div> 
              
+          <NavAnio/>
+
          </TabPane>
 
          <TabPane tabId="2">
@@ -152,8 +176,10 @@ function BusquedaTodo() {
          <p className="mt-2">Cargando cómics...</p>
        </div>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS" ,
-            fontSize: "20px" }}>No se han encontraron resultados para "{search}"</p>
+          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
+          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+          : 'No se han encontraron resultados para ""'}
+        </p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -194,11 +220,17 @@ function BusquedaTodo() {
            
          </TabPane>
 
-         {/* <TabPane tabId="4">
+         <TabPane tabId="4">
            
-             <TabArtista/>
+             <p>Aun no funciona</p>
            
-         </TabPane> */}
+         </TabPane>
+
+         <TabPane tabId="5">
+           
+             <TabAnio/>
+           
+         </TabPane>
 
        </TabContent>
     </div>

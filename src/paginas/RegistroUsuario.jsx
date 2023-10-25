@@ -68,6 +68,12 @@ function RegistroUsuario() {
 
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
 
     if (Object.values(newErrors).every((error) => !error)) {
@@ -79,7 +85,7 @@ function RegistroUsuario() {
         // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
         console.log('Registro exitoso con:', formData);
         console.log('Respuesta del servidor:', response.data);
-        navigate('/inicio-sesion');
+        navigate('/');
       } catch (error) {
         // Manejar errores de la solicitud, como una respuesta de error del servidor.
         console.error('Error al registrar:', error);

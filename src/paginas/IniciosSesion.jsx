@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function InicioSesion() {
   const navigate = useNavigate();
-
+  const [errorMensaje, setErrorMensaje] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -40,6 +40,12 @@ function InicioSesion() {
     }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[A-Z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
+    } else if (!/\d/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos un número.';
     }
 
 
@@ -64,6 +70,7 @@ function InicioSesion() {
         }
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
+        setErrorMensaje('Error al iniciar sesión. Por favor, verifica tus credenciales.');
       }
     }
     setErrors(newErrors);
@@ -87,7 +94,7 @@ function InicioSesion() {
             onChange={handleChange}
             placeholder="Nombre de usuario"
           />
-          <p className={`error - message ${ errors.username ? '' : 'hidden' } `}>
+          <p className={`error-message ${ errors.username ? '' : 'hidden' } `}>
             {errors.username}
           </p>
         </div>
@@ -109,13 +116,18 @@ function InicioSesion() {
               className="password-toggle"
             />
           </div>
-          <p className={`error - message ${ errors.password ? '' : 'hidden' } `}>
+          <p className={`error-message ${ errors.password ? '' : 'hidden' } `}>
             {errors.password}
           </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Iniciar Sesión</button>
         </div>
+        {errorMensaje && (
+        <div className="error-message" style={{ textAlign: 'center', color: 'red' }}>
+           {errorMensaje}
+        </div>
+           )}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           ¿Aún no tienes una cuenta? <Link to="/registro-usuario"> Regístrate.</Link>
           <p><strong><Link to="/solicitud-restablecimiento-contraseña" style={{ color: 'black' }}>¿Olvidaste tu contraseña?</Link></strong></p>

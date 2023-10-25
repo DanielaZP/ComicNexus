@@ -1,5 +1,3 @@
-import '/src/css/tab.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react'
 import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
 import {TabContent, TabPane, Nav, NavItem, NavLink} from "reactstrap";
@@ -119,28 +117,14 @@ function BusquedaTodo() {
                 </div>
               ))}
             </div>
-            {comicsData.length > itemsPerPage && (
-              <div className="mt-4 text-center">
-                <button
-                  className="btn custom-btn-color mx-2"
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}>
-                  Página Anterior
-                </button>
-                <button
-                  className="btn custom-btn-color mx-2"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={currentPage * itemsPerPage >= comicsData.length}
-                >
-                  Siguiente Página
-                </button>
-              </div>
-            )}
           </div>
         )}
       </div>
-           </div>
-
+     </div>
+          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
+                 textShadow: "2px 2px 4px darkgray"}}>Artistas</h1>
+          </div> 
+             
          </TabPane>
 
          <TabPane tabId="2">

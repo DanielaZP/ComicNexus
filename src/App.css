@@ -137,13 +137,13 @@ button {
   
 }
 
-.btn-registro{
-  background-color: #0e0d0d;
+/* .btn-registro{
+  background-color: var(--celestito);
   color: #fff;
 }
 
 .btn-inicio{
-  background-color: #0e0d0d;
+  background-color: var(--celestito);
   color: #fff;
 }
 
@@ -155,7 +155,7 @@ button {
 .btn-inicio:hover{
  background-color: var(--azulito); 
  color: #fff;
-}
+} */
 
 /*registro*/
 .form-container {
@@ -237,6 +237,10 @@ button:hover {
 .badabb{
   font-family: badabb;
   color: #153f59; -webkit-text-stroke: 2px white;
+}
+.badabbm{
+  font-family: badabb;
+  color: -webkit-text-stroke 2px white;
 }
 
 @font-face {

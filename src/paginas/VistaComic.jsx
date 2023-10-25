@@ -10,6 +10,7 @@ function VistaComic() {
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
+  const codUsuario = localStorage.getItem('cod_usuario');
 
   useEffect(() => {
     // Hacer la solicitud HTTP para obtener los datos del cómic por ID

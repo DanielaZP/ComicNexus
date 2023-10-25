@@ -36,7 +36,7 @@ function SolicitudRestablecimientoContraseña() {
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="form-title badabb">Restablecimiento de contraseña</h2>
+        <h2 className="form-title badabbm">Restablecimiento de contraseña</h2>
         <div className="image-container">
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>

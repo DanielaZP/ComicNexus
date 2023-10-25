@@ -92,7 +92,7 @@ function RegistroUsuario() {
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="form-title badabb">Registro de Usuario</h2>
+        <h2 className="form-title badabbm">Registro de Usuario</h2>
         <div className="image-container">
           <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
         </div>
@@ -159,7 +159,7 @@ function RegistroUsuario() {
           <button type="submit">Registrarse</button>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          ¿Ya tienes cuenta? <Link to="/inicio-sesion">Inicia sesión aquí.</Link>
+          ¿Ya tienes cuenta? <Link to="/">Inicia sesión aquí.</Link>
         </div>
       </form>
     </div>

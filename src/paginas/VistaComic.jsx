@@ -156,6 +156,9 @@ function VistaComic() {
               <Modal.Title>¿A qué playlist quieres añadir el cómic: {comic.comic.titulo}?</Modal.Title>
             </Modal.Header>
             <Modal.Body style={{ maxHeight: 'calc(80vh - 130px)', overflowY: 'auto' }}>
+            {playlists.length === 0 ? (
+                <p>No tienes playlists creadas.</p>
+              ) : (
               <ul className="playlist-list">
                 {playlists.map((playlist) => (
                   <li key={playlist.playlist.cod_playlist}>
@@ -177,6 +180,7 @@ function VistaComic() {
                   </li>
                 ))}
               </ul>
+              )}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="btn Warning-btn-color" onClick={handleCloseModal}>
@@ -186,7 +190,7 @@ function VistaComic() {
           </Modal>
           <Modal show={successModalVisible} onHide={() => setSuccessModalVisible(false)} centered>
             <Modal.Body>
-              <h4 className='text-center'>El cómic: {comic.comic.titulo} se subió con éxito a la playlist</h4>
+              <h4>El cómic: {comic.comic.titulo} se subió con éxito a la playlist</h4>
             </Modal.Body>
             <Modal.Footer>
               <Button className="btn Warning-btn-color" onClick={() => setSuccessModalVisible(false)}>
@@ -196,11 +200,7 @@ function VistaComic() {
           </Modal>
           <Modal show={Errormodalvisible} onHide={() => setErrormodalvisible(false)} centered>
             <Modal.Body>
-<<<<<<< HEAD
-              <h4>El cómic: {comic.comic.titulo} No se subió a la playlist ya existe en esta playlist</h4>
-=======
-              <h4 className='text-center'>El cómic: {comic.comic.titulo} No se subió a la playlist porque ya existe dentro de la playlist</h4>
->>>>>>> 27d6485fb331712d758f401e87496ed027c6a5da
+              <h4>El cómic: {comic.comic.titulo} ya existe en la playlist.</h4>
             </Modal.Body>
             <Modal.Footer>
               <Button className="btn Warning-btn-color" onClick={() => setErrormodalvisible(false)}>

@@ -39,12 +39,12 @@ const CienciaFiccion = () => {
       </Container>
       <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
+         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
          <Spinner animation="border" variant="primary" role="status">
            <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
-       </div>
+       </Container>
         ) : comicsData.length === 0 ? (
           <p>No se encontraron cómics en esta categoría.</p>
         ) : (

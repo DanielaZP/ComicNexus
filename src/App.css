@@ -358,7 +358,7 @@ button:hover {
   }
 
   .custom-divider {
-    border: 4px solid white;
+    border: 4px solid rgb(255, 255, 255);
     height: 0;
     margin: 20px 0;
   }

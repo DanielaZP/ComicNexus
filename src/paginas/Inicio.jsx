@@ -35,17 +35,17 @@ export const Inicio = () => {
     <div className='container'>
           <Container className="text-center my-5">
           <h1 className="display-4 badabb">ComicNexus</h1>
-          <hr className="my-4 custom-divider" style={{ backgroundColor: 'var(--celestito)' }} />
+          <hr className="my-4 custom-divider"  />
         </Container>
         <Carrucel/>
         <h3 className="display-4 badabb fs-1">Comics que te recomendamos</h3>
         {isLoading ? (
-        <div className="text-center my-3">
-         <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only"></span>
-         </Spinner>
-         <p className="mt-2">Cargando cómics...</p>
-       </div>
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Spinner animation="border" variant="primary" role="status">
+          <span className="sr-only"></span>
+        </Spinner>
+        <p className="mt-2">Cargando cómics...</p>
+      </Container>
       ) : (
         <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
           {getRandomComics().map((comic) => (

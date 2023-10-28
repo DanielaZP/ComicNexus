@@ -35,7 +35,7 @@ export const Inicio = () => {
     <div className='container'>
           <Container className="text-center my-5">
           <h1 className="display-4 badabb">ComicNexus</h1>
-          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+          <hr className="my-4 custom-divider" style={{ backgroundColor: 'var(--celestito)' }} />
         </Container>
         <Carrucel/>
         <h3 className="display-4 badabb fs-1">Comics que te recomendamos</h3>

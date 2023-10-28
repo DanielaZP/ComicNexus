@@ -59,7 +59,7 @@ const VistaPlaylist = () => {
             />
           </Col>
           <Col md={6}>
-            <div className="content-container" >
+            <div className="content-container custom-form-container" >
             <h1 className="display-4 badabb"><strong>playlist: {playlist.playlist.nombre_playlist}</strong></h1>
             <h3 >Lista de cómics variados</h3>
             </div>
@@ -68,7 +68,7 @@ const VistaPlaylist = () => {
           <Container className="mt-4">
           {comicsData.length > 0 ? (
             comicsData.map((comic, index) => (
-              <Row key={index} className="mb-4">
+              <Row key={index} className="mb-4" >
                 <Col md={1} className="text-center">
                   <p className="font-weight-bold" style={{
                       marginTop: '50px',
@@ -85,7 +85,7 @@ const VistaPlaylist = () => {
                     style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                   />
                 </Col>
-                <Col md={4}>
+                <Col md={4} >
                   <h4>{comic.comic.titulo}</h4>
                   <p>{comic.comic.sinopsis}</p>
                 </Col>

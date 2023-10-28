@@ -1,8 +1,9 @@
 import React from "react";
 
 const Carrucel = () => {
+  
   return (
-    <div>
+    <div className="borde-container">
       <div id="carouselExampleIndicators" className="carousel slide">
         <div className="carousel-indicators">
           <button

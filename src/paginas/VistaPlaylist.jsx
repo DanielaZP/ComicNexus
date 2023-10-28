@@ -93,7 +93,7 @@ const VistaPlaylist = () => {
                 </Col>
                 <Col md={4} className='custom-form-container'>
                   <h4>{comic.comic.titulo}</h4>
-                  <p>{comic.comic.sinopsis}</p>
+                  {comic.comic.sinopsis.length > 150 ? `${comic.comic.sinopsis.substring(0, 150)}...` : comic.comic.sinopsis}
                 </Col>
                 <Col md={4}>
                 <Link to={`/vista-comic/${comic.comic.cod_comic}`} className="btn custom-btn-color "

@@ -4,19 +4,19 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-//const ZEROBOUNCE_API_KEY = '1090cb61970442a6b5a5f3370c37eb68';
+const ZEROBOUNCE_API_KEY = '1090cb61970442a6b5a5f3370c37eb68';
 
-// async function validateEmail(email) {
-//   const zeroBounceUrl = `https://api.zerobounce.net/v2/validate?api_key=${ZEROBOUNCE_API_KEY}&email=${email}`;
+async function validateEmail(email) {
+  const zeroBounceUrl = `https://api.zerobounce.net/v2/validate?api_key=${ZEROBOUNCE_API_KEY}&email=${email}`;
 
-//   try {
-//     const response = await axios.get(zeroBounceUrl);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error al validar el correo electrónico:', error);
-//     return null;
-//   }
-// }
+  try {
+    const response = await axios.get(zeroBounceUrl);
+    return response.data;
+  } catch (error) {
+    console.error('Error al validar el correo electrónico:', error);
+    return null;
+  }
+}
 
 function RegistroUsuario() {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function RegistroUsuario() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = { ...errors };
+    let newErrors = { ...errors };
     
     if (!formData.name) {
       newErrors.name = 'El nombre es obligatorio.';
@@ -58,14 +58,12 @@ function RegistroUsuario() {
     
     if (!formData.email) {
       newErrors.email = 'El correo electrónico es obligatorio.';
-    } //else {
-      //const emailValidationResult = await validateEmail(formData.email);
-
-     // if (emailValidationResult && emailValidationResult.status !== 'Valid') {
-     //   newErrors.email = 'El correo electrónico no es válido.';
-      //}
-//    }
-
+    } else {
+      const emailValidationResult = await validateEmail(formData.email);
+      if (emailValidationResult && emailValidationResult.status !== 'valid') {
+        newErrors.email = 'El correo electrónico no es válido.';
+      }
+    }
     if (!formData.password) {
       newErrors.password = 'La contraseña es obligatoria.';
     } else if (formData.password.length < 8) {
@@ -75,7 +73,6 @@ function RegistroUsuario() {
     } else if (!/\d/.test(formData.password)) {
       newErrors.password = 'La contraseña debe contener al menos un número.';
     }
-
     if (Object.values(newErrors).every((error) => !error)) {
       // Si no hay errores, continúa con el envío de datos al servidor
       try {

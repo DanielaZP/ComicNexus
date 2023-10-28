@@ -36,7 +36,7 @@ const getCurrentComics = () => {
   return (
     <div>
       <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Sección de comedia</h1>
+      <h1 className="display-4 badabb">Seccion de comedia</h1>
       <p className="lead">Explora y descubre contenido increíble</p>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container>
@@ -49,7 +49,8 @@ const getCurrentComics = () => {
          <p className="mt-2">Cargando cómics...</p>
        </div>
         ) : comicsData.length === 0 ? (
-          <p>No se encontraron cómics en esta categoría.</p>
+          <p className='text-center custom-form-container' style={{ maxWidth: '600px', margin: '0 auto' }}>
+            No se encontraron cómics en esta categoría.</p>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -64,6 +65,8 @@ const getCurrentComics = () => {
                 <button
                   className="btn custom-btn-color mx-2"
                   onClick={() => setCurrentPage(currentPage - 1)}
+                  style={{border: '3px solid white', 
+                  borderRadius: '8px'}}
                   disabled={currentPage === 1}
                 >
                   Página Anterior
@@ -71,6 +74,8 @@ const getCurrentComics = () => {
                 <button
                   className="btn custom-btn-color mx-2"
                   onClick={() => setCurrentPage(currentPage + 1)}
+                  style={{border: '3px solid white', 
+                  borderRadius: '8px'}}
                   disabled={currentPage * itemsPerPage >= comicsData.length}
                 >
                   Siguiente Página

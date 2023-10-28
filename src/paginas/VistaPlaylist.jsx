@@ -7,6 +7,8 @@ const VistaPlaylist = () => {
   const [playlist, setPlaylist] = useState(null);
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedComic, setSelectedComic] = useState(null);
   const { id } = useParams();
   const codUsuario = localStorage.getItem('cod_usuario');
   useEffect(() => {
@@ -36,7 +38,24 @@ const VistaPlaylist = () => {
         setIsLoading(false);
       });
   }, [id]);
-  
+  const handleShowModal = (comic) => {
+    setSelectedComic(comic);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedComic(null);
+    setShowModal(false);
+  };
+
+  const handleDeleteComic = () => {
+    // Agrega aquí la lógica para eliminar el cómic de la lista
+    // ...
+
+    // Cierra el modal después de eliminar el cómic
+    handleCloseModal();
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -117,6 +136,7 @@ const VistaPlaylist = () => {
                       border: '3px solid white', 
                       borderRadius: '8px'
                     }} 
+                    onClick={() => handleShowModal(comic)}
                   >Eliminar de la Lista</Button>
                 </Col>
               </Row>
@@ -133,6 +153,22 @@ const VistaPlaylist = () => {
           <hr className="my-4" style={{ borderColor: 'var(--rojito)', borderWidth: '2px' }} />
         </Container> 
       )}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmación de Eliminación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{`¿Estás seguro que deseas eliminar el cómic ${selectedComic?.comic?.titulo}?`}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn custom-btn-color" onClick={handleCloseModal}>
+            No
+          </Button>
+          <Button className="btn Warning-btn-color" onClick={handleDeleteComic}>
+            Sí
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

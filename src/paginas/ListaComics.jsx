@@ -37,18 +37,18 @@ function ListaComics() {
   return (
     <div>
       <Container className="text-center my-5">
-      <h1 className="display-4 badabb ">Listado de cómics</h1>
-      <p className="lead">Explora y descubre contenido increíble</p>
+      <h1 className="display-4 badabb ">Listado de comics</h1>
+      <p className="lead" style={{ color: 'white' }}>Explora y descubre contenido increíble</p>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container> 
     <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
+         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
          <Spinner animation="border" variant="primary" role="status">
            <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
-       </div>
+       </Container>
         ) : comicsData.length === 0 ? (
           <p>No se encontraron cómics en esta categoría.</p>
         ) : (
@@ -65,6 +65,8 @@ function ListaComics() {
                 <button
                   className="btn custom-btn-color mx-2"
                   onClick={() => setCurrentPage(currentPage - 1)}
+                  style={{border: '3px solid white', 
+                  borderRadius: '8px'}}
                   disabled={currentPage === 1}
                 >
                   Página Anterior
@@ -72,6 +74,8 @@ function ListaComics() {
                 <button
                   className="btn custom-btn-color mx-2"
                   onClick={() => setCurrentPage(currentPage + 1)}
+                  style={{border: '3px solid white', 
+                  borderRadius: '8px'}}
                   disabled={currentPage * itemsPerPage >= comicsData.length}
                 >
                   Siguiente Página

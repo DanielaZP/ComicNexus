@@ -91,14 +91,12 @@ function VistaComic() {
   return (
     <div>
       {isLoading ? (
-        <Container className="text-center my-5">
-          <div className="text-center my-3">
-            <Spinner animation="border" variant="primary" role="status">
-              <span className="sr-only"></span>
-            </Spinner>
-            <p className="mt-2">Cargando cómic...</p>
-          </div>
-        </Container>
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Spinner animation="border" variant="primary" role="status">
+          <span className="sr-only"></span>
+        </Spinner>
+        <p className="mt-2">Cargando cómic...</p>
+      </Container>
       ) : comic ? (
         <Row>
           <Container className="text-center my-5">

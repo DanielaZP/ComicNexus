@@ -206,11 +206,18 @@ const Playlist = () => {
 
   return (
     <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Mis playlists de cómics</h1>
+      <h1 className="display-4 badabb">Mis playlists de comics</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">
-        <Button variant="btn custom-btn-color" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
+        <Button variant="btn custom-btn-color" onClick={handleShow} style={{
+                marginTop: '-150px',
+                marginLeft: '930px',
+                width: '150px',
+                height: '60px',
+                border: '3px solid white', 
+                borderRadius: '8px', 
+              }}>
           Crear playlist
         </Button>
 
@@ -329,10 +336,10 @@ const Playlist = () => {
           centered
         >
           <Modal.Body>
-            <h4>¡La playlist se ha subido con éxito!</h4>
+            <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseSuccessModal}>  
+            <Button className='btn custom-btn-color' onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>
           </Modal.Footer>
@@ -350,7 +357,14 @@ const Playlist = () => {
           ) : (
             currentPlaylists.map((playlist) => (
               <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
-                <Card style={{ width: '210px', height: '300px', marginBottom: '20px', marginRight: '0px'  }}>
+                <Card style={{ 
+                  width: '210px', 
+                  height: '300px', 
+                  marginBottom: '20px', 
+                  marginRight: '0px',
+                  border: '3px solid white', 
+                  borderRadius: '8px', 
+                }}>
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}

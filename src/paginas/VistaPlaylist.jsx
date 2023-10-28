@@ -124,7 +124,8 @@ const VistaPlaylist = () => {
               </Row>
             ))
           ) : (
-            <p className='text-center'>No hay ningún cómic registrado en la playlist.</p>
+            <p className='text-center custom-form-container' style={{ maxWidth: '600px', margin: '0 auto' }}>
+              No hay ningún cómic registrado en la playlist.</p>
           )}
         </Container>
         </Row>

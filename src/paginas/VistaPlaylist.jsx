@@ -55,7 +55,9 @@ const VistaPlaylist = () => {
               src={playlist.portadaUrl}
               alt="Playlist Cover"
               className="img-fluid"
-              style={{ width: '208px', height: '200px', objectFit: 'cover' }}
+              style={{ width: '208px', height: '200px', objectFit: 'cover',
+              border: '3px solid white', 
+              borderRadius: '8px'}}
             />
           </Col>
           <Col md={6}>
@@ -69,23 +71,29 @@ const VistaPlaylist = () => {
           {comicsData.length > 0 ? (
             comicsData.map((comic, index) => (
               <Row key={index} className="mb-4" >
-                <Col md={1} className="text-center">
-                  <p className="font-weight-bold" style={{
-                      marginTop: '50px',
-                      marginLeft: '10px',
-                      width: '150px',
-                      height: '50px',
-                    }}>{index + 1}</p>
+                <Col md={1} className="text-center badabb">
+                <p className="font-weight-bold" style={{
+                    marginTop: '50px',
+                    marginLeft: '10px',
+                    width: '150px',
+                    height: '50px',
+                    color: 'white',
+                    fontSize: '1.5em',
+                    
+                  }}>
+                    {index + 1}
+                  </p>
                 </Col>
                 <Col md={3} className='text-center'>
                   <img
                     src={comic.portadaUrl}
                     alt={`Comic ${index + 1}`}
                     className="img-fluid"
-                    style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                    style={{ width: '150px', height: '150px', objectFit: 'cover',border: '3px solid white', 
+                    borderRadius: '8px'}}
                   />
                 </Col>
-                <Col md={4} >
+                <Col md={4} className='custom-form-container'>
                   <h4>{comic.comic.titulo}</h4>
                   <p>{comic.comic.sinopsis}</p>
                 </Col>
@@ -98,6 +106,8 @@ const VistaPlaylist = () => {
                       height: '50px',
                       justifyContent: 'center',  // Alinea horizontalmente en el centro
                       lineHeight: '35px',  // Centra verticalmente el texto
+                      border: '3px solid white', 
+                      borderRadius: '8px'
                     }}
                   >Ver el cómic</Link>
                   <Button className="btn Warning-btn-color" 
@@ -106,7 +116,9 @@ const VistaPlaylist = () => {
                       marginLeft: '20px',
                       width: '150px',
                       height: '50px',
-                    }} disabled
+                      border: '3px solid white', 
+                      borderRadius: '8px'
+                    }} 
                   >Eliminar de la Lista</Button>
                 </Col>
               </Row>

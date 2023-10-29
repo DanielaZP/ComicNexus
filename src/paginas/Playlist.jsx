@@ -353,7 +353,8 @@ const Playlist = () => {
             <p className="mt-2">Cargando playlists...</p>
           </Container>
           ) : playlists.length === 0 ? (
-            <p>No tienes playlist creadas.</p>
+            <p className='text-center custom-form-container' style={{ maxWidth: '600px', margin: '0 auto' }}>
+              No tienes playlist creadas.</p>
           ) : (
             currentPlaylists.map((playlist) => (
               <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
@@ -382,16 +383,24 @@ const Playlist = () => {
           )}
         </Row>
 
-        <Pagination className="justify-content-center mt-3">
-          <Pagination.Prev
+          <div className="mt-4 text-center">
+          <button
+            className="btn custom-btn-color mx-2"
             onClick={() => handlePageChange(currentPage - 1)}
+            style={{ border: '3px solid white', borderRadius: '8px' }}
             disabled={currentPage === 1}
-          />
-          <Pagination.Next
+          >
+            Página Anterior
+          </button>
+          <button
+            className="btn custom-btn-color mx-2"
             onClick={() => handlePageChange(currentPage + 1)}
+            style={{ border: '3px solid white', borderRadius: '8px' }}
             disabled={indexOfLastPlaylist >= playlists.length}
-          />
-        </Pagination>
+          >
+            Siguiente Página
+          </button>
+        </div>
       </div>
     </Container>
   );

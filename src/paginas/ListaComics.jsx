@@ -38,8 +38,7 @@ function ListaComics() {
     <div>
       <Container className="text-center my-5">
       <h1 className="display-4 badabb ">Listado de comics</h1>
-      <p className="lead" style={{ color: 'white' }}>Explora y descubre contenido increíble</p>
-      <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+      <hr className="my-4 custom-divider"  />
     </Container> 
     <div className="container">
         {isLoading ? (

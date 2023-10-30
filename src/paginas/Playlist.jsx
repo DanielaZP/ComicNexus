@@ -199,6 +199,8 @@ const Playlist = () => {
   const indexOfLastPlaylist = currentPage * playlistsPerPage;
   const indexOfFirstPlaylist = indexOfLastPlaylist - playlistsPerPage;
   const currentPlaylists = playlists.slice(indexOfFirstPlaylist, indexOfLastPlaylist);
+  const totalPages = Math.ceil(playlists.length / playlistsPerPage);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -382,24 +384,27 @@ const Playlist = () => {
             ))
           )}
         </Row>
-
           <div className="mt-4 text-center">
-          <button
-            className="btn custom-btn-color mx-2"
-            onClick={() => handlePageChange(currentPage - 1)}
-            style={{ border: '3px solid white', borderRadius: '8px' }}
-            disabled={currentPage === 1}
-          >
-            Página Anterior
-          </button>
-          <button
-            className="btn custom-btn-color mx-2"
-            onClick={() => handlePageChange(currentPage + 1)}
-            style={{ border: '3px solid white', borderRadius: '8px' }}
-            disabled={indexOfLastPlaylist >= playlists.length}
-          >
-            Siguiente Página
-          </button>
+          {totalPages > 1 && (
+            <>
+              <button
+                className="btn custom-btn-color mx-2"
+                onClick={() => handlePageChange(currentPage - 1)}
+                style={{ border: '3px solid white', borderRadius: '8px' }}
+                disabled={currentPage === 1}
+              >
+                Página Anterior
+              </button>
+              <button
+                className="btn custom-btn-color mx-2"
+                onClick={() => handlePageChange(currentPage + 1)}
+                style={{ border: '3px solid white', borderRadius: '8px' }}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente Página
+              </button>
+            </>
+          )}
         </div>
       </div>
     </Container>

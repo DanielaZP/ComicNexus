@@ -305,17 +305,7 @@ button:hover {
 .TabB {
     text-align: center;
     margin-left: 60px;
-  }
-  
-  .TabB-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .TabB-logo {
-      animation: TabB-logo-spin infinite 20s linear;
-    }
+    border-color: transparent !important;
   }
   
   .TabB-header {
@@ -333,17 +323,10 @@ button:hover {
     color: #61dafb;
   }
   
-  @keyframes TabB-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
   .baseTab{
-    border-left: 1px solid #e9ecef !important;
+    /* background: #7498b6; */
+    /* border-left: 1px solid black !important; */
+    color: black;
     cursor: pointer;
   }
   
@@ -375,3 +358,6 @@ button:hover {
     border-radius: 10px; /* Ajusta según tus preferencias */
     padding: 20px; /* Ajusta el relleno según tus preferencias */
   }
+.nav-tabs{
+  --bs-nav-tabs-border-color: transparent !important;
+}

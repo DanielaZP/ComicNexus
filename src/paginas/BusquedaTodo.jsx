@@ -64,7 +64,7 @@ function BusquedaTodo() {
     </Container>
     
       <div className="TabB"  >
-       <Nav tabs>
+       <Nav tabs className='nav-bar'>
          <NavItem>
            <NavLink 
            className={(activeTab=="1" ? "activeTab baseTab" : "baseTab" )}
@@ -113,10 +113,7 @@ function BusquedaTodo() {
        </Nav>
 
 
-
-
-
-       <TabContent activeTab={activeTab} style={{ margin: "0 auto" }} lazy={true}>
+       <TabContent activeTab={activeTab} style={{ margin: "0 auto"}} lazy={true}>
          <TabPane tabId="1">
            <div className='container'>
            <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",color:"white",

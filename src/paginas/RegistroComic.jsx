@@ -100,7 +100,7 @@ export const RegistroComic = () => {
     titulo: "",
     autor: "",
     sinopsis: "",
-    selectedCategorias: {},
+    selectedCategorias: [],
     fechaPublicacion: "",
     selectedFile: "",
     portada: ""

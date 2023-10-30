@@ -62,7 +62,19 @@ function BusquedaTodo() {
       <h1 className="display-4 badabb">Resultados</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
     </Container>
-    
+    <div>{search === "¡" ? (
+      <Container className="text-center my-5">
+          <p style={ {textShadow: "2px 2px 4px black", fontFamily: "Comic Sans MS", fontSize: "20px", 
+                 color: "white", textAlign: "center" }}>
+          Explore cómics, ingrese una palabra en el buscador
+          </p>
+          <img
+          src='/LogoComicsNexus.png'  
+          alt='Descripción de la imagen'
+          style={{ maxWidth: '30%', height: 'auto', textAlign: 'center' }}  
+        />
+      </Container>
+        ) : (
       <div className="TabB"  >
        <Nav tabs className='nav-bar'>
          <NavItem>
@@ -232,6 +244,8 @@ function BusquedaTodo() {
          </TabPane>
 
        </TabContent>
+      </div>
+    )}
     </div>
   </div>
   )

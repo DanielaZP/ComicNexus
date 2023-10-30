@@ -49,12 +49,25 @@ const VistaPlaylist = () => {
   };
 
   const handleDeleteComic = () => {
-    // Agrega aquí la lógica para eliminar el cómic de la lista
-    // ...
-
-    // Cierra el modal después de eliminar el cómic
-    handleCloseModal();
-  };
+    axios.delete('https://comic-next-laravel.vercel.app/api/api/deleteComicPlaylist', {
+        data: {
+          cod_comic: selectedComic.comic.cod_comic,
+          cod_usuario: codUsuario,
+          cod_playlist: id,
+        },
+        })
+      .then((response) => {
+        console.log('Éxito al eliminar el cómic', response.data);
+        window.location.reload(); // Recargar la página
+      })
+      .catch((error) => {
+        console.error('Error al eliminar el cómic de la playlist:', error);
+        modalError();
+      })
+      .finally(() => {
+        handleCloseModal();
+      });
+    };
 
   return (
     <div>

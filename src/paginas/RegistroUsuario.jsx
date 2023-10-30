@@ -72,6 +72,8 @@ function RegistroUsuario() {
       newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
     } else if (!/\d/.test(formData.password)) {
       newErrors.password = 'La contraseña debe contener al menos un número.';
+    } else if (!/[a-z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra minúscula.';
     }
     if (Object.values(newErrors).every((error) => !error)) {
       // Si no hay errores, continúa con el envío de datos al servidor

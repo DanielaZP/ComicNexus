@@ -68,7 +68,7 @@ const NavComponent = () => {
                   <div style={{position: "absolute", marginLeft:"9px", marginTop:"5px", color: "darkgray"}}>  
                     <FontAwesomeIcon icon={faMagnifyingGlass} /> </div>
                       <Input className="form-control me-2" 
-                          type="search" placeholder="¿Que quiere leer?" 
+                          type="search" placeholder="¿Qué quiere leer?" 
                           value={inputValue} aria-label="Search"
                           onChange={handleInputChange} onKeyDown={handleKeyPress}
                           style={{border: "2px solid #ccc", borderRadius: "15px", 

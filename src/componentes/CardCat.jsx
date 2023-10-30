@@ -9,7 +9,7 @@ function CardCat({ comic }) {
   const url = `/vista-comic/${cod_comic}`;
 
   return (
-    <div className="card">
+    <div className="card borde-container">
       <img
         src={portadaUrl}
         className="card-img-top"

@@ -91,14 +91,12 @@ function VistaComic() {
   return (
     <div>
       {isLoading ? (
-        <Container className="text-center my-5">
-          <div className="text-center my-3">
-            <Spinner animation="border" variant="primary" role="status">
-              <span className="sr-only"></span>
-            </Spinner>
-            <p className="mt-2">Cargando cómic...</p>
-          </div>
-        </Container>
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Spinner animation="border" variant="primary" role="status">
+          <span className="sr-only"></span>
+        </Spinner>
+        <p className="mt-2">Cargando cómic...</p>
+      </Container>
       ) : comic ? (
         <Row>
           <Container className="text-center my-5">
@@ -107,15 +105,16 @@ function VistaComic() {
             </h1>
             <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
           </Container>
-          <Col lg={5} md={12} className="text-center">
+          <Col lg={5} md={12} className="text-cente ">
             <img
-              className="imagen-previa text-center"
+              className="imagen-previa text-center "
               src={comic.portadaUrl}
               alt="Portada"
               style={{
                 width: '300px',
                 height: '470px',
-                border: '1px dashed #ccc',
+                border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
+                borderRadius: '8px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -124,7 +123,7 @@ function VistaComic() {
             />
           </Col>
           <Col lg={6} md={12}>
-            <div>
+          <div className="custom-form-container">
               <h3>Título: {comic.comic.titulo}</h3>
               <p>
                 <strong>Autor(es): </strong>
@@ -139,12 +138,14 @@ function VistaComic() {
                 {comic.comic.sinopsis}
               </p>
             </div>
-            <Button
-              className="btn custom-btn-color"
+            <Button 
+              className="btn custom-btn-color" 
               style={{
                 marginTop: '50px',
                 width: '200px',
                 height: '80px',
+                border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
+                borderRadius: '8px', 
               }}
               onClick={handleAddToPlaylist}
             >

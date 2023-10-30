@@ -370,7 +370,7 @@ export const RegistroComic = () => {
 
     <div className="container" >
       <Container className="text-center mt-5">
-        <h3 className="display-4 badabb">Registro Cómic</h3>
+        <h3 className="display-4 badabb">Registro Comic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
 
@@ -387,18 +387,23 @@ export const RegistroComic = () => {
                   style={{
                     width: "300px",
                     height: "470px",
-                    border: "1px dashed #ccc",
+                    //border: "1px dashed #ccc",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    backgroundColor: "white",
+                    border: '3px solid white', 
+                    borderRadius: '8px'
                   }}
                 >
-                  Ingrese una imagen:
+                  Ingrese una imagen
                 </div>
               )}
               <button
                 onClick={() => document.getElementById("imagen").click()}
                 className="select-image-button btn custom-btn-color"
+                style={{border: '3px solid white', 
+                borderRadius: '8px'}}
               >
                 Seleccionar Imagen<span className="text-danger">*</span>
               </button>

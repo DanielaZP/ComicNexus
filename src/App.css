@@ -232,11 +232,11 @@ button:hover {
 
 @font-face {
   font-family: badabb;
-  src: url(/ComickBook_Simple.ttf);
+  src: url(/BADABB__.TTF);
 }
 .badabb{
   font-family: badabb;
-  color: #153f59; -webkit-text-stroke: 2px white;
+  color: var(--celestito); -webkit-text-stroke: 2px white;
 }
 .badabbm{
   font-family: badabb;
@@ -350,4 +350,22 @@ button:hover {
     background-color: var(--celestito) !important;
     color: white !important;
   }
+
+  .borde-container {
+    border: 4px solid white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .custom-divider {
+    border: 4px solid rgb(255, 255, 255);
+    height: 0;
+    margin: 20px 0;
+  }
   
+  .custom-form-container {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 10px; /* Ajusta según tus preferencias */
+    padding: 20px; /* Ajusta el relleno según tus preferencias */
+  }

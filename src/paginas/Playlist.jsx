@@ -206,11 +206,18 @@ const Playlist = () => {
 
   return (
     <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Mis playlists de cómics</h1>
+      <h1 className="display-4 badabb">Mis playlists de comics</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">
-        <Button variant="btn custom-btn-color" onClick={handleShow} style={{ marginTop: '-155px', marginLeft: '900px' }}>
+        <Button variant="btn custom-btn-color" onClick={handleShow} style={{
+                marginTop: '-150px',
+                marginLeft: '930px',
+                width: '150px',
+                height: '60px',
+                border: '3px solid white', 
+                borderRadius: '8px', 
+              }}>
           Crear playlist
         </Button>
 
@@ -329,28 +336,36 @@ const Playlist = () => {
           centered
         >
           <Modal.Body>
-            <h4>¡La playlist se ha subido con éxito!</h4>
+            <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseSuccessModal}>  
+            <Button className='btn custom-btn-color' onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>
           </Modal.Footer>
         </Modal>
         <Row style={{ marginLeft: '-70px', marginRight: '-90px', flexWrap: 'wrap' }}>
           {isLoading ? (
-            <div className="text-center my-3">
-              <Spinner animation="border" variant="primary" role="status">
-                <span className="sr-only">.</span>
-              </Spinner>
-              <p className="mt-2">Cargando playlists...</p>
-            </div>
+            <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="sr-only"></span>
+            </Spinner>
+            <p className="mt-2">Cargando playlists...</p>
+          </Container>
           ) : playlists.length === 0 ? (
-            <p>No tienes playlist creadas.</p>
+            <p className='text-center custom-form-container' style={{ maxWidth: '600px', margin: '0 auto' }}>
+              No tienes playlist creadas.</p>
           ) : (
             currentPlaylists.map((playlist) => (
               <Col key={playlist.playlist.cod_playlist} md={2} className="mb-4" style={{ flex: '0 0 20%', maxWidth: '20%' }}>
-                <Card style={{ width: '210px', height: '300px', marginBottom: '20px', marginRight: '0px'  }}>
+                <Card style={{ 
+                  width: '210px', 
+                  height: '300px', 
+                  marginBottom: '20px', 
+                  marginRight: '0px',
+                  border: '3px solid white', 
+                  borderRadius: '8px', 
+                }}>
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}
@@ -368,16 +383,24 @@ const Playlist = () => {
           )}
         </Row>
 
-        <Pagination className="justify-content-center mt-3">
-          <Pagination.Prev
+          <div className="mt-4 text-center">
+          <button
+            className="btn custom-btn-color mx-2"
             onClick={() => handlePageChange(currentPage - 1)}
+            style={{ border: '3px solid white', borderRadius: '8px' }}
             disabled={currentPage === 1}
-          />
-          <Pagination.Next
+          >
+            Página Anterior
+          </button>
+          <button
+            className="btn custom-btn-color mx-2"
             onClick={() => handlePageChange(currentPage + 1)}
+            style={{ border: '3px solid white', borderRadius: '8px' }}
             disabled={indexOfLastPlaylist >= playlists.length}
-          />
-        </Pagination>
+          >
+            Siguiente Página
+          </button>
+        </div>
       </div>
     </Container>
   );

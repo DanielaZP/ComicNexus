@@ -43,8 +43,12 @@ function RegistroUsuario() {
     const { name, value } = e.target;
     setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
+    if (name === "email") {
+      setServerErrorMessage(null);
+    }
   };
 
+  const [serverErrorMessage, setServerErrorMessage] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = { ...errors };
@@ -75,22 +79,22 @@ function RegistroUsuario() {
     } else if (!/[a-z]/.test(formData.password)) {
       newErrors.password = 'La contraseña debe contener al menos una letra minúscula.';
     }
-    if (Object.values(newErrors).every((error) => !error)) {
-      // Si no hay errores, continúa con el envío de datos al servidor
-      try {
-        // Realiza la solicitud POST con Axios
+    try {
+      if (Object.values(newErrors).every((error) => !error)) {
         const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/registro-usuario', formData);
-
-        // Si la solicitud es exitosa, puedes manejar la respuesta aquí.
-        console.log('Registro exitoso con:', formData);
-        console.log('Respuesta del servidor:', response.data);
-        navigate('/');
-      } catch (error) {
-        // Manejar errores de la solicitud, como una respuesta de error del servidor.
+          // La solicitud es exitosa
+          console.log('Registro exitoso con:', formData);
+          console.log('Respuesta del servidor:', response.data);
+          navigate('/');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        // El correo o nombre de usuario ya están registrados
+        setServerErrorMessage('Este correo ya fue registrado.');
+      } else {
         console.error('Error al registrar:', error);
       }
     }
-
     setErrors(newErrors);
   };
 
@@ -139,6 +143,11 @@ function RegistroUsuario() {
           <p className={`error-message ${errors.email ? '' : 'hidden'}`}>
             {errors.email}
           </p>
+          {serverErrorMessage && (
+          <p className='error-message-repetido'>
+           {serverErrorMessage}
+          </p>
+           )}
         </div>
         <div className="form-group">
           <label>Contraseña<span className="text-danger">*</span></label>

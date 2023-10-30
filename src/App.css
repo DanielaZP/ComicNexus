@@ -264,6 +264,12 @@ button:hover {
 .error-message.hidden {
   visibility: hidden;
 }
+
+.error-message-repetido{
+  color: red;
+  visibility: visible;
+  margin-top: -10px;
+}
 /* Agrega este estilo para el modal */
 .custom-modal {
   max-height: 80vh;

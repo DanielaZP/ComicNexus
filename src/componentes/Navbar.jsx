@@ -7,7 +7,11 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/inicio">
-            ComicNexus
+              <img
+              src="/LogoComicsNexus.png" // Reemplaza "/ruta/del/tu/logo.png" con la ruta de tu logo
+              alt="Logo de tu aplicación"
+              style={{ maxHeight: '45px', marginRight: '20px', marginLeft:'15px'}} // Puedes ajustar el estilo según tus necesidades
+            />
           </a>
           <button
             className="navbar-toggler"

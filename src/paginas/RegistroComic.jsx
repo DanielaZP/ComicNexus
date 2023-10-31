@@ -247,6 +247,7 @@ export const RegistroComic = () => {
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
     setCampoObligatorioTituloError(false);
+    setCampoTituloDuplicado(false);
     const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| áéíóúÁÉÍÓÚñÑ]*$/;
 
     if (nuevoTitulo.length > 60) {

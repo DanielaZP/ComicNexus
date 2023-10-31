@@ -60,9 +60,9 @@ function BusquedaTodo() {
     <div>
       <Container className="text-center my-5">
       <h1 className="display-4 badabb">Resultados</h1>
-      <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+      <hr className="my-4 custom-divider"  />
     </Container>
-    <div>{search === "¡" ? (
+    <div>{search === "¡" || search === null ? (
       <Container className="text-center my-5">
           <p style={ {textShadow: "2px 2px 4px black", fontFamily: "Comic Sans MS", fontSize: "20px", 
                  color: "white", textAlign: "center" }}>
@@ -128,21 +128,25 @@ function BusquedaTodo() {
        <TabContent activeTab={activeTab} style={{ margin: "0 auto"}} lazy={true}>
          <TabPane tabId="1">
            <div className='container'>
-           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",color:"white",
-                 textShadow: "2px 2px 4px black"}}>Títulos</h1>
+           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
+                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+                }}>Títulos</h1>
              <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
+         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
          <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only">.</span>
+           <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
-       </div>
+       </Container>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
-          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
-          : 'No se han encontraron resultados para ""'}
-        </p>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <p style={{ fontFamily: "Comic Sans MS" ,
+            fontSize: "20px"}}>
+            {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+            : 'No se han encontraron resultados para ""'}
+          </p>
+          </Container>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -157,19 +161,22 @@ function BusquedaTodo() {
       </div>
      </div>
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                color:"white", textShadow: "2px 2px 4px black"}}>Artistas</h1>
+                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+                }}>Artistas</h1>
           </div> 
 
           <NavArtista/>
 
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                color:"white", textShadow: "2px 2px 4px black"}}>Categorías</h1>
+                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+                 }}>Categorías</h1>
           </div> 
 
             <NavCat/>
 
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                color:"white", textShadow: "2px 2px 4px black"}}>Año de publicación</h1>
+                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '320px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+                }}>Año de publicación</h1>
           </div> 
              
           <NavAnio/>
@@ -180,17 +187,20 @@ function BusquedaTodo() {
         
              <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
-         <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only">.</span>
-         </Spinner>
-         <p className="mt-2">Cargando cómics...</p>
-       </div>
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Spinner animation="border" variant="primary" role="status">
+          <span className="sr-only"></span>
+        </Spinner>
+        <p className="mt-2">Cargando cómics...</p>
+      </Container>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
-          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
-          : 'No se han encontraron resultados para ""'}
-        </p>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <p style={{ fontFamily: "Comic Sans MS" ,
+            fontSize: "20px"}}>
+            {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+            : 'No se han encontraron resultados para ""'}
+          </p>
+          </Container>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">

@@ -46,17 +46,20 @@ const TabAnio = () => {
       
     <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
+         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
          <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only">.</span>
+           <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
-       </div>
+       </Container>
         ) : comicsData.length === 0 ? (
-          <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
-          {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
-          : 'No se han encontraron resultados para ""'}
-        </p>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <p style={{ fontFamily: "Comic Sans MS" ,
+            fontSize: "20px"}}>
+            {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
+            : 'No se han encontraron resultados para ""'}
+          </p>
+          </Container>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">

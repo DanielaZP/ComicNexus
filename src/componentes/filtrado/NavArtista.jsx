@@ -15,22 +15,28 @@ const NavArtista = () => {
   const search = new URLSearchParams(location.search).get("search");
 
 useEffect(() => {
-  setIsLoading(true);
-  console.log(search)
-  axios.get('https://comic-next-laravel.vercel.app/api/api/artista/'+search)
-      .then((response) => {
-        // Almacena los datos JSON en el estado local
-        console.log(response.data);
-        setComicsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      })
-      .finally(() => {
-        // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
-        setIsLoading(false);
-      });
-  }, [search]);
+  const delay = setTimeout(() => {  
+    setIsLoading(true);
+    console.log(search)
+    axios.get('https://comic-next-laravel.vercel.app/api/api/artista/'+search)
+        .then((response) => {
+          // Almacena los datos JSON en el estado local
+          console.log(response.data);
+          setComicsData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error al obtener datos:', error);
+        })
+        .finally(() => {
+          // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
+          setIsLoading(false);
+        });
+      }, 300); // 300 ms de retraso
+
+      // Limpiar el temporizador si el usuario sigue escribiendo
+      return () => clearTimeout(delay);    
+    }, [search]);
+
   const getCurrentComics = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -48,7 +54,7 @@ useEffect(() => {
          <p className="mt-2">Cargando cómics...</p>
        </Container>
         ) : comicsData.length === 0 ? (
-          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <p style={{ fontFamily: "Comic Sans MS" ,
           fontSize: "20px"}}>
           {search !== "¡" ? `No se han encontraron resultados para "${search}"` 

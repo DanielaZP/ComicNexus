@@ -8,8 +8,8 @@ import TabArtista from '../componentes/filtrado/TabArtista';
 import NavArtista from '../componentes/filtrado/NavArtista';
 import TabAnio from '../componentes/filtrado/TabAnio';
 import NavAnio from '../componentes/filtrado/NavAnio';
-import TabCat from '../componentes/filtrado/TabCat';
-import NavCat from '../componentes/filtrado/NavCat';
+import TabCat from '../componentes/filtrado/TabSinopsis';
+import NavCat from '../componentes/filtrado/NavSinopsis';
 
 function BusquedaTodo() {
   const [comicsData, setComicsData] = useState([]);
@@ -64,10 +64,12 @@ function BusquedaTodo() {
     </Container>
     <div>{search === "¡" || search === null ? (
       <Container className="text-center my-5">
-          <p style={ {textShadow: "2px 2px 4px black", fontFamily: "Comic Sans MS", fontSize: "20px", 
-                 color: "white", textAlign: "center" }}>
-          Explore cómics, ingrese una palabra en el buscador
-          </p>
+          <div className='container d-flex justify-content-center align-items-center'>
+          <h3 style={{textAlign: "center", fontFamily: "Comic Sans MS", lineHeight: '10px',
+                        backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '700px', height: '50px',
+                        }}>Ingrese una palabra en el buscador, para explorar cómics</h3>
+         </div>
+
           <img
           src='/LogoComicsNexus.png'  
           alt='Descripción de la imagen'
@@ -100,7 +102,7 @@ function BusquedaTodo() {
               className={(activeTab=="3" ? "activeTab baseTab" : "baseTab" )}
            onClick={()=>cambiarTab("3")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "3" ? 
             "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
-            Artistas
+            Autor
            </NavLink>
          </NavItem>
 
@@ -109,7 +111,7 @@ function BusquedaTodo() {
               className={(activeTab=="4" ? "activeTab baseTab" : "baseTab" )}
            onClick={()=>cambiarTab("4")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "4" ? 
             "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
-            Categorías
+            Sinopsis
            </NavLink>
          </NavItem>
 
@@ -140,7 +142,7 @@ function BusquedaTodo() {
          <p className="mt-2">Cargando cómics...</p>
        </Container>
         ) : comicsData.length === 0 ? (
-          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <p style={{ fontFamily: "Comic Sans MS" ,
             fontSize: "20px"}}>
             {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
@@ -162,14 +164,14 @@ function BusquedaTodo() {
      </div>
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
                 backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-                }}>Artistas</h1>
+                }}>Autor</h1>
           </div> 
 
           <NavArtista/>
 
           <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
                 backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-                 }}>Categorías</h1>
+                 }}>Sinopsis</h1>
           </div> 
 
             <NavCat/>
@@ -194,7 +196,7 @@ function BusquedaTodo() {
         <p className="mt-2">Cargando cómics...</p>
       </Container>
         ) : comicsData.length === 0 ? (
-          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <p style={{ fontFamily: "Comic Sans MS" ,
             fontSize: "20px"}}>
             {search !== "¡" ? `No se han encontraron resultados para "${search}"` 

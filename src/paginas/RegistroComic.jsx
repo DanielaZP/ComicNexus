@@ -505,7 +505,7 @@ export const RegistroComic = () => {
                   value={data.fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
-                  min="1985-01-01"
+                  min="1986-02-16"
                   onKeyDown={(e) => e.preventDefault()}
                 />
                 {mostrarAdvertencia && (

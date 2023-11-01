@@ -100,6 +100,7 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
+    const specialCharactersRegex = /^[a-zA-Z0-9 ]+$/;
     if (!playlistName.trim()) {
       setNameError('Rellene este campo.');
       setMinLengthError(false);
@@ -112,6 +113,10 @@ const Playlist = () => {
       setMinLengthError(false);
       setMaxLengthError(true);
       setNameError('');
+    } else if (!specialCharactersRegex.test(playlistName)) {
+      setNameError('El nombre no puede contener caracteres especiales.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
     } else if (!selectedImage) {
       setNameError('Sube una imagen válida.');
       setMinLengthError(false);
@@ -308,18 +313,19 @@ const Playlist = () => {
         </Modal>
 
         <Modal show={confirmModalVisible} centered backdrop="static" keyboard={false}>
-        <Modal.Body>
-          <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
-            No
-          </Button>
-          <Button variant="success" onClick={handleConfirmSave}>
-            Sí
-          </Button>
-        </Modal.Footer>
-      </Modal>
+  <Modal.Body>
+    <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
+  </Modal.Body>
+  <Modal.Footer className="justify-content-center">
+    <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
+      No
+    </Button>
+    <Button variant="success" onClick={handleConfirmSave}>
+      Sí
+    </Button>
+  </Modal.Footer>
+</Modal>
+
 
         <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
           <Modal.Body>

@@ -349,7 +349,7 @@ const Playlist = () => {
           keyboard={false}
           centered
         >
-          <Modal.Body>
+          <Modal.Body className="text-center">
             <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">

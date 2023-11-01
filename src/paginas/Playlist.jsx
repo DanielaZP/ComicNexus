@@ -352,7 +352,7 @@ const Playlist = () => {
           <Modal.Body>
             <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="justify-content-center">
             <Button className='btn custom-btn-color' onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>

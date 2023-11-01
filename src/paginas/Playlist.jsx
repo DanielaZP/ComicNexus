@@ -20,6 +20,7 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
+  
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -100,7 +101,7 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
-    const specialCharactersRegex = /^[a-zA-Z0-9 ]+$/;
+    const specialCharactersRegex = /^[a-zA-Z0-9ñÑ ]+$/;
     if (!playlistName.trim()) {
       setNameError('Rellene este campo.');
       setMinLengthError(false);

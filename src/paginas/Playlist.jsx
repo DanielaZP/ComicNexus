@@ -100,7 +100,11 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
-    if (playlistName.trim().length < 3) {
+    if (!playlistName.trim()) {
+      setNameError('Rellene este campo.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
+    } else if (playlistName.trim().length < 3) {
       setMinLengthError(true);
       setMaxLengthError(false);
       setNameError('');
@@ -117,7 +121,7 @@ const Playlist = () => {
       setMaxLengthError(false);
       setConfirmModalVisible(true);
     }
-  };
+  }  
 
   const handleCloseSuccessModal = () => {
     setSuccessModalVisible(false);
@@ -287,6 +291,7 @@ const Playlist = () => {
                     />
                       {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
                       {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                      {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
                     </Form.Group>
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>

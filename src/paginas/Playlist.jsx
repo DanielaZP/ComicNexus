@@ -232,7 +232,7 @@ const Playlist = () => {
           Crear playlist
         </Button>
 
-        <Modal show={showModal} onHide={handleClose} size="lg">
+        <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Crear playlist</Modal.Title>
           </Modal.Header>
@@ -313,25 +313,25 @@ const Playlist = () => {
         </Modal>
 
         <Modal show={confirmModalVisible} centered backdrop="static" keyboard={false}>
-  <Modal.Body>
-    <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
-  </Modal.Body>
-  <Modal.Footer className="justify-content-center">
-    <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
-      No
-    </Button>
-    <Button variant="success" onClick={handleConfirmSave}>
-      Sí
-    </Button>
-  </Modal.Footer>
-</Modal>
+        <Modal.Body>
+          <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+         <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
+          No
+          </Button>
+          <Button variant="success" onClick={handleConfirmSave}>
+         Sí
+      </Button>
+   </Modal.Footer>
+  </Modal>
 
 
         <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
           <Modal.Body>
             <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="justify-content-center">
             <Button variant="danger" onClick={() => setCancelModalVisible(false)}>
               No
             </Button>

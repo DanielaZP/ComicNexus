@@ -124,7 +124,7 @@ function VistaComic() {
           </Col>
           <Col lg={6} md={12}>
           <div className="custom-form-container">
-              <h3>Título: {comic.comic.titulo}</h3>
+              
               <p>
                 <strong>Autor(es): </strong>
                 {comic.comic.autor}

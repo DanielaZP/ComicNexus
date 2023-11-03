@@ -20,6 +20,7 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
+  
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -100,7 +101,12 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
-    if (playlistName.trim().length < 3) {
+    const specialCharactersRegex = /^[a-zA-Z0-9ñÑ ]+$/;
+    if (!playlistName.trim()) {
+      setNameError('Rellene este campo.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
+    } else if (playlistName.trim().length < 3) {
       setMinLengthError(true);
       setMaxLengthError(false);
       setNameError('');
@@ -108,6 +114,10 @@ const Playlist = () => {
       setMinLengthError(false);
       setMaxLengthError(true);
       setNameError('');
+    } else if (!specialCharactersRegex.test(playlistName)) {
+      setNameError('El nombre no puede contener caracteres especiales.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
     } else if (!selectedImage) {
       setNameError('Sube una imagen válida.');
       setMinLengthError(false);
@@ -117,7 +127,7 @@ const Playlist = () => {
       setMaxLengthError(false);
       setConfirmModalVisible(true);
     }
-  };
+  }  
 
   const handleCloseSuccessModal = () => {
     setSuccessModalVisible(false);
@@ -199,6 +209,8 @@ const Playlist = () => {
   const indexOfLastPlaylist = currentPage * playlistsPerPage;
   const indexOfFirstPlaylist = indexOfLastPlaylist - playlistsPerPage;
   const currentPlaylists = playlists.slice(indexOfFirstPlaylist, indexOfLastPlaylist);
+  const totalPages = Math.ceil(playlists.length / playlistsPerPage);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -221,7 +233,7 @@ const Playlist = () => {
           Crear playlist
         </Button>
 
-        <Modal show={showModal} onHide={handleClose} size="lg">
+        <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Crear playlist</Modal.Title>
           </Modal.Header>
@@ -285,6 +297,7 @@ const Playlist = () => {
                     />
                       {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
                       {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                      {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
                     </Form.Group>
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
@@ -304,21 +317,22 @@ const Playlist = () => {
         <Modal.Body>
           <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
-            No
+        <Modal.Footer className="justify-content-center">
+         <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
+          No
           </Button>
           <Button variant="success" onClick={handleConfirmSave}>
-            Sí
-          </Button>
-        </Modal.Footer>
-      </Modal>
+         Sí
+      </Button>
+   </Modal.Footer>
+  </Modal>
+
 
         <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
           <Modal.Body>
             <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="justify-content-center">
             <Button variant="danger" onClick={() => setCancelModalVisible(false)}>
               No
             </Button>
@@ -335,10 +349,10 @@ const Playlist = () => {
           keyboard={false}
           centered
         >
-          <Modal.Body>
+          <Modal.Body className="text-center">
             <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="justify-content-center">
             <Button className='btn custom-btn-color' onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>
@@ -382,24 +396,27 @@ const Playlist = () => {
             ))
           )}
         </Row>
-
           <div className="mt-4 text-center">
-          <button
-            className="btn custom-btn-color mx-2"
-            onClick={() => handlePageChange(currentPage - 1)}
-            style={{ border: '3px solid white', borderRadius: '8px' }}
-            disabled={currentPage === 1}
-          >
-            Página Anterior
-          </button>
-          <button
-            className="btn custom-btn-color mx-2"
-            onClick={() => handlePageChange(currentPage + 1)}
-            style={{ border: '3px solid white', borderRadius: '8px' }}
-            disabled={indexOfLastPlaylist >= playlists.length}
-          >
-            Siguiente Página
-          </button>
+          {totalPages > 1 && (
+            <>
+              <button
+                className="btn custom-btn-color mx-2"
+                onClick={() => handlePageChange(currentPage - 1)}
+                style={{ border: '3px solid white', borderRadius: '8px' }}
+                disabled={currentPage === 1}
+              >
+                Página Anterior
+              </button>
+              <button
+                className="btn custom-btn-color mx-2"
+                onClick={() => handlePageChange(currentPage + 1)}
+                style={{ border: '3px solid white', borderRadius: '8px' }}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente Página
+              </button>
+            </>
+          )}
         </div>
       </div>
     </Container>

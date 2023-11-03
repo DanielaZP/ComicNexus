@@ -46,9 +46,13 @@ function RegistroUsuario() {
     if (name === "email") {
       setServerErrorMessage(null);
     }
+    if (name === "username") {
+      setServerErrorMessageUserName(null);
+    }
   };
 
   const [serverErrorMessage, setServerErrorMessage] = useState(false);
+  const [serverErrorMessageUserName, setServerErrorMessageUserName] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = { ...errors };
@@ -89,8 +93,14 @@ function RegistroUsuario() {
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        // El correo o nombre de usuario ya están registrados
-        setServerErrorMessage('Este correo ya fue registrado.');
+        if (error.response.data.message === 'Correo ya está registrado en esta página') {
+          setServerErrorMessage('Este correo ya fue registrado.');
+        } else if (error.response.data.message === 'Nombre de usuario ya está registrado en esta página') {
+          setServerErrorMessageUserName('Este nombre de usuario ya fue registrado.');
+        } else if (error.response.data.message === 'Correo y nombre de usuario ya están registrados en esta página') {
+          setServerErrorMessage('Este correo ya fue registrado.');
+          setServerErrorMessageUserName('Este nombre de usuario ya fue registrado.');
+        }
       } else {
         console.error('Error al registrar:', error);
       }
@@ -130,6 +140,11 @@ function RegistroUsuario() {
           <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
             {errors.username}
           </p>
+          {serverErrorMessageUserName && (
+          <p className='error-message-repetido'>
+           {serverErrorMessageUserName}
+          </p>
+           )}
         </div>
         <div className="form-group">
           <label>Correo electrónico<span className="text-danger">*</span></label>

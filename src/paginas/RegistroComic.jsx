@@ -100,7 +100,7 @@ export const RegistroComic = () => {
     titulo: "",
     autor: "",
     sinopsis: "",
-    selectedCategorias: {},
+    selectedCategorias: [],
     fechaPublicacion: "",
     selectedFile: "",
     portada: ""
@@ -247,6 +247,7 @@ export const RegistroComic = () => {
   const handleTituloChange = (e) => {
     const nuevoTitulo = e.target.value;
     setCampoObligatorioTituloError(false);
+    setCampoTituloDuplicado(false);
     const regex = /^[a-zA-Z0-9%$#&-'/=<>*+,;| áéíóúÁÉÍÓÚñÑ]*$/;
 
     if (nuevoTitulo.length > 60) {
@@ -505,7 +506,7 @@ export const RegistroComic = () => {
                   value={data.fechaPublicacion}
                   onChange={handleFechaChange}
                   max={new Date().toISOString().split("T")[0]}
-                  min="1985-01-01"
+                  min="1986-02-16"
                   onKeyDown={(e) => e.preventDefault()}
                 />
                 {mostrarAdvertencia && (

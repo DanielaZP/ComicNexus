@@ -62,12 +62,11 @@ const VistaPlaylist = () => {
       })
       .catch((error) => {
         console.error('Error al eliminar el cómic de la playlist:', error);
-        modalError();
       })
       .finally(() => {
         handleCloseModal();
-      });
-    };
+       });
+     };
 
   return (
     <div>

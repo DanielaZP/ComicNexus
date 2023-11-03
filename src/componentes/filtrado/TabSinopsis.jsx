@@ -6,10 +6,10 @@ import CardCat from '../CardCat'// Importa tu componente Card
 import { Spinner } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
-const NavCat = () => {
+const TabCat = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Inicialmente, isLoading se establece en true
-  const itemsPerPage = 3;
+  const itemsPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
@@ -17,7 +17,7 @@ const NavCat = () => {
 useEffect(() => {
   setIsLoading(true);
   console.log(search)
-  axios.get('https://comic-next-laravel.vercel.app/api/api/cat/'+search)
+  axios.get('https://comic-next-laravel.vercel.app/api/api/sinopsis/'+search)
       .then((response) => {
         // Almacena los datos JSON en el estado local
         console.log(response.data);
@@ -41,17 +41,20 @@ useEffect(() => {
       
     <div className="container">
         {isLoading ? (
-         <div className="text-center my-3">
+         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
          <Spinner animation="border" variant="primary" role="status">
-           <span className="sr-only">.</span>
+           <span className="sr-only"></span>
          </Spinner>
          <p className="mt-2">Cargando cómics...</p>
-       </div>
+       </Container>
         ) : comicsData.length === 0 ? (
-            <p style={ { textAlign: "center", fontFamily: "Comic Sans MS", fontSize: "20px" }}>
+          <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <p style={{ fontFamily: "Comic Sans MS" ,
+          fontSize: "20px"}}>
           {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
           : 'No se han encontraron resultados para ""'}
         </p>
+        </Container>
         ) : (
           <div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-4">
@@ -61,11 +64,28 @@ useEffect(() => {
                 </div>
               ))}
             </div>
-            
+            {comicsData.length > itemsPerPage && (
+              <div className="mt-4 text-center">
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Página Anterior
+                </button>
+                <button
+                  className="btn custom-btn-color mx-2"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage * itemsPerPage >= comicsData.length}
+                >
+                  Siguiente Página
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
   )
 }
 
-export default  NavCat 
+export default  TabCat

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faUser, faLock, faRoad } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,16 +24,10 @@ function InicioSesion() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const newPassword = name === 'password' ? value.replace(/\s/g, '') : value; // Elimina espacios en blanco
 
-    if (name === "password" && /\s/.test(value)) {
-      // Si el campo de contraseña contiene espacios en blanco, establece un mensaje de error
-      setErrors({ ...errors, [name]: 'La contraseña no puede contener espacios en blanco.' });
-    } else {
-      // Si no hay espacios en blanco, elimina el mensaje de error
-      setErrors({ ...errors, [name]: '' });
-    }
-
-    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: '' });
+    setFormData({ ...formData, [name]: newPassword });
   };
 
   const handleSubmit = async (e) => {
@@ -47,16 +41,20 @@ function InicioSesion() {
       newErrors.password = 'La contraseña es obligatoria.';
     } else if (formData.password.length < 8) {
       newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/[a-z]/.test(formData.password)) {
+      newErrors.password = 'La contraseña debe contener al menos una letra minúscula.';
     } else if (!/[A-Z]/.test(formData.password)) {
       newErrors.password = 'La contraseña debe contener al menos una letra mayúscula.';
     } else if (!/\d/.test(formData.password)) {
       newErrors.password = 'La contraseña debe contener al menos un número.';
+    } else if (/\s/.test(formData.password)) {
+      newErrors.password = 'La contraseña no puede contener espacios en blanco.';
     }
 
     if (Object.keys(newErrors).length === 0) {
       // No hay errores, enviar el formulario
       try {
-        const response = await axios.get(`https://comic-next-laravel.vercel.app/api/api/verificar-credenciales?nombre_u=${formData.username}& password=${formData.password}`)
+        const response = await axios.get(`https://comic-next-laravel.vercel.app/api/api/verificar-credenciales?nombre_u=${formData.username}&password=${formData.password}`)
         if (response.status === 200) {
           // Autenticación exitosa
           const data = response.data; // Obtén los datos de la respuesta

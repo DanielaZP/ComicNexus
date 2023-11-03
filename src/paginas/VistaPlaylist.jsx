@@ -149,7 +149,7 @@ const VistaPlaylist = () => {
                       borderRadius: '8px'
                     }} 
                     onClick={() => handleShowModal(comic)}
-                  >Eliminar de la Lista</Button>
+                  >Eliminar de la lista</Button>
                 </Col>
               </Row>
             ))

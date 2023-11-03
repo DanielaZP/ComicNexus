@@ -477,7 +477,7 @@ export const RegistroComic = () => {
               <div className="field">
                 <label>Categoría<span className="text-danger">*</span></label>
                 <Dropdown
-                  placeholder="Seleccione la o las categorias"
+                  placeholder="Seleccione la o las categorías"
                   /*className="form-control"*/
                   name="categorias"
                   options={options}

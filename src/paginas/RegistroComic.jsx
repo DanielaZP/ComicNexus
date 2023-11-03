@@ -545,7 +545,7 @@ export const RegistroComic = () => {
                 )}
                  {caracterNoPermitidoSinopsis && (
                   <Message size="mini" negative>
-                   <p>Ingreso caracteres no permitidos.</p>
+                   <p>”Ingresó caracteres no permitidos.</p>
                   </Message>   
                 )}
 

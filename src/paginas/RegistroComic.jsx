@@ -423,7 +423,7 @@ export const RegistroComic = () => {
               <div className="field">
                 <label>Título <span className="text-danger">*</span></label>
                 <Input
-                  placeholder="Ingrese el titulo del comic"
+                  placeholder="Ingrese el título del cómic"
                   name="titulo"
                   type="text"
                   value={data.titulo}

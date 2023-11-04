@@ -19,15 +19,15 @@ function PaginaAdmi() {
             </div>
             </div>
         </div>
-        {/* <div class="col-sm-6">
+         <div class="col-sm-6">
             <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title">Elimar comic existente de la plataforma</h5>
-                <p class="card-text">Para eliminar el registro y datos de un comic ya existente presione el boton.</p>
-                <a href="#" class="btn custom-btn-color">Eliminar comic</a>
+                <h5 class="card-title">Añadir nuevo contenido de cómic a la plataforma</h5>
+                <p class="card-text">Para agregar nuevo contenido de un cómic presione el botón de abajo.</p>
+                <a href="#" class="btn custom-btn-color">Añadir contenido</a>
             </div>
             </div>
-        </div> */}
+        </div> 
         </div>
     </div>
   )

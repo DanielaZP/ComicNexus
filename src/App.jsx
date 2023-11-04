@@ -55,6 +55,7 @@ function App() {
             <Route path="playlists" element={<Playlist />} />
             <Route path="vista-playlist/:id" element={<VistaPlaylist />} />
             <Route path='buscar' element={<BusquedaTodo/>}/>
+            <Route path='perfil' element={<Perfil/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />

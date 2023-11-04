@@ -423,7 +423,7 @@ export const RegistroComic = () => {
               <div className="field">
                 <label>Título <span className="text-danger">*</span></label>
                 <Input
-                  placeholder="Ingrese el titulo del comic"
+                  placeholder="Ingrese el título del cómic"
                   name="titulo"
                   type="text"
                   value={data.titulo}
@@ -478,7 +478,7 @@ export const RegistroComic = () => {
               <div className="field">
                 <label>Categoría<span className="text-danger">*</span></label>
                 <Dropdown
-                  placeholder="Seleccione la o las categorias"
+                  placeholder="Seleccione la o las categorías"
                   /*className="form-control"*/
                   name="categorias"
                   options={options}
@@ -545,7 +545,7 @@ export const RegistroComic = () => {
                 )}
                  {caracterNoPermitidoSinopsis && (
                   <Message size="mini" negative>
-                   <p>Ingreso caracteres no permitidos.</p>
+                   <p>”Ingresó caracteres no permitidos.</p>
                   </Message>   
                 )}
 

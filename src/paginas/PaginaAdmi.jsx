@@ -24,7 +24,7 @@ function PaginaAdmi() {
             <div class="card-body">
                 <h5 class="card-title">Añadir nuevo contenido de cómic a la plataforma</h5>
                 <p class="card-text">Para agregar nuevo contenido de un cómic presione el botón de abajo.</p>
-                <a href="#" class="btn custom-btn-color">Añadir contenido</a>
+                <Link class="btn custom-btn-color" to="/contenido-comic">Añadir contenido</Link>
             </div>
             </div>
         </div> 

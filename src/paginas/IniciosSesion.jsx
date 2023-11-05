@@ -65,10 +65,12 @@ function InicioSesion() {
         } else {
           // Autenticación fallida
           console.error('Error de autenticación:', response.data.error);
+
         }
       } catch (error) {
         console.error('Error al enviar la solicitud:', error);
-        setErrorMensaje('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+        setFormData({ username: '', password: '', showPassword: false });
+        setErrorMensaje('Error al iniciar sesión. Por favor, ingrese nuevamente sus credenciales.');
         const response2 = await axios.get(`https://comic-next-laravel.vercel.app/api/api/incrementarFallidos/${formData.username}`)
         if (response2.status === 200) {
           const data2 = response2.data;

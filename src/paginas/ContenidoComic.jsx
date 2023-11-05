@@ -1,6 +1,7 @@
 import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 function ContenidoComic() {
@@ -105,7 +106,7 @@ function ContenidoComic() {
                 textAlign: 'center'
               }}
             >
-              <h4>Titulo: {selectedComic.comic.titulo}</h4>
+              <h4>Título: {selectedComic.comic.titulo}</h4>
               <p>Autor(es): {selectedComic.comic.autor}</p>
             </div>
           </>
@@ -166,11 +167,46 @@ function ContenidoComic() {
                 </div>
               ))}
             </div>
-            <button onClick={uploadImages} style={{
-              marginTop: '10px'
-            }}>
+            <button onClick={uploadImages} className="btn custom-btn-color"
+              style={{
+                marginTop: '20px',
+                width: '180px',
+                height: '60px',
+                justifyContent: 'center',
+                lineHeight: '35px',
+                border: '3px solid white',
+                borderRadius: '8px',
+                
+              }}>
               Subir imágenes
             </button>
+            <button  className="btn custom-btn-color"
+              style={{
+                marginTop: '20px',
+                width: '180px',
+                height: '60px',
+                justifyContent: 'center',
+                lineHeight: '35px',
+                border: '3px solid white',
+                borderRadius: '8px',
+                marginRight: '110px',
+                marginLeft:'110px'
+              }}>
+              Limpiar
+            </button>
+            <Link className="btn Warning-btn-color" to="/inicio"
+              style={{
+                marginTop: '20px',
+                width: '180px',
+                height: '60px',
+                justifyContent: 'center',
+                lineHeight: '35px',
+                border: '3px solid white',
+                borderRadius: '8px',
+                marginRight: '0px'
+              }}>
+              Cancelar
+            </Link>
           </div>
         </Col>
       </Row>

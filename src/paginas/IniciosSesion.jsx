@@ -112,6 +112,7 @@ function InicioSesion() {
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"
+              maxlength="50"
             />
             <FontAwesomeIcon
               icon={formData.showPassword ? faEye : faEyeSlash}

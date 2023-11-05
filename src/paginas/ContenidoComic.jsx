@@ -1,10 +1,14 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
 function ContenidoComic() {
     const [images, setImages] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
 
     const onDrop = (acceptedFiles) => {
       const newImages = acceptedFiles.map((file) => Object.assign(file, {
@@ -50,6 +54,40 @@ function ContenidoComic() {
       <Row>
         {/* Columna izquierda (1/3 de la ventana) */}
         <Col xs={12} md={4}>
+        <div
+                  className="empty-image-container"
+                  style={{
+                    width: "300px",
+                    height: "470px",
+                    //border: "1px dashed #ccc",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "white",
+                    border: '3px solid white', 
+                    borderRadius: '8px'
+                  }}
+                >
+                  Escoja un cómic
+                </div>
+                <div className='text-center'>
+                    <button
+                        className="btn custom-btn-color"
+                        style={{
+                        marginTop: '20px',
+                        width: '180px',
+                        height: '60px',
+                        justifyContent: 'center',
+                        lineHeight: '35px',
+                        border: '3px solid white', 
+                        borderRadius: '8px',
+                        marginRight:'110px'
+                        }}
+                        onClick={handleShowModal}
+                    >
+                        Seleccionar Cómic
+                    </button>
+                </div>
         </Col>
         {/* Columna derecha (2/3 de la ventana) */}
         <Col xs={12} md={8}>
@@ -72,10 +110,27 @@ function ContenidoComic() {
                 </div>
                 ))}
             </div>
-            <button onClick={uploadImages}>Subir imágenes</button>
+            <button onClick={uploadImages} style={{
+                marginTop:'10px'
+            }}>
+            Subir imágenes</button>
             </div>
         </Col>
       </Row>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>A qué cómic quieres añadir contenido?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Contenido del modal */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="btn Warning-btn-color" onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+          {/* Otros botones del pie del modal si es necesario */}
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }
@@ -87,7 +142,8 @@ const dropzoneStyles = {
     cursor: 'pointer',
     marginBottom: '20px', 
     minHeight: '150px',
-    marginTop: '20px'
+    marginTop: '20px',
+    backgroundColor: "white"
   };
 
   const previewStyles = {
@@ -101,8 +157,8 @@ const dropzoneStyles = {
   };
   
   const imageStyles = {
-    width: '100px',
-    height: '100px',
+    width: '150px',
+    height: '200px',
     objectFit: 'cover',
   };
   
@@ -119,6 +175,7 @@ const dropzoneStyles = {
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    
   };
 
 export default ContenidoComic;

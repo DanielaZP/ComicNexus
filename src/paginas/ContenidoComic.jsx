@@ -72,6 +72,10 @@ function ContenidoComic() {
     handleCloseModal();
   };
 
+  const clearImages = () => {
+    setImages([]);
+  };
+
   return (
     <Container className="text-center my-5">
       <h1 className="display-4 badabb">
@@ -191,7 +195,7 @@ function ContenidoComic() {
                 borderRadius: '8px',
                 marginRight: '110px',
                 marginLeft:'110px'
-              }}>
+              }} onClick={clearImages}>
               Limpiar
             </button>
             <Link className="btn Warning-btn-color" to="/inicio"
@@ -262,6 +266,8 @@ const dropzoneStyles = {
 const previewStyles = {
   display: 'flex',
   marginTop: '20px',
+  overflowX: 'auto',  // Agregar esta línea para habilitar el scroll horizontal
+  maxHeight: '300px', // Ajustar según sea necesario
 };
 
 const imageContainerStyles = {
@@ -290,5 +296,6 @@ const deleteIconStyles = {
   cursor: 'pointer',
 
 };
+
 
 export default ContenidoComic;

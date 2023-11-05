@@ -58,14 +58,16 @@ const VistaPlaylist = () => {
         })
       .then((response) => {
         console.log('Éxito al eliminar el cómic', response.data);
-        window.location.reload(); // Recargar la página
+        setComicsData((prevComicsData) =>
+        prevComicsData.filter((comic) => comic.comic.cod_comic !== selectedComic.comic.cod_comic)
+      );
       })
       .catch((error) => {
         console.error('Error al eliminar el cómic de la playlist:', error);
       })
       .finally(() => {
         handleCloseModal();
-       });
+      });
      };
 
   return (

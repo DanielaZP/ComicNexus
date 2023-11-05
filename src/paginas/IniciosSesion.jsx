@@ -96,6 +96,7 @@ function InicioSesion() {
             value={formData.username}
             onChange={handleChange}
             placeholder="Nombre de usuario"
+            maxlength="30"
           />
           <p className={`error-message ${errors.username ? '' : 'hidden'}`}>
             {errors.username}
@@ -112,6 +113,7 @@ function InicioSesion() {
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"
+              maxlength="50"
             />
             <FontAwesomeIcon
               icon={formData.showPassword ? faEye : faEyeSlash}

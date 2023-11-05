@@ -1,11 +1,31 @@
 import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
 function ContenidoComic() {
     const [images, setImages] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [comicsData, setComicsData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Hacer la solicitud HTTP a tu servidor Laravel
+        axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
+    
+        .then((response) => {
+          // Almacena los datos JSON en el estado local
+          console.log(response.data);
+          setComicsData(response.data);
+        })
+        .catch((error) => {
+          console.error('Error al obtener datos:', error);
+        })
+        .finally(() => {
+          // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
+          setIsLoading(false);
+        });
+      }, []);
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
@@ -121,9 +141,27 @@ function ContenidoComic() {
         <Modal.Header closeButton>
           <Modal.Title>A qué cómic quieres añadir contenido?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {/* Contenido del modal */}
-        </Modal.Body>
+            <Modal.Body style={{maxHeight: 'calc(80vh - 130px)', overflowY: 'auto'}}>
+            <ul className='playlist-list'>
+                {comicsData.map((comic) => (
+                <li key={comic.comic.id}>
+                    <div className='playlist-item'>
+                    <img
+                    src={comic.portadaUrl} // Ajusta según la estructura de tus datos
+                    alt={comic.comic.titulo} // Ajusta según la estructura de tus datos
+                    className='contenido-image'
+                    />
+                    <span className='playlist-title'>{comic.comic.titulo}</span> 
+                    <Button
+                    className='btn custom-btn-color'
+                    >
+                        Seleccionar
+                    </Button>
+                    </div>
+                </li>
+                ))}
+            </ul>
+            </Modal.Body>
         <Modal.Footer>
           <Button className="btn Warning-btn-color" onClick={handleCloseModal}>
             Cancelar

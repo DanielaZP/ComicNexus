@@ -97,8 +97,8 @@ function BusquedaTodo() {
          <NavItem>
            <NavLink 
            className={(activeTab=="1" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("1")}style={{ textShadow: "2px 2px 4px black", color: activeTab === "1" ? 
-            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+           onClick={()=>cambiarTab("1")}style={{ color: activeTab === "1" ? "#61dafb" : "black",
+                 borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
              Todo
            </NavLink>
          </NavItem>
@@ -106,8 +106,8 @@ function BusquedaTodo() {
          <NavItem>
            <NavLink 
               className={(activeTab=="2" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("2")}style={{ textShadow: "2px 2px 4px black",color: activeTab === "2" ? 
-            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px",fontWeight: "bold"}}>
+           onClick={()=>cambiarTab("2")}style={{ color: activeTab === "2" ? "#61dafb" : "black",
+                   borderRadius: "20px" , marginRight: "20px",fontWeight: "bold"}}>
              Títulos
            </NavLink>
          </NavItem>
@@ -115,8 +115,8 @@ function BusquedaTodo() {
          <NavItem>
            <NavLink 
               className={(activeTab=="3" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("3")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "3" ? 
-            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+           onClick={()=>cambiarTab("3")}style={{ color: activeTab === "3" ? "#61dafb" : "black", 
+                  borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
             Autor
            </NavLink>
          </NavItem>
@@ -124,8 +124,8 @@ function BusquedaTodo() {
          <NavItem>
            <NavLink 
               className={(activeTab=="4" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("4")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "4" ? 
-            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+           onClick={()=>cambiarTab("4")}style={{ color: activeTab === "4" ? "#61dafb" : "black", 
+                  borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
             Sinopsis
            </NavLink>
          </NavItem>
@@ -133,8 +133,8 @@ function BusquedaTodo() {
          <NavItem>
            <NavLink 
               className={(activeTab=="5" ? "activeTab baseTab" : "baseTab" )}
-           onClick={()=>cambiarTab("5")}style={{  textShadow: "2px 2px 4px black",color: activeTab === "5" ? 
-            "#61dafb" : "white", borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
+           onClick={()=>cambiarTab("5")}style={{ color: activeTab === "5" ? "#61dafb" : "black", 
+                borderRadius: "20px" , marginRight: "20px", fontWeight: "bold"}}>
             Año de publicación
            </NavLink>
          </NavItem>

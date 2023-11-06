@@ -328,7 +328,7 @@ button:hover {
   }
   
   .baseTab{
-    /* background: #7498b6; */
+    background: white;
     /* border-left: 1px solid black !important; */
     color: black;
     cursor: pointer;

@@ -56,6 +56,7 @@ function SolicitudRestablecimientoContraseña() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder='Ingrese su correo electrónico'
               />
               <p className={`error-message ${errors.email ? '' : 'hidden'}`}>
                 {errors.email}

@@ -296,7 +296,11 @@ button:hover {
   height: 50px;
   margin-right: 10px;
 }
-
+.contenido-image {
+  width: 50px ;
+  height: 80px; 
+  margin-Right: 10px; 
+}
 /* Agrega este estilo para el título de la playlist */
 .playlist-title {
   flex-grow: 1; /* Hace que el título ocupe todo el espacio restante */

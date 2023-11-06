@@ -20,6 +20,7 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
+  
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -100,7 +101,7 @@ const Playlist = () => {
   };
 
   const handleSavePlaylist = () => {
-    const specialCharactersRegex = /^[a-zA-Z0-9 ]+$/;
+    const specialCharactersRegex = /^[a-zA-Z0-9ñÑ ]+$/;
     if (!playlistName.trim()) {
       setNameError('Rellene este campo.');
       setMinLengthError(false);
@@ -348,10 +349,10 @@ const Playlist = () => {
           keyboard={false}
           centered
         >
-          <Modal.Body>
+          <Modal.Body className="text-center">
             <h4 c>¡La playlist se ha subido con éxito!</h4>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="justify-content-center">
             <Button className='btn custom-btn-color' onClick={handleCloseSuccessModal}>  
               Cerrar
             </Button>

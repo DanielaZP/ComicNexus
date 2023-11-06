@@ -18,6 +18,7 @@ import VistaPlaylist from './paginas/VistaPlaylist';
 import InicioSesion from './paginas/IniciosSesion';
 import BusquedaTodo from './paginas/BusquedaTodo';
 import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
+import ContenidoComic from './paginas/ContenidoComic';
 
 function App() {
   const estiloFondo = {
@@ -55,6 +56,8 @@ function App() {
             <Route path="playlists" element={<Playlist />} />
             <Route path="vista-playlist/:id" element={<VistaPlaylist />} />
             <Route path='buscar' element={<BusquedaTodo/>}/>
+            <Route path='perfil' element={<Perfil/>}/>
+            <Route path='contenido-comic' element={<ContenidoComic/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />

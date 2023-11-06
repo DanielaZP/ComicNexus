@@ -62,7 +62,10 @@ function RegistroUsuario() {
     }
     if (!formData.username) {
       newErrors.username = 'El nombre de usuario es obligatorio.';
+    } else if (formData.username.length < 3) {
+      newErrors.username = 'El nombre de usuario debe tener al menos 3 caracteres.';
     }
+  
     
     if (!formData.email) {
       newErrors.email = 'El correo electrónico es obligatorio.';

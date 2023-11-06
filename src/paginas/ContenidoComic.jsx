@@ -31,11 +31,23 @@ function ContenidoComic() {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  const onDrop = (acceptedFiles) => {
-    const newImages = acceptedFiles.map((file) => Object.assign(file, {
-      preview: URL.createObjectURL(file),
-    }));
+  const onDrop = async (acceptedFiles) => {
+    const newImages = await Promise.all(
+      acceptedFiles.map(async (file) => {
+        const base64String = await readFileAsBase64(file);
+        return { file, preview: URL.createObjectURL(file), base64String };
+      })
+    );
     setImages((prevImages) => [...prevImages, ...newImages]);
+  };
+  
+  const readFileAsBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -44,23 +56,35 @@ function ContenidoComic() {
   });
 
   const uploadImages = async () => {
-    const formData = new FormData();
-    images.forEach((image) => {
-      formData.append('images[]', image);
-    });
+    if (!selectedComic) {
+      console.error('Por favor, selecciona un cómic antes de subir imágenes.');
+      return;
+    }
+  
+    const imageData = images.map(({ base64String }) => base64String);
 
+    console.log('Datos que se enviarán al servidor:', {
+      imagenes: imageData,
+      cod_comic: selectedComic.comic.cod_comic,
+    });
     try {
-      await axios.post('http://tu-api-laravel.com/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      // Incluir el código del cómic en la solicitud POST
+      await axios.post('https://comic-next-laravel.vercel.app/api/api/registroContenidoComic', {
+        imagenes: imageData,
+        cod_comic: selectedComic.comic.cod_comic, 
       });
-      // Manejar la respuesta exitosa
+  
+      // Mostrar un mensaje en la consola si la solicitud es exitosa
+      console.log('Imágenes subidas correctamente.');
+  
+      // Manejar la respuesta exitosa (puedes agregar más lógica aquí si es necesario)
     } catch (error) {
       // Manejar el error
+      console.error('Error al subir imágenes:', error);
     }
   };
-
+  
+  
   const removeImage = (index) => {
     const newImages = [...images];
     newImages.splice(index, 1);
@@ -180,7 +204,6 @@ function ContenidoComic() {
                 lineHeight: '35px',
                 border: '3px solid white',
                 borderRadius: '8px',
-                
               }}>
               Subir imágenes
             </button>

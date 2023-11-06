@@ -9,6 +9,7 @@ const NavComponent = () => {
   const [inputValue, setInputValue] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [characterCount, setCharacterCount] = useState(0);
 
   const showInput = () => {
     setInputVisible(true);
@@ -17,8 +18,9 @@ const NavComponent = () => {
   const hideInput = () => {
     setInputVisible(false);
     setShowAlert(false);
-    //setInputValue('');
-    //navigate(-1);
+    let ir = ((characterCount)*-1)
+    navigate(ir)
+    localStorage.setItem('cuenta',0)
   };
 
   const handleInputChange = (e) => {
@@ -42,12 +44,21 @@ const NavComponent = () => {
     setInputValue('');
     const otro = '¡';
     navigate(`/buscar?search=${otro}`);
+    setCharacterCount((prevCount) => prevCount +1);
+    localStorage.setItem('cuenta',characterCount)
+    console.log(localStorage.getItem('cod_usuario'))
+    console.log(localStorage.getItem('cuenta'))
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault(); 
+    }else{
+      setCharacterCount((prevCount) => prevCount +1);
+      localStorage.setItem('cuenta',characterCount)
     }
+    console.log(localStorage.getItem('cod_usuario'))
+    console.log(localStorage.getItem('cuenta'))
   }
 
   const borrar = ()=>{setShowAlert(false);}

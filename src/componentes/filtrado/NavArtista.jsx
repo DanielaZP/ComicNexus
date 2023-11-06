@@ -17,11 +17,11 @@ const NavArtista = () => {
 useEffect(() => {
   const delay = setTimeout(() => {  
     setIsLoading(true);
-    console.log(search)
+    //console.log(search)
     axios.get('https://comic-next-laravel.vercel.app/api/api/artista/'+search)
         .then((response) => {
           // Almacena los datos JSON en el estado local
-          console.log(response.data);
+          //console.log(response.data);
           setComicsData(response.data);
         })
         .catch((error) => {

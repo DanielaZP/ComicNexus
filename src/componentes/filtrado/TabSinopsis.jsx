@@ -16,7 +16,7 @@ const TabCat = () => {
 
 useEffect(() => {
   setIsLoading(true);
-  console.log(search)
+  //console.log(search)
   axios.get('https://comic-next-laravel.vercel.app/api/api/sinopsis/'+search)
       .then((response) => {
         // Almacena los datos JSON en el estado local

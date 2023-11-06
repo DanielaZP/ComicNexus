@@ -20,7 +20,7 @@ const NavAnio = () => {
       setIsLoading(true);
       axios.get('https://comic-next-laravel.vercel.app/api/api/anio/' + search)
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           setComicsData(response.data);
         })
         .catch((error) => {

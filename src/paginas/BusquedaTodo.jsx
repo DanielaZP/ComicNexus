@@ -10,6 +10,8 @@ import TabAnio from '../componentes/filtrado/TabAnio';
 import NavAnio from '../componentes/filtrado/NavAnio';
 import TabCat from '../componentes/filtrado/TabSinopsis';
 import NavCat from '../componentes/filtrado/NavSinopsis';
+import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from 'react-use';
 
 function BusquedaTodo() {
   const [comicsData, setComicsData] = useState([]);
@@ -19,6 +21,19 @@ function BusquedaTodo() {
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
   const[activeTab,setActiveTab] = useState("1");
+  let navigate = useNavigate();
+  const [cuenta, setCuenta] = useLocalStorage('cuenta');
+
+  window.onpopstate = () => {
+    let ir = ((localStorage.getItem('cuenta'))*-1)
+    console.log(ir)
+    navigate(ir);
+    //navigate("/inicio");
+    //Talvez se mejor guardar el path anterior :v
+    localStorage.setItem('cuenta',0)
+    console.log(localStorage.getItem('cod_usuario'))
+    console.log(localStorage.getItem('cuenta'))
+  }
 
   const cambiarTab = (numeroTab) =>{
     if(activeTab !== numeroTab){

@@ -59,6 +59,7 @@ function App() {
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />
           <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

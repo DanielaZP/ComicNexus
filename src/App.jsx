@@ -18,6 +18,7 @@ import VistaPlaylist from './paginas/VistaPlaylist';
 import InicioSesion from './paginas/IniciosSesion';
 import BusquedaTodo from './paginas/BusquedaTodo';
 import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
+import RestablecerContraseña from './paginas/RestablecerContrasaña';
 import ContenidoComic from './paginas/ContenidoComic';
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />
           <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
+          <Route path="restablecer-contraseña" element={<RestablecerContraseña />} />
           {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </BrowserRouter>

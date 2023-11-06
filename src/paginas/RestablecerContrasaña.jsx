@@ -43,6 +43,7 @@ function RestablecerContraseña() {
     }
 
     if (Object.keys(newErrors).length === 0) {
+      setFormData({ newPassword: '', confirmPassword: '', showPassword: false });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
     }
@@ -54,6 +55,9 @@ function RestablecerContraseña() {
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
       <form onSubmit={handleSubmit} className="form">
         <h2 className="form-title badabbm">Restablecer Contraseña</h2>
+        <div className="image-container">
+          <img src="./LogoComicsNexus.png" alt="Imagen de usuario" style={{ maxWidth: '50%', height: 'auto' }} />
+        </div>
         <div className="form-group">
           <label>
             <FontAwesomeIcon icon={faLock} /> Nueva Contraseña<span className="text-danger">*</span>
@@ -64,7 +68,7 @@ function RestablecerContraseña() {
               name="newPassword"
               value={formData.newPassword}
               onChange={handleChange}
-              placeholder="Nueva Contraseña"
+              placeholder="Ingrese una nueva contraseña."
               maxLength="50"
             />
             <FontAwesomeIcon
@@ -87,8 +91,13 @@ function RestablecerContraseña() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Confirmar Contraseña"
+              placeholder="Repita la misma contraseña para confirmarla."
               maxLength="50"
+            />
+            <FontAwesomeIcon
+              icon={formData.showPassword ? faEye : faEyeSlash}
+              onClick={togglePasswordVisibility}
+              className="password-toggle"
             />
           </div>
           <p className={`error-message ${errors.confirmPassword ? '' : 'hidden'}`}>

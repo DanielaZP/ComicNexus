@@ -51,7 +51,12 @@ function RestablecerContraseña() {
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
       try {
-          const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', formData);
+          const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', 
+          {
+            password: formData.newPassword,
+            cod: localStorage.getItem('nuevo')
+          }
+          );
             // La solicitud es exitosa
             console.log('Registro exitoso con:', formData);
             console.log('Respuesta del servidor:', response.data);

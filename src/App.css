@@ -365,3 +365,7 @@ button:hover {
 .nav-tabs{
   --bs-nav-tabs-border-color: transparent !important;
 }
+.btn:disabled {
+  background-color: lightblue; /* Cambia el color de fondo a azul claro */
+  /* Otros estilos que desees aplicar a los botones deshabilitados */
+}

@@ -1,5 +1,5 @@
-import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Modal, Button, ProgressBar } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import { Link } from "react-router-dom";
 import axios from 'axios';
@@ -8,14 +8,13 @@ function ContenidoComic() {
   const [images, setImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [comicsData, setComicsData] = useState([]);
-  const [selectedComic, setSelectedComic] = useState(null); // Nuevo estado para el cómic seleccionado
+  const [selectedComic, setSelectedComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
-    // Hacer la solicitud HTTP a tu servidor Laravel
     axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
       .then((response) => {
-        // Almacena los datos JSON en el estado local
         console.log(response.data);
         setComicsData(response.data);
       })
@@ -23,7 +22,6 @@ function ContenidoComic() {
         console.error('Error al obtener datos:', error);
       })
       .finally(() => {
-        // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
         setIsLoading(false);
       });
   }, []);
@@ -40,7 +38,7 @@ function ContenidoComic() {
     );
     setImages((prevImages) => [...prevImages, ...newImages]);
   };
-  
+
   const readFileAsBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -60,7 +58,7 @@ function ContenidoComic() {
       console.error('Por favor, selecciona un cómic antes de subir imágenes.');
       return;
     }
-  
+
     const imageData = images.map(({ base64String }) => base64String);
 
     console.log('Datos que se enviarán al servidor:', {
@@ -68,23 +66,29 @@ function ContenidoComic() {
       cod_comic: selectedComic.comic.cod_comic,
     });
     try {
-      // Incluir el código del cómic en la solicitud POST
-      await axios.post('https://comic-next-laravel.vercel.app/api/api/registroContenidoComic', {
-        imagenes: imageData,
-        cod_comic: selectedComic.comic.cod_comic, 
-      });
-  
-      // Mostrar un mensaje en la consola si la solicitud es exitosa
+      await axios.post(
+        'https://comic-next-laravel.vercel.app/api/api/registroContenidoComic',
+        {
+          imagenes: imageData,
+          cod_comic: selectedComic.comic.cod_comic,
+        },
+        {
+          onUploadProgress: (progressEvent) => {
+            const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+            setUploadProgress(progress);
+          },
+        }
+      );
+
+      setUploadProgress(0);
+      handleCloseModal();
       console.log('Imágenes subidas correctamente.');
-  
-      // Manejar la respuesta exitosa (puedes agregar más lógica aquí si es necesario)
     } catch (error) {
-      // Manejar el error
+      setUploadProgress(0);
       console.error('Error al subir imágenes:', error);
     }
   };
-  
-  
+
   const removeImage = (index) => {
     const newImages = [...images];
     newImages.splice(index, 1);
@@ -107,37 +111,36 @@ function ContenidoComic() {
       </h1>
       <hr className="my-4 custom-divider" />
       <Row>
-        {/* Columna izquierda (1/3 de la ventana) */}
         <Col xs={12} md={4}>
           {selectedComic ? (
             <>
-            <img
-              src={selectedComic.portadaUrl}
-              alt={selectedComic.comic.titulo}
-              style={{
-                width: "300px",
-                height: "470px",
-                borderRadius: '8px',
-                border: '3px solid white',
-                marginRight: '100px'
-              }}
-            />
-            <div
-              style={{
-                marginTop: '20px',
-                marginLeft: '10px',
-                width: '300px',
-                height: '80px',
-                backgroundColor: 'white',
-                borderRadius: '8px',
-                padding: '10px',
-                textAlign: 'center'
-              }}
-            >
-              <h4>Título: {selectedComic.comic.titulo}</h4>
-              <p>Autor(es): {selectedComic.comic.autor}</p>
-            </div>
-          </>
+              <img
+                src={selectedComic.portadaUrl}
+                alt={selectedComic.comic.titulo}
+                style={{
+                  width: "300px",
+                  height: "470px",
+                  borderRadius: '8px',
+                  border: '3px solid white',
+                  marginRight: '100px'
+                }}
+              />
+              <div
+                style={{
+                  marginTop: '20px',
+                  marginLeft: '10px',
+                  width: '300px',
+                  height: '80px',
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  padding: '10px',
+                  textAlign: 'center'
+                }}
+              >
+                <h4>Título: {selectedComic.comic.titulo}</h4>
+                <p>Autor(es): {selectedComic.comic.autor}</p>
+              </div>
+            </>
           ) : (
             <div
               className="empty-image-container"
@@ -174,7 +177,6 @@ function ContenidoComic() {
             </button>
           </div>
         </Col>
-        {/* Columna derecha (2/3 de la ventana) */}
         <Col xs={12} md={8}>
           <div>
             <div {...getRootProps()} style={dropzoneStyles}>
@@ -205,9 +207,9 @@ function ContenidoComic() {
                 border: '3px solid white',
                 borderRadius: '8px',
               }}>
-              Subir imágenes
+              Subir imagenes
             </button>
-            <button  className="btn custom-btn-color"
+            <button className="btn custom-btn-color"
               style={{
                 marginTop: '20px',
                 width: '180px',
@@ -217,7 +219,7 @@ function ContenidoComic() {
                 border: '3px solid white',
                 borderRadius: '8px',
                 marginRight: '110px',
-                marginLeft:'110px'
+                marginLeft: '110px'
               }} onClick={clearImages}>
               Limpiar
             </button>
@@ -267,8 +269,13 @@ function ContenidoComic() {
           <Button className="btn Warning-btn-color" onClick={handleCloseModal}>
             Cancelar
           </Button>
-          {/* Otros botones del pie del modal si es necesario */}
         </Modal.Footer>
+      </Modal>
+      <Modal show={uploadProgress > 0} backdrop="static" keyboard={false} centered>
+        <Modal.Body>
+          <h5>Subiendo contenido comic...</h5>
+          <ProgressBar now={uploadProgress} label={`${uploadProgress}%`} variant='var(--celestito)'/>
+        </Modal.Body>
       </Modal>
     </Container>
   );
@@ -289,8 +296,8 @@ const dropzoneStyles = {
 const previewStyles = {
   display: 'flex',
   marginTop: '20px',
-  overflowX: 'auto',  // Agregar esta línea para habilitar el scroll horizontal
-  maxHeight: '300px', // Ajustar según sea necesario
+  overflowX: 'auto',
+  maxHeight: '300px',
 };
 
 const imageContainerStyles = {
@@ -317,8 +324,6 @@ const deleteIconStyles = {
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
-
 };
-
 
 export default ContenidoComic;

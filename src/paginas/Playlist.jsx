@@ -275,6 +275,7 @@ const Playlist = () => {
                       }}
                       onChange={handleImageChange}
                     />
+                    
                   </div>
                   <Button
                     variant="btn custom-btn-color"
@@ -286,7 +287,7 @@ const Playlist = () => {
                 </Col>
                 <Col md={6}>
                   <Form.Group controlId="playlistName">
-                    <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre de la Playlist</Form.Label>
+                    <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre del Playlist</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Ingrese el nombre de la playlist"
@@ -328,7 +329,13 @@ const Playlist = () => {
   </Modal>
 
 
-        <Modal show={cancelModalVisible} onHide={() => setCancelModalVisible(false)} centered>
+        <Modal
+  show={cancelModalVisible}
+  onHide={() => setCancelModalVisible(false)}
+  centered
+  backdrop="static"
+  keyboard={false}
+  >
           <Modal.Body>
             <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
           </Modal.Body>

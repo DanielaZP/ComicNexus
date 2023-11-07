@@ -14,6 +14,8 @@ function VistaComic() {
   const codUsuario = localStorage.getItem('cod_usuario');
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   useEffect(() => {
     // Hacer la solicitud HTTP para obtener los datos del cómic por ID
     axios
@@ -44,6 +46,20 @@ function VistaComic() {
         console.error('Error al obtener playlists:', error);
       });
   }, []);
+
+  const handleToggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    if (!isFavorite) {
+      setSuccessMessage('Comic añadido a favoritos con éxito');
+    } else {
+      setSuccessMessage('');
+    }
+  };
+
+
+  const handleAddToFavorite = () => {
+    setIsFavorite(!isFavorite); // Alternar el estado de isFavorite al hacer clic en el botón de favoritos
+  };
 
   const handleAddToPlaylist = () => {
     setShowModal(true);
@@ -87,7 +103,6 @@ function VistaComic() {
         });
     
   };
-
   return (
     <div>
       {isLoading ? (
@@ -219,5 +234,5 @@ function VistaComic() {
     </div>
   );
 }
-
+ 
 export default VistaComic;

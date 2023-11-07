@@ -54,7 +54,7 @@ function RestablecerContraseña() {
     }
 
     if (Object.keys(newErrors).length === 0) {
-      setFormData({ newPassword: '', confirmPassword: ''});
+      setFormData({ newPassword: '', confirmPassword: '' });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
     }
@@ -127,3 +127,4 @@ function RestablecerContraseña() {
 }
 
 export default RestablecerContraseña;
+

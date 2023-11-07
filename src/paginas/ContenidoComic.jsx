@@ -3,6 +3,7 @@ import { Container, Row, Col, Modal, Button, ProgressBar } from 'react-bootstrap
 import { useDropzone } from 'react-dropzone';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function ContenidoComic() {
   const [images, setImages] = useState([]);
@@ -11,7 +12,7 @@ function ContenidoComic() {
   const [selectedComic, setSelectedComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
-
+  
   useEffect(() => {
     axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
       .then((response) => {
@@ -82,6 +83,12 @@ function ContenidoComic() {
 
       setUploadProgress(0);
       handleCloseModal();
+      Swal.fire({
+        icon: 'success',
+        title: 'Contenido subido con éxito',
+        showConfirmButton: false,
+        timer: 1500, // La alerta se cerrará después de 1500 milisegundos (1.5 segundos)
+      });
       console.log('Imágenes subidas correctamente.');
     } catch (error) {
       setUploadProgress(0);
@@ -273,7 +280,7 @@ function ContenidoComic() {
       </Modal>
       <Modal show={uploadProgress > 0} backdrop="static" keyboard={false} centered>
         <Modal.Body>
-          <h5>Subiendo contenido comic...</h5>
+          <h5>Subiendo contenido al comic...</h5>
           <ProgressBar now={uploadProgress} label={`${uploadProgress}%`} variant='var(--celestito)'/>
         </Modal.Body>
       </Modal>

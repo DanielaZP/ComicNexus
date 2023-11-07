@@ -19,10 +19,13 @@ function RestablecerContraseña() {
     confirmPassword: false,
   });
 
+  const [passwordMatchError, setPasswordMatchError] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: '' });
+    setPasswordMatchError('');
   };
 
   const togglePasswordVisibility = (field) => {
@@ -34,31 +37,29 @@ function RestablecerContraseña() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const newErrors = {};
-
+  
     if (!formData.newPassword) {
       newErrors.newPassword = 'La nueva contraseña es obligatoria.';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'La contraseña debe tener al menos 8 caracteres.';
     }
-
+  
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'La confirmación de contraseña es obligatoria.';
     } else if (formData.newPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden.';
+      setPasswordMatchError('Las contraseñas no coinciden.');
     }
-
+  
     if (formData.newPassword === formData.confirmPassword) {
-      newErrors.confirmPassword = 'La nueva contraseña no puede ser la misma que la contraseña anterior.';
-    }
-
-    if (Object.keys(newErrors).length === 0) {
-      setFormData({ newPassword: '', confirmPassword: '' });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
+  
+      // Limpia los campos solo si las contraseñas coinciden
+      setFormData({ newPassword: '', confirmPassword: '' });
     }
-
+  
     setErrors(newErrors);
   };
 
@@ -111,12 +112,10 @@ function RestablecerContraseña() {
               className="password-toggle"
             />
           </div>
-          <p className={`error-message ${errors.confirmPassword ? '' : 'hidden'}`}>
-            {errors.confirmPassword}
-          </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Restablecer Contraseña</button>
+          <p className="error-message">{passwordMatchError}</p>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <Link to="/">Volver al Inicio de Sesión</Link>
@@ -127,4 +126,6 @@ function RestablecerContraseña() {
 }
 
 export default RestablecerContraseña;
+
+
 

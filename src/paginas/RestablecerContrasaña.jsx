@@ -57,11 +57,11 @@ function RestablecerContraseña() {
             console.log('Respuesta del servidor:', response.data);
             navigate('/');
         } catch (error) {
-          
+
             console.error('Error al registrar:', error);
-          
+
         }
-    
+
     }
 
     setErrors(newErrors);

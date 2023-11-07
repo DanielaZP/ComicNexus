@@ -18,7 +18,7 @@ import VistaPlaylist from './paginas/VistaPlaylist';
 import InicioSesion from './paginas/IniciosSesion';
 import BusquedaTodo from './paginas/BusquedaTodo';
 import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
-import RestablecerContraseña from './paginas/RestablecerContrasaña';
+import RestablecerContraseña from './paginas/RestablecerContraseña';
 import ContenidoComic from './paginas/ContenidoComic';
 
 function App() {

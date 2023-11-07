@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function RestablecerContraseña() {
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     newPassword: '',
     confirmPassword: '',
+    showPassword: false,
+    cod: localStorage.getItem('nuevo')
   });
 
   const [errors, setErrors] = useState({
@@ -14,52 +19,51 @@ function RestablecerContraseña() {
     confirmPassword: '',
   });
 
-  const [passwordVisibility, setPasswordVisibility] = useState({
-    newPassword: false,
-    confirmPassword: false,
-  });
-
-  const [passwordMatchError, setPasswordMatchError] = useState('');
+  const togglePasswordVisibility = () => {
+    setFormData({ ...formData, showPassword: !formData.showPassword });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: '' });
-    setPasswordMatchError('');
   };
 
-  const togglePasswordVisibility = (field) => {
-    setPasswordVisibility({
-      ...passwordVisibility,
-      [field]: !passwordVisibility[field],
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const newErrors = {};
-  
+
     if (!formData.newPassword) {
       newErrors.newPassword = 'La nueva contraseña es obligatoria.';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'La contraseña debe tener al menos 8 caracteres.';
     }
-  
+
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'La confirmación de contraseña es obligatoria.';
     } else if (formData.newPassword !== formData.confirmPassword) {
-      setPasswordMatchError('Las contraseñas no coinciden.');
+      newErrors.confirmPassword = 'Las contraseñas no coinciden.';
     }
-  
-    if (formData.newPassword === formData.confirmPassword) {
+
+    if (Object.keys(newErrors).length === 0) {
+      setFormData({ newPassword: '', confirmPassword: '', showPassword: false });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
-  
-      // Limpia los campos solo si las contraseñas coinciden
-      setFormData({ newPassword: '', confirmPassword: '' });
+      try {
+          const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', formData);
+            // La solicitud es exitosa
+            console.log('Registro exitoso con:', formData);
+            console.log('Respuesta del servidor:', response.data);
+            navigate('/');
+        } catch (error) {
+          
+            console.error('Error al registrar:', error);
+          
+        }
+    
     }
-  
+
     setErrors(newErrors);
   };
 
@@ -76,7 +80,7 @@ function RestablecerContraseña() {
           </label>
           <div className="password-input">
             <input
-              type={passwordVisibility.newPassword ? 'text' : 'password'}
+              type={formData.showPassword ? 'text' : 'password'}
               name="newPassword"
               value={formData.newPassword}
               onChange={handleChange}
@@ -84,8 +88,8 @@ function RestablecerContraseña() {
               maxLength="50"
             />
             <FontAwesomeIcon
-              icon={passwordVisibility.newPassword ? faEye : faEyeSlash}
-              onClick={() => togglePasswordVisibility('newPassword')}
+              icon={formData.showPassword ? faEye : faEyeSlash}
+              onClick={togglePasswordVisibility}
               className="password-toggle"
             />
           </div>
@@ -99,7 +103,7 @@ function RestablecerContraseña() {
           </label>
           <div className="password-input">
             <input
-              type={passwordVisibility.confirmPassword ? 'text' : 'password'}
+              type={formData.showPassword ? 'text' : 'password'}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -107,15 +111,17 @@ function RestablecerContraseña() {
               maxLength="50"
             />
             <FontAwesomeIcon
-              icon={passwordVisibility.confirmPassword ? faEye : faEyeSlash}
-              onClick={() => togglePasswordVisibility('confirmPassword')}
+              icon={formData.showPassword ? faEye : faEyeSlash}
+              onClick={togglePasswordVisibility}
               className="password-toggle"
             />
           </div>
+          <p className={`error-message ${errors.confirmPassword ? '' : 'hidden'}`}>
+            {errors.confirmPassword}
+          </p>
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Restablecer Contraseña</button>
-          <p className="error-message">{passwordMatchError}</p>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <Link to="/">Volver al Inicio de Sesión</Link>

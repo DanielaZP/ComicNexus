@@ -3,13 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function RestablecerContraseña() {
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     newPassword: '',
     confirmPassword: '',
     showPassword: false,
-    cod:(localStorage.getItem('nuevo'))
+    cod: localStorage.getItem('nuevo')
   });
 
   const [errors, setErrors] = useState({
@@ -27,7 +29,7 @@ function RestablecerContraseña() {
     setErrors({ ...errors, [name]: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -48,12 +50,17 @@ function RestablecerContraseña() {
       setFormData({ newPassword: '', confirmPassword: '', showPassword: false });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
-      
-      const response = axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', formData);
-        // La solicitud es exitosa
-        console.log('Registro exitoso con:', formData);
-        console.log('Respuesta del servidor:', response.data);
-        navigate('/');
+      try {
+          const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', formData);
+            // La solicitud es exitosa
+            console.log('Registro exitoso con:', formData);
+            console.log('Respuesta del servidor:', response.data);
+            navigate('/');
+        } catch (error) {
+          
+            console.error('Error al registrar:', error);
+          
+        }
     
     }
 

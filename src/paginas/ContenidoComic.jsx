@@ -96,6 +96,12 @@ function ContenidoComic() {
     } catch (error) {
       setUploadProgress(0);
       console.error('Error al subir imágenes:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al subir imágenes',
+        showConfirmButton: false,
+        showCloseButton: true, // Muestra el botón de cerrar en el modal de error
+      });
     }
   };
 

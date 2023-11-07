@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function RestablecerContraseña() {
   const [formData, setFormData] = useState({
     newPassword: '',
     confirmPassword: '',
     showPassword: false,
+    cod:(localStorage.getItem('nuevo'))
   });
 
   const [errors, setErrors] = useState({
@@ -46,6 +48,13 @@ function RestablecerContraseña() {
       setFormData({ newPassword: '', confirmPassword: '', showPassword: false });
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
+      
+      const response = axios.post('ttp://127.0.0.1:8000/api/reset-password', formData);
+        // La solicitud es exitosa
+        console.log('Registro exitoso con:', formData);
+        console.log('Respuesta del servidor:', response.data);
+        navigate('/');
+    
     }
 
     setErrors(newErrors);

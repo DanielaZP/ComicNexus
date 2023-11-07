@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useLocalStorage } from 'react-use';
 
 function SolicitudRestablecimientoContraseña() {
+  const [nuevo, setNuevo ]= useLocalStorage('nuevo');
   const [formData, setFormData] = useState({
     email: '',
   });
@@ -27,7 +30,16 @@ function SolicitudRestablecimientoContraseña() {
     }
     // Aquí realizarsb la lógica de envío de correo con la base de datos
     if (Object.keys(newErrors).length === 0) {
-      
+      axios.get('https://comic-next-laravel.vercel.app/api/verificar-correo/'+formData.email)
+      .then((response) => {
+        // Almacena los datos JSON en el estado local
+        console.log(response.data);
+        localStorage.setItem('nuevo',response.data.nuevo)
+        
+      })
+      .catch((error) => {
+        console.error('Error al obtener datos:', error);
+      });
       setRequestSent(true);
     }
     setErrors(newErrors);

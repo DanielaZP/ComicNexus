@@ -7,7 +7,6 @@ function RestablecerContraseña() {
   const [formData, setFormData] = useState({
     newPassword: '',
     confirmPassword: '',
-    showPassword: false,
   });
 
   const [errors, setErrors] = useState({
@@ -15,14 +14,22 @@ function RestablecerContraseña() {
     confirmPassword: '',
   });
 
-  const togglePasswordVisibility = () => {
-    setFormData({ ...formData, showPassword: !formData.showPassword });
-  };
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    newPassword: false,
+    confirmPassword: false,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: '' });
+  };
+
+  const togglePasswordVisibility = (field) => {
+    setPasswordVisibility({
+      ...passwordVisibility,
+      [field]: !passwordVisibility[field],
+    });
   };
 
   const handleSubmit = (e) => {
@@ -42,8 +49,12 @@ function RestablecerContraseña() {
       newErrors.confirmPassword = 'Las contraseñas no coinciden.';
     }
 
+    if (formData.newPassword === formData.confirmPassword) {
+      newErrors.confirmPassword = 'La nueva contraseña no puede ser la misma que la contraseña anterior.';
+    }
+
     if (Object.keys(newErrors).length === 0) {
-      setFormData({ newPassword: '', confirmPassword: '', showPassword: false });
+      setFormData({ newPassword: '', confirmPassword: ''});
       // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
       // Aquí debes agregar el código para enviar la solicitud de restablecimiento
     }
@@ -64,7 +75,7 @@ function RestablecerContraseña() {
           </label>
           <div className="password-input">
             <input
-              type={formData.showPassword ? 'text' : 'password'}
+              type={passwordVisibility.newPassword ? 'text' : 'password'}
               name="newPassword"
               value={formData.newPassword}
               onChange={handleChange}
@@ -72,8 +83,8 @@ function RestablecerContraseña() {
               maxLength="50"
             />
             <FontAwesomeIcon
-              icon={formData.showPassword ? faEye : faEyeSlash}
-              onClick={togglePasswordVisibility}
+              icon={passwordVisibility.newPassword ? faEye : faEyeSlash}
+              onClick={() => togglePasswordVisibility('newPassword')}
               className="password-toggle"
             />
           </div>
@@ -87,7 +98,7 @@ function RestablecerContraseña() {
           </label>
           <div className="password-input">
             <input
-              type={formData.showPassword ? 'text' : 'password'}
+              type={passwordVisibility.confirmPassword ? 'text' : 'password'}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -95,8 +106,8 @@ function RestablecerContraseña() {
               maxLength="50"
             />
             <FontAwesomeIcon
-              icon={formData.showPassword ? faEye : faEyeSlash}
-              onClick={togglePasswordVisibility}
+              icon={passwordVisibility.confirmPassword ? faEye : faEyeSlash}
+              onClick={() => togglePasswordVisibility('confirmPassword')}
               className="password-toggle"
             />
           </div>

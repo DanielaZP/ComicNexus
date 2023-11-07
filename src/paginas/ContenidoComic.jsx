@@ -88,6 +88,9 @@ function ContenidoComic() {
         title: 'Contenido subido con éxito',
         showConfirmButton: false,
         timer: 1500, // La alerta se cerrará después de 1500 milisegundos (1.5 segundos)
+      }).then(() => {
+        // Actualizar la ventana después de cerrar la alerta de éxito
+        window.location.reload();
       });
       console.log('Imágenes subidas correctamente.');
     } catch (error) {

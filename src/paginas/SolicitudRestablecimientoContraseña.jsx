@@ -21,29 +21,37 @@ function SolicitudRestablecimientoContraseña() {
     setErrors({ ...errors, [name]: '' });
     setFormData({ ...formData, [name]: value });
   };
-
+  const [errorMessage, setErrorMessage] = useState(null);
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
     if (!formData.email) { 
       newErrors.email = 'El correo electrónico es obligatorio.';
     }
-    // Aquí realizarsb la lógica de envío de correo con la base de datos
+    
     if (Object.keys(newErrors).length === 0) {
-      axios.get('https://comic-next-laravel.vercel.app/api/verificar-correo/'+formData.email)
-      .then((response) => {
-        // Almacena los datos JSON en el estado local
-        console.log(response.data);
-        localStorage.setItem('nuevo',response.data.nuevo)
-        
-      })
-      .catch((error) => {
-        console.error('Error al obtener datos:', error);
-      });
-      setRequestSent(true);
+      axios.get('https://comic-next-laravel.vercel.app/api/verificar-correo/' + formData.email)
+        .then((response) => {
+          // Almacena los datos JSON en el estado local
+          console.log(response.data);
+          localStorage.setItem('nuevo', response.data.nuevo);
+          if (response.data.nuevo) {
+            setRequestSent(true);
+            setErrorMessage(null);
+          } else {
+            setRequestSent(false);
+            setErrorMessage('El correo electrónico no ha sido verificado.'); 
+          }
+        })
+        .catch((error) => {
+          console.error('Error al obtener datos:', error);
+          setErrorMessage('Error al verificar el correo electrónico.');
+        });
+    } else {
+      setErrorMessage('Por favor, corrige los errores en el formulario.');
     }
     setErrors(newErrors);
-  };
+  };  
 
   return (
     <div className="form-container" style={{ width: '600px', margin: 'auto' }}>
@@ -76,6 +84,11 @@ function SolicitudRestablecimientoContraseña() {
             </div>
             <div className="form-group" style={{ textAlign: 'center' }}>
               <button type="submit">Enviar solicitud</button>
+            </div>
+            <div className="form-group" style={{ textAlign: 'center' }}>
+            {errorMessage && (
+             <p className="error-message">{errorMessage}</p>
+             )}
             </div>
           </div>
         )}

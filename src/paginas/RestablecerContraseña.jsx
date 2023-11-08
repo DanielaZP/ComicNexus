@@ -30,10 +30,16 @@ function RestablecerContraseña() {
     });
   };
 
+  const [passwordMatchError, setPasswordMatchError] = useState('');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: '' });
+    
+    if (passwordMatchError) {
+      setPasswordMatchError('');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -52,25 +58,29 @@ function RestablecerContraseña() {
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'La confirmación de contraseña es obligatoria.';
     } else if (formData.newPassword !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden.';
+      setPasswordMatchError('Las contraseñas no coinciden.');
     }
 
     if (Object.keys(newErrors).length === 0) {
-      setFormData({ newPassword: '', confirmPassword: '' });
-      // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
-      // Aquí debes agregar el código para enviar la solicitud de restablecimiento
-      try {
-        const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', {
-          password: formData.newPassword,
-          cod: localStorage.getItem('nuevo'),
-        });
-        // La solicitud es exitosa
-        console.log('Registro exitoso con:', formData);
-        console.log('Respuesta del servidor:', response.data);
-        navigate('/');
-      } catch (error) {
-        console.error('Error al registrar:', error);
+      if (formData.newPassword === formData.confirmPassword) {
+        // Las contraseñas coinciden, puedes enviar la solicitud para restablecerla
+        // Aquí debes agregar el código para enviar la solicitud de restablecimiento
+        try {
+          const response = await axios.post('https://comic-next-laravel.vercel.app/api/api/reset-password', {
+            password: formData.newPassword,
+            cod: localStorage.getItem('nuevo'),
+          });
+          // La solicitud es exitosa
+          console.log('Registro exitoso con:', formData);
+          console.log('Respuesta del servidor:', response.data);
+          navigate('/');
+        } catch (error) {
+          console.error('Error al registrar:', error);
+        }
+        // Limpia los campos solo si las contraseñas coinciden
+        setFormData({ newPassword: '', confirmPassword: '' });
       }
+      
     }
 
     setErrors(newErrors);
@@ -131,6 +141,7 @@ function RestablecerContraseña() {
         </div>
         <div className="form-group" style={{ textAlign: 'center' }}>
           <button type="submit">Restablecer Contraseña</button>
+          <p className="error-message">{passwordMatchError}</p>
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <Link to="/">Volver al Inicio de Sesión</Link>

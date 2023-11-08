@@ -56,7 +56,12 @@ function ContenidoComic() {
 
   const uploadImages = async () => {
     if (!selectedComic) {
-      console.error('Por favor, selecciona un cómic antes de subir imágenes.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Seleccione un cómic primero',
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
       return;
     }
 

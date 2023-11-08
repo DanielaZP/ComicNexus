@@ -64,7 +64,15 @@ function ContenidoComic() {
       });
       return;
     }
-
+    if(images == 0){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Debe subir al menos una imagen',
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+      return;
+    }
     try {
       const totalImages = images.length;
 

@@ -45,6 +45,8 @@ function RestablecerContraseña() {
       newErrors.newPassword = 'La nueva contraseña es obligatoria.';
     } else if (formData.newPassword.length < 8) {
       newErrors.newPassword = 'La contraseña debe tener al menos 8 caracteres.';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.newPassword)) {
+      newErrors.newPassword = 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula y un número.';
     }
 
     if (!formData.confirmPassword) {
@@ -100,7 +102,7 @@ function RestablecerContraseña() {
               className="password-toggle"
             />
           </div>
-          <p className={`error-message ${errors.newPassword ? '' : 'hidden'}`}>
+          <p className={`error-message ${errors.newPassword ? 'text-danger' : 'hidden'}`}>
             {errors.newPassword}
           </p>
         </div>
@@ -123,7 +125,7 @@ function RestablecerContraseña() {
               className="password-toggle"
             />
           </div>
-          <p className={`error-message ${errors.confirmPassword ? '' : 'hidden'}`}>
+          <p className={`error-message ${errors.confirmPassword ? 'text-danger' : 'hidden'}`}>
             {errors.confirmPassword}
           </p>
         </div>

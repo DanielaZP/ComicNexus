@@ -29,7 +29,7 @@ function ContenidoComic() {
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
+  const calculateProgress = (index) => Math.round(((index + 1) / images.length) * 100);
   const onDrop = async (acceptedFiles) => {
     const newImages = await Promise.all(
       acceptedFiles.map(async (file) => {
@@ -59,41 +59,36 @@ function ContenidoComic() {
       console.error('Por favor, selecciona un cómic antes de subir imágenes.');
       return;
     }
-  
+
     try {
       const totalImages = images.length;
-      let totalBytesUploaded = 0;
-  
+
       const promises = images.map(async (image, index) => {
         const imageData = {
-          imagenes: [image.base64String], // Cambia el nombre del campo a "imagenes"
+          imagenes: [image.base64String],
           cod_comic: selectedComic.comic.cod_comic,
-          pag: index + 1, // Suma 1 a la variable "pag" para comenzar desde 1
+          pag: index + 1,
         };
-  
+
         console.log('Datos que se enviarán al servidor:', imageData);
-  
+
         const response = await axios.post(
           'https://comic-next-laravel.vercel.app/api/api/registroContenidoComic',
           imageData,
           {
             onUploadProgress: (progressEvent) => {
-              // Calcula el progreso en función de la cantidad total de bytes a enviar
-              const bytesUploaded = progressEvent.loaded;
-              const totalBytes = progressEvent.total;
-              totalBytesUploaded += bytesUploaded;
-  
-              const progress = Math.round((totalBytesUploaded / (totalImages * totalBytes)) * 100);
+              // Cambiado: Calcula el progreso en función del número de imágenes
+              const progress = calculateProgress(index);
               setUploadProgress(progress);
             },
           }
         );
-  
+
         return response.data;
       });
-  
+
       await Promise.all(promises);
-  
+
       setUploadProgress(0);
       handleCloseModal();
       Swal.fire({

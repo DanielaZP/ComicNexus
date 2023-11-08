@@ -59,37 +59,49 @@ function ContenidoComic() {
       console.error('Por favor, selecciona un cómic antes de subir imágenes.');
       return;
     }
-
-    const imageData = images.map(({ base64String }) => base64String);
-
-    console.log('Datos que se enviarán al servidor:', {
-      imagenes: imageData,
-      cod_comic: selectedComic.comic.cod_comic,
-    });
+  
     try {
-      await axios.post(
-        'https://comic-next-laravel.vercel.app/api/api/registroContenidoComic',
-        {
-          imagenes: imageData,
+      const totalImages = images.length;
+      let totalBytesUploaded = 0;
+  
+      const promises = images.map(async (image, index) => {
+        const imageData = {
+          imagenes: [image.base64String], // Cambia el nombre del campo a "imagenes"
           cod_comic: selectedComic.comic.cod_comic,
-        },
-        {
-          onUploadProgress: (progressEvent) => {
-            const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-            setUploadProgress(progress);
-          },
-        }
-      );
-
+          pag: index + 1, // Suma 1 a la variable "pag" para comenzar desde 1
+        };
+  
+        console.log('Datos que se enviarán al servidor:', imageData);
+  
+        const response = await axios.post(
+          'https://comic-next-laravel.vercel.app/api/api/registroContenidoComic',
+          imageData,
+          {
+            onUploadProgress: (progressEvent) => {
+              // Calcula el progreso en función de la cantidad total de bytes a enviar
+              const bytesUploaded = progressEvent.loaded;
+              const totalBytes = progressEvent.total;
+              totalBytesUploaded += bytesUploaded;
+  
+              const progress = Math.round((totalBytesUploaded / (totalImages * totalBytes)) * 100);
+              setUploadProgress(progress);
+            },
+          }
+        );
+  
+        return response.data;
+      });
+  
+      await Promise.all(promises);
+  
       setUploadProgress(0);
       handleCloseModal();
       Swal.fire({
         icon: 'success',
         title: 'Contenido subido con éxito',
         showConfirmButton: false,
-        timer: 1500, // La alerta se cerrará después de 1500 milisegundos (1.5 segundos)
+        timer: 1500,
       }).then(() => {
-        // Actualizar la ventana después de cerrar la alerta de éxito
         window.location.reload();
       });
       console.log('Imágenes subidas correctamente.');
@@ -100,11 +112,11 @@ function ContenidoComic() {
         icon: 'error',
         title: 'Error al subir imágenes',
         showConfirmButton: false,
-        showCloseButton: true, // Muestra el botón de cerrar en el modal de error
+        showCloseButton: true,
       });
     }
   };
-
+  
   const removeImage = (index) => {
     const newImages = [...images];
     newImages.splice(index, 1);

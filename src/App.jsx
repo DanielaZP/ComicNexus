@@ -20,6 +20,7 @@ import BusquedaTodo from './paginas/BusquedaTodo';
 import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
 import RestablecerContraseña from './paginas/RestablecerContraseña';
 import ContenidoComic from './paginas/ContenidoComic';
+const codUsuario = localStorage.getItem('cod_usuario');
 
 function App() {
   const estiloFondo = {

@@ -20,7 +20,7 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
-  
+  const codUsuario = localStorage.getItem('cod_usuario');
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -218,7 +218,7 @@ const Playlist = () => {
 
   return (
     <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Mis playlists de comics</h1>
+      <h1 className="display-4 badabb">Mis playlists de comics {codUsuario}</h1>
       <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
 
       <div className="container">

@@ -18,9 +18,10 @@ const NavComponent = () => {
   const hideInput = () => {
     setInputVisible(false);
     setShowAlert(false);
-    let ir = ((characterCount)*-1)
-    navigate(ir)
-    localStorage.setItem('cuenta',0)
+    setInputValue('');
+    // let ir = ((characterCount)*-1)
+    // navigate(ir)
+    // localStorage.setItem('cuenta',0)
   };
 
   const handleInputChange = (e) => {

@@ -30,7 +30,17 @@ function ContenidoComic() {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
   const calculateProgress = (index) => Math.round(((index + 1) / images.length) * 100);
+
   const onDrop = async (acceptedFiles) => {
+    if (images.length + acceptedFiles.length > 35) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Maximo 35 imagenes!',
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+      return;
+    }
     const newImages = await Promise.all(
       acceptedFiles.map(async (file) => {
         const base64String = await readFileAsBase64(file);

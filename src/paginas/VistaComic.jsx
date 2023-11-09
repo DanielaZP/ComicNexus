@@ -16,7 +16,6 @@ function VistaComic() {
   const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
   const codUsuario = localStorage.getItem('cod_usuario');
-  const [likedPlus, setLikedPlus] = useState(false); 
   const [likedHeart, setLikedHeart] = useState(false); 
   // const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
@@ -53,7 +52,6 @@ function VistaComic() {
 
   const handleAddToPlaylist = () => {
     setShowModal(true);
-    setLikedPlus(!likedPlus);
   };
   const handleToggleFavorite = () => {
     setLikedHeart(!likedHeart);
@@ -77,7 +75,6 @@ function VistaComic() {
   };
 
   const handleAddToPlaylistConfirm = (selectedPlaylistId) => {
-    setAddToPlaylistButtonDisabled(true);
     axios
       .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
         cod_comic: id,
@@ -182,7 +179,7 @@ function VistaComic() {
                           style={{
                             fontSize: '2em',
                             cursor: 'pointer',
-                            color: likedPlus  ? 'red' : 'var(--color-original)',
+                            color: 'black',
                           }}
                         />
                       </div>

@@ -20,6 +20,8 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
+  
+
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
       setMinLengthError(false);

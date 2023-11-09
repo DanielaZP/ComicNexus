@@ -158,11 +158,30 @@ function ContenidoComic() {
   const clearImages = () => {
     setImages([]);
   };
+  const handleIconClick = () => {
+    Swal.fire({
+      icon: 'info',
+      title: 'Cómo subir contenido a un cómic',
+      html:
+        '<p>1. Primero, selecciona un cómic de la lista de cómics sin contenido.</p>' +
+        '<p>2. Arrastra y suelta las imágenes en la zona indicada o haz clic para seleccionarlas.</p>' +
+        '<p>3. Haz clic en "Subir imágenes" para completar el proceso.</p>',
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
+  };
+  
 
   return (
     <Container className="text-center my-5">
       <h1 className="display-4 badabb">
         <strong>Registro contenido comic</strong>
+        <Button
+          variant="link"
+          onClick={handleIconClick}
+        >
+          <i class="bi bi-info-circle-fill" style={{ marginLeft: '50px', fontSize: '3.5em' }}></i>
+        </Button>
       </h1>
       <hr className="my-4 custom-divider" />
       <Row>

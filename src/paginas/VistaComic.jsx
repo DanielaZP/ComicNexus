@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { Icon, Popup } from 'semantic-ui-react';
 import axios from 'axios';
 
 function VistaComic() {
@@ -12,10 +13,10 @@ function VistaComic() {
   const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
   const codUsuario = localStorage.getItem('cod_usuario');
+  const [likedPlus, setLikedPlus] = useState(false); 
+  const [likedHeart, setLikedHeart] = useState(false); 
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   useEffect(() => {
     // Hacer la solicitud HTTP para obtener los datos del cómic por ID
     axios
@@ -47,24 +48,17 @@ function VistaComic() {
       });
   }, []);
 
-  const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    if (!isFavorite) {
-      setSuccessMessage('Comic añadido a favoritos con éxito');
-    } else {
-      setSuccessMessage('');
-    }
-  };
-
-
-  const handleAddToFavorite = () => {
-    setIsFavorite(!isFavorite); // Alternar el estado de isFavorite al hacer clic en el botón de favoritos
-  };
-
   const handleAddToPlaylist = () => {
     setShowModal(true);
+    setLikedPlus(!likedPlus);
   };
-
+  const handleToggleFavorite = () => {
+    setLikedHeart(!likedHeart);
+  };
+  const handleAddToLeerComic = () => {
+    
+    // Aquí puedes realizar logica de   leer comic 
+  };
   const handleCloseModal = () => {
     setShowModal(false);
     // Restablecer el estado de selectedPlaylistId al cerrar el modal
@@ -103,6 +97,7 @@ function VistaComic() {
         });
     
   };
+
   return (
     <div>
       {isLoading ? (
@@ -162,10 +157,51 @@ function VistaComic() {
                 border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
                 borderRadius: '8px', 
               }}
-              onClick={handleAddToPlaylist}
+              onClick={handleAddToLeerComic}
             >
-              Añadir cómic a playlist
+              Leer Comic
             </Button>
+            {/* <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '20px' }}> */}
+            <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '20px' }}>    
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Popup
+                    content="Añadir a la playlist"
+                    trigger={
+                      <div className="icon-container" onClick={handleAddToPlaylist}>
+                        <Icon
+                          name='plus' 
+                          style={{
+                            fontSize: '2em',
+                            cursor: 'pointer',
+                            color: likedPlus  ? 'red' : 'var(--color-original)',
+                          }}
+                        />
+                      </div>
+                    }
+                  />
+                  <div className='icon-message' style={{ marginTop: '10px' }}>Añadir playlist</div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <Popup
+                    content="Me gusta"
+                    trigger={
+                      <div className="icon-container" onClick={handleToggleFavorite}>
+                        <Icon
+                          name='like'
+                          style={{
+                            fontSize: '2em',
+                            cursor: 'pointer',
+                            color: likedHeart  ? 'red' : 'var(--color-original)',
+                          }}
+                        />
+                      </div>
+                    }
+                  />
+                  <div className='icon-message' style={{ marginTop: '10px' }}>Añadir mis favoritos</div>
+                </div>
+              </div>
+
           </Col>
           <Modal show={showModal} onHide={handleCloseModal} dialogClassName="custom-modal">
             <Modal.Header closeButton>
@@ -234,5 +270,5 @@ function VistaComic() {
     </div>
   );
 }
- 
+
 export default VistaComic;

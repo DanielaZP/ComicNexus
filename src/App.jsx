@@ -24,8 +24,8 @@ const codUsuario = localStorage.getItem('cod_usuario');
 
 function App() {
   const estiloFondo = {
-     backgroundImage: `url('fondos/Fondo.jpeg')`,
-       backgroundColor: "#999999", 
+     backgroundImage: `url('../fondos/Fondo.jpeg')`,
+     backgroundColor: "#999999", 
      backgroundSize: "cover",
      backgroundRepeat: "no-repeat",
      backgroundAttachment: "fixed",

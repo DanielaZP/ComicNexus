@@ -3,6 +3,9 @@ import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { Icon, Popup } from 'semantic-ui-react';
 import axios from 'axios';
+import Favorite from '@mui/icons-material/Favorite';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function VistaComic() {
   const [comic, setComic] = useState(null);
@@ -15,7 +18,7 @@ function VistaComic() {
   const codUsuario = localStorage.getItem('cod_usuario');
   const [likedPlus, setLikedPlus] = useState(false); 
   const [likedHeart, setLikedHeart] = useState(false); 
-  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  // const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
   useEffect(() => {
     // Hacer la solicitud HTTP para obtener los datos del cómic por ID
@@ -75,38 +78,45 @@ function VistaComic() {
 
   const handleAddToPlaylistConfirm = (selectedPlaylistId) => {
     setAddToPlaylistButtonDisabled(true);
-      axios
-        .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
-          cod_comic: id,
-          cod_usuario: codUsuario,
-          cod_playlist: selectedPlaylistId,
-        })
-        .then((response) => {
-          console.log('Éxito al añadir el cómic a la playlist:', response.data);
-          modalExito();
-        })
-        .catch((error) => {
-          console.error('Error al añadir el cómic a la playlist:', error);
-          modalError();
-        })
-        .finally(() => {
-          setShowModal(false);
-          // Restablecer el estado de selectedPlaylistId después de añadir a la playlist
-          setSelectedPlaylistId(null);
-          setAddToPlaylistButtonDisabled(false);
-        });
-    
+    axios
+      .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
+        cod_comic: id,
+        cod_usuario: codUsuario,
+        cod_playlist: selectedPlaylistId,
+      })
+      .then((response) => {
+        console.log('Éxito al añadir el cómic a la playlist:', response.data);
+        modalExito();
+      })
+      .catch((error) => {
+        console.error('Error al añadir el cómic a la playlist:', error);
+        modalError();
+      })
+      .finally(() => {
+        setShowModal(false);
+        // Restablecer el estado de selectedPlaylistId después de añadir a la playlist
+        setSelectedPlaylistId(null);
+        setAddToPlaylistButtonDisabled(false);
+      });
+  };
+  const favoriteTextStyle = {
+    fontSize: '15px',
+    marginTop: '10px',
+    color: 'MenuText',
+    fontWeight: 'bold', // Añadir negrita
+    textShadow: '1px 1px 1px rgba(0, 0, 0, 0.8)', // Añadir sombra de texto
+    marginLeft: '-45px',
   };
 
   return (
     <div>
       {isLoading ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <Spinner animation="border" variant="primary" role="status">
-          <span className="sr-only"></span>
-        </Spinner>
-        <p className="mt-2">Cargando cómic...</p>
-      </Container>
+          <Spinner animation="border" variant="primary" role="status">
+            <span className="sr-only"></span>
+          </Spinner>
+          <p className="mt-2">Cargando cómic...</p>
+        </Container>
       ) : comic ? (
         <Row>
           <Container className="text-center my-5">
@@ -133,8 +143,7 @@ function VistaComic() {
             />
           </Col>
           <Col lg={6} md={12}>
-          <div className="custom-form-container">
-              
+            <div className="custom-form-container">
               <p>
                 <strong>Autor(es): </strong>
                 {comic.comic.autor}
@@ -148,14 +157,14 @@ function VistaComic() {
                 {comic.comic.sinopsis}
               </p>
             </div>
-            <Button 
-              className="btn custom-btn-color" 
+            <Button
+              className="btn custom-btn-color"
               style={{
                 marginTop: '50px',
                 width: '200px',
                 height: '80px',
                 border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
-                borderRadius: '8px', 
+                borderRadius: '8px',
               }}
               onClick={handleAddToLeerComic}
             >
@@ -208,30 +217,30 @@ function VistaComic() {
               <Modal.Title>¿A qué playlist quieres añadir el cómic: {comic.comic.titulo}?</Modal.Title>
             </Modal.Header>
             <Modal.Body style={{ maxHeight: 'calc(80vh - 130px)', overflowY: 'auto' }}>
-            {playlists.length === 0 ? (
+              {playlists.length === 0 ? (
                 <p>No tienes playlists creadas.</p>
               ) : (
-              <ul className="playlist-list">
-                {playlists.map((playlist) => (
-                  <li key={playlist.playlist.cod_playlist}>
-                    <div className="playlist-item">
-                      <img
-                        src={playlist.portadaUrl}
-                        alt={`Imagen de ${playlist.playlist.nombre_playlist}`}
-                        className="playlist-image"
-                      />
-                      <span className="playlist-title">{playlist.playlist.nombre_playlist}</span>
-                      <Button
-                        variant="btn custom-btn-color"
-                        onClick={() => handleAddToPlaylistConfirm(playlist.playlist.cod_playlist)}
-                        disabled={addToPlaylistButtonDisabled}
-                      >
-                        Añadir
-                      </Button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                <ul className="playlist-list">
+                  {playlists.map((playlist) => (
+                    <li key={playlist.playlist.cod_playlist}>
+                      <div className="playlist-item">
+                        <img
+                          src={playlist.portadaUrl}
+                          alt={`Imagen de ${playlist.playlist.nombre_playlist}`}
+                          className="playlist-image"
+                        />
+                        <span className="playlist-title">{playlist.playlist.nombre_playlist}</span>
+                        <Button
+                          variant="btn custom-btn-color"
+                          onClick={() => handleAddToPlaylistConfirm(playlist.playlist.cod_playlist)}
+                          disabled={addToPlaylistButtonDisabled}
+                        >
+                          Añadir
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               )}
             </Modal.Body>
             <Modal.Footer>

@@ -31,7 +31,16 @@ function ContenidoComic() {
   const handleCloseModal = () => setShowModal(false);
   const calculateProgress = (index) => Math.round(((index + 1) / images.length) * 100);
 
-  const onDrop = async (acceptedFiles) => {
+  const onDrop = async (acceptedFiles, rejectedFiles) => {
+    if (rejectedFiles.length > 0 || acceptedFiles.some(file => !file.type.startsWith('image/'))) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Solo se permiten archivos JPG y PNG',
+        showConfirmButton: false,
+        showCloseButton: true,
+      });
+      return;
+    }
     if (images.length + acceptedFiles.length > 35) {
       Swal.fire({
         icon: 'warning',
@@ -60,7 +69,7 @@ function ContenidoComic() {
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
+    accept: 'image/jpeg, image/png',
     onDrop,
   });
 

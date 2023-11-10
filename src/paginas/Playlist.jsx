@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Container, Row, Col, Spinner, Card, Pagination } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -330,12 +331,12 @@ const Playlist = () => {
 
 
         <Modal
-  show={cancelModalVisible}
-  onHide={() => setCancelModalVisible(false)}
-  centered
-  backdrop="static"
-  keyboard={false}
-  >
+            show={cancelModalVisible}
+            onHide={() => setCancelModalVisible(false)}
+            centered
+            backdrop="static"
+            keyboard={false}
+            >
           <Modal.Body>
             <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
           </Modal.Body>
@@ -387,14 +388,25 @@ const Playlist = () => {
                   border: '3px solid white', 
                   borderRadius: '8px', 
                 }}>
-                   <Button
-                    variant="dark"  // Fondo negro
-                    className="position-absolute top-0 end-0 m-2"  // Posición en la esquina superior derecha
-                    style={{ background: 'var(--celestito)',border: '1px solid white', borderRadius: '8px', padding: '5px' }}   // Borde blanco y estilo adicional
-                    onClick={() => handleVisualizePlaylist(playlist)}  // Manejador de clic para el botón
+                    <Dropdown
+                  className="position-absolute top-0 end-0 m-2"
+                  style={{ zIndex: 1 }} 
+                >
+                  <Dropdown.Toggle
+                    variant="dark"
+                    id={`dropdown-${playlist.playlist.cod_playlist}`}
+                    style={{ background: 'var(--celestito)', border: '1px solid white', borderRadius: '8px', padding: '5px' }}
+                    
                   >
+                    
                     <i className="bi bi-three-dots-vertical" style={{ color: 'white' }}></i>
-                  </Button>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item >Editar Playlist</Dropdown.Item>
+                    <Dropdown.Item >Eliminar Playlist</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
 
                   <Card.Img
                     variant="top"

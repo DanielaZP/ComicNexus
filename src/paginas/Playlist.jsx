@@ -68,7 +68,7 @@ const Playlist = () => {
     console.log('Eliminar playlist:', selectedPlaylist);
     const cod_playlist = selectedPlaylist?.playlist?.cod_playlist;
     axios
-      .delete(`https://comic-next-laravel.vercel.app/api/api/eliminarPlaylist/${cod_playlist}`)
+      .delete(`https://comic-next-laravel.vercel.app/api/api/eliminarPlaylist?cod_playlist=${cod_playlist}`)
       .then(() => {
         setPlaylists((prevPlaylists) =>
           prevPlaylists.filter((playlist) => playlist.playlist.cod_playlist !== cod_playlist)
@@ -76,7 +76,7 @@ const Playlist = () => {
         setDeleteModalVisible(false);
         Swal.fire({
           icon: 'success',
-          title: '¡Playlist eliminada exitosamente!',
+          title: '¡La playlist ha sido eliminada con éxito!',
           showConfirmButton: false,
           timer: 1500,
         });

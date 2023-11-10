@@ -62,11 +62,29 @@ const Playlist = () => {
   const handleDeletePlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
     setDeleteModalVisible(true);
-  };
+  };  
 
   const handleConfirmDelete = () => {
     console.log('Eliminar playlist:', selectedPlaylist);
-    setDeleteModalVisible(false);
+    const cod_playlist = selectedPlaylist?.playlist?.cod_playlist;
+    axios
+      .delete(`https://comic-next-laravel.vercel.app/api/api/eliminarPlaylist/${cod_playlist}`)
+      .then(() => {
+        setPlaylists((prevPlaylists) =>
+          prevPlaylists.filter((playlist) => playlist.playlist.cod_playlist !== cod_playlist)
+        )
+        setDeleteModalVisible(false);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Playlist eliminada exitosamente!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error('Error al eliminar la playlist:', error);
+
+      });
   };
 
   const handleCancelDelete = () => {
@@ -420,7 +438,6 @@ const Playlist = () => {
                     <Dropdown.Item onClick={() => handleDeletePlaylist(playlist)}>Eliminar Playlist</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}
@@ -438,18 +455,18 @@ const Playlist = () => {
           )}
         </Row>
         <Modal show={deleteModalVisible} onHide={handleCancelDelete} centered backdrop="static" keyboard={false}>
-        <Modal.Body>
-          <h4>¿Deseas eliminar la playlist?</h4>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-          <Button variant="btn Warning-btn-color" onClick={handleCancelDelete}>
-            No
-          </Button>
-          <Button variant="btn custom-btn-color" onClick={handleConfirmDelete}>
-            Sí
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Modal.Body>
+              <h4>¿Deseas eliminar la playlist: {selectedPlaylist?.playlist?.nombre_playlist}?</h4>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <Button variant="btn Warning-btn-color" onClick={handleCancelDelete}>
+                No
+              </Button>
+              <Button variant="btn custom-btn-color" onClick={handleConfirmDelete} style={{marginLeft:'25px'}}>
+                Sí
+              </Button>
+            </Modal.Footer>
+        </Modal>
           <div className="mt-4 text-center">
           {totalPages > 1 && (
             <>

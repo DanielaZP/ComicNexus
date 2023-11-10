@@ -387,6 +387,15 @@ const Playlist = () => {
                   border: '3px solid white', 
                   borderRadius: '8px', 
                 }}>
+                   <Button
+                    variant="dark"  // Fondo negro
+                    className="position-absolute top-0 end-0 m-2"  // Posición en la esquina superior derecha
+                    style={{ background: 'var(--celestito)',border: '1px solid white', borderRadius: '8px', padding: '5px' }}   // Borde blanco y estilo adicional
+                    onClick={() => handleVisualizePlaylist(playlist)}  // Manejador de clic para el botón
+                  >
+                    <i className="bi bi-three-dots-vertical" style={{ color: 'white' }}></i>
+                  </Button>
+
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}

@@ -152,7 +152,7 @@ function VistaComic() {
                 <strong>Sinopsis: </strong>
                 {comic.comic.sinopsis}
               </p>
-            </div>
+            
             <Button
               className="btn custom-btn-color"
               style={{
@@ -204,6 +204,7 @@ function VistaComic() {
                     }
                   />
                   <div className='icon-message' style={{ marginTop: '10px' }}>Añadir mis favoritos</div>
+                </div>
                 </div>
               </div>
 

@@ -17,7 +17,7 @@ function VistaComic() {
   const { id } = useParams();
   const codUsuario = localStorage.getItem('cod_usuario');
   const [likedHeart, setLikedHeart] = useState(false); 
-  // const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
   useEffect(() => {
     // Hacer la solicitud HTTP para obtener los datos del cómic por ID
@@ -75,32 +75,31 @@ function VistaComic() {
   };
 
   const handleAddToPlaylistConfirm = (selectedPlaylistId) => {
-    axios
-      .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
-        cod_comic: id,
-        cod_usuario: codUsuario,
-        cod_playlist: selectedPlaylistId,
-      })
-      .then((response) => {
-        console.log('Éxito al añadir el cómic a la playlist:', response.data);
-        modalExito();
-      })
-      .catch((error) => {
-        console.error('Error al añadir el cómic a la playlist:', error);
-        modalError();
-      })
-      .finally(() => {
-        setShowModal(false);
-        // Restablecer el estado de selectedPlaylistId después de añadir a la playlist
-        setSelectedPlaylistId(null);
-        setAddToPlaylistButtonDisabled(false);
-      });
+    setAddToPlaylistButtonDisabled(true);
+      axios
+        .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
+          cod_comic: id,
+          cod_usuario: codUsuario,
+          cod_playlist: selectedPlaylistId,
+        })
+        .then((response) => {
+          console.log('Éxito al añadir el cómic a la playlist:', response.data);
+          modalExito();
+        })
+        .catch((error) => {
+          console.error('Error al añadir el cómic a la playlist:', error);
+          modalError();
+        })
+        .finally(() => {
+          setShowModal(false);
+          setSelectedPlaylistId(null);
+          setAddToPlaylistButtonDisabled(false);
+        });
   };
   const favoriteTextStyle = {
     fontSize: '15px',
     marginTop: '10px',
-    color: 'MenuText',
-    fontWeight: 'bold', // Añadir negrita
+    color: 'MenuText', 
     textShadow: '1px 1px 1px rgba(0, 0, 0, 0.8)', // Añadir sombra de texto
     marginLeft: '-45px',
   };

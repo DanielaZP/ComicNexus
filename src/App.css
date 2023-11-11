@@ -243,10 +243,10 @@ button:hover {
   color: -webkit-text-stroke 2px white;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Comic Sans MS";
   src: url("./Comic_Sans_MS.woff") format("woff");
-}
+} */
 
 
 /*imagen del registro*/
@@ -299,7 +299,7 @@ button:hover {
 .contenido-image {
   width: 50px ;
   height: 80px; 
-  margin-Right: 10px; 
+  margin-right: 10px; 
 }
 /* Agrega este estilo para el título de la playlist */
 .playlist-title {

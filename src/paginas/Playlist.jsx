@@ -338,7 +338,10 @@ const Playlist = () => {
                   </div>
                   <div style={{ marginTop: '10px', color: 'red' }}>
                             {imageError && (
-                              <div style={{ marginTop: '10px', color: 'red' }}>
+                              <div style={{ marginTop: 10, color: 'red', width: 222,
+                              textAlign: 'center',
+                              display: 'block',
+                              marginBottom: 15 }}>
                                 Sube una imagen válida.
                               </div>
                             )}

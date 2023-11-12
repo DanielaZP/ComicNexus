@@ -31,9 +31,9 @@ function PaginaAdmi() {
         <div class="col-sm-6 mb-4 mx-auto">
             <div class="card text-center">
             <div class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text"></p>
-                <Link class="btn custom-btn-color" to=""></Link>
+                <h5 class="card-title">Editar un cómic de la plataforma</h5>
+                <p class="card-text">Para editar datos de un cómic ya registrado presione el botón de abajo.</p>
+                <Link class="btn custom-btn-color" to="">Editar cómic</Link>
             </div>
             </div>
         </div> 

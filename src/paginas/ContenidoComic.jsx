@@ -297,7 +297,7 @@ function ContenidoComic() {
               }} onClick={clearImages}>
               Limpiar
             </button>
-            <Link className="btn Warning-btn-color" to="/inicio"
+            <Link className="btn Warning-btn-color" to="/pagina-admi"
               style={{
                 marginTop: '20px',
                 width: '180px',

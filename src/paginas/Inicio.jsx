@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Carrucel from '../componentes/Carrucel';
 import CardCat from '../componentes/CardCat';
 import { Container, Row, Col, ButtonGroup, Button, Spinner } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 export const Inicio = () => {
@@ -33,51 +34,61 @@ export const Inicio = () => {
         <hr className="my-4 custom-divider" />
       </Container>
       <Carrucel />
-      <ButtonGroup className="mt-4 d-flex" >
-        <Button
-          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect"
+      <ButtonGroup className="mt-4 d-flex " >
+        <Link
+          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
           style={{
             height: '100px',
             borderRadius: '8px',
             border: '3px solid white',
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: '24px',
+            
           }}
+          to="/terror"
         >
-          Terror
-        </Button>
-        <Button
-          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect"
+          𝙏𝙚𝙧𝙧𝙤𝙧
+        </Link>
+        <Link
+          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
           style={{
             height: '100px',
             borderRadius: '8px',
             border: '3px solid white',
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: '24px'
           }}
+          to="/accion"
         >
-          Accion 
-        </Button>
-        <Button
-          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect"
+          𝘼𝙘𝙘𝙞𝙤𝙣
+        </Link>
+        <Link
+          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
           style={{
             height: '100px',
             borderRadius: '8px',
             border: '3px solid white',
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: '24px'
           }}
+          to="/ciencia-ficcion"
         >
-          Ciencia ficcion
-        </Button>
-        <Button
-          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect"
+          𝘾𝙞𝙚𝙣𝙘𝙞𝙖 𝙛𝙞𝙘𝙘𝙞𝙤𝙣
+        </Link>
+        <Link
+          className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
           style={{
             height: '100px',
             borderRadius: '8px',
             border: '3px solid white',
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: '24px'
           }}
+          to="/comedia"
         >
-          Comedia
-        </Button>
+          𝘾𝙤𝙢𝙚𝙙𝙞𝙖
+        </Link>
+        
       </ButtonGroup>
       <h3 className="display-4 badabb fs-1 mt-4">Comics que te recomendamos</h3>
       {isLoading ? (

@@ -17,16 +17,16 @@ function VistaComic() {
   const { id } = useParams();
   const codUsuario = localStorage.getItem('cod_usuario');
   const [likedHeart, setLikedHeart] = useState(false); 
-  // const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
   useEffect(() => {
-    // Hacer la solicitud HTTP para obtener los datos del cómic por ID
     axios
-      .get(`https://comic-next-laravel.vercel.app/api/api/comic/${id}`)
+      .get(`https://comic-next-laravel.vercel.app/api/api/comic/${id}?codUsuario=${codUsuario}`)
       .then((response) => {
         // Almacena los datos del cómic en el estado local
         console.log(response.data);
         setComic(response.data[0]);
+        setLikedHeart(response.data[0].comic_favoritos);
       })
       .catch((error) => {
         console.error('Error al obtener datos del cómic:', error);
@@ -53,9 +53,32 @@ function VistaComic() {
   const handleAddToPlaylist = () => {
     setShowModal(true);
   };
-  const handleToggleFavorite = () => {
-    setLikedHeart(!likedHeart);
+  
+  const handleToggleFavorite = async () => {
+    try {
+      const response = await axios({
+        method: 'post',  
+        url: 'https://comic-next-laravel.vercel.app/api/api/ComicFavoritosLike',
+        data: {
+          cod_comic: id,
+          cod_usuario: codUsuario,
+        },
+      }); 
+  
+      if (response.status === 200) {
+        console.log(response.data.mensaje);
+  
+        // Actualiza el estado local para reflejar el cambio
+        setLikedHeart(!likedHeart);
+      } else {
+        console.error('Error al agregar/eliminar de favoritos');
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+    }
   };
+  
+
   const handleAddToLeerComic = () => {
     
     // Aquí puedes realizar logica de   leer comic 
@@ -75,38 +98,37 @@ function VistaComic() {
   };
 
   const handleAddToPlaylistConfirm = (selectedPlaylistId) => {
-    axios
-      .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
-        cod_comic: id,
-        cod_usuario: codUsuario,
-        cod_playlist: selectedPlaylistId,
-      })
-      .then((response) => {
-        console.log('Éxito al añadir el cómic a la playlist:', response.data);
-        modalExito();
-      })
-      .catch((error) => {
-        console.error('Error al añadir el cómic a la playlist:', error);
-        modalError();
-      })
-      .finally(() => {
-        setShowModal(false);
-        // Restablecer el estado de selectedPlaylistId después de añadir a la playlist
-        setSelectedPlaylistId(null);
-        setAddToPlaylistButtonDisabled(false);
-      });
+    setAddToPlaylistButtonDisabled(true);
+      axios
+        .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
+          cod_comic: id,
+          cod_usuario: codUsuario,
+          cod_playlist: selectedPlaylistId,
+        })
+        .then((response) => {
+          console.log('Éxito al añadir el cómic a la playlist:', response.data);
+          modalExito();
+        })
+        .catch((error) => {
+          console.error('Error al añadir el cómic a la playlist:', error);
+          modalError();
+        })
+        .finally(() => {
+          setShowModal(false);
+          setSelectedPlaylistId(null);
+          setAddToPlaylistButtonDisabled(false);
+        });
   };
   const favoriteTextStyle = {
     fontSize: '15px',
     marginTop: '10px',
-    color: 'MenuText',
-    fontWeight: 'bold', // Añadir negrita
+    color: 'MenuText', 
     textShadow: '1px 1px 1px rgba(0, 0, 0, 0.8)', // Añadir sombra de texto
     marginLeft: '-45px',
   };
 
   return (
-    <div>
+    <div> 
       {isLoading ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Spinner animation="border" variant="primary" role="status">
@@ -153,7 +175,7 @@ function VistaComic() {
                 <strong>Sinopsis: </strong>
                 {comic.comic.sinopsis}
               </p>
-            </div>
+            
             <Button
               className="btn custom-btn-color"
               style={{
@@ -205,6 +227,7 @@ function VistaComic() {
                     }
                   />
                   <div className='icon-message' style={{ marginTop: '10px' }}>Añadir mis favoritos</div>
+                </div>
                 </div>
               </div>
 

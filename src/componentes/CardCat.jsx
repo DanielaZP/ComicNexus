@@ -23,7 +23,7 @@ function CardCat({ comic }) {
           {sinopsis.length > 150 ? `${sinopsis.substring(0, 150)}...` : sinopsis}
         </p>
         {/* Usar Link con la URL que incluye el ID del cómic */}
-        <Link to={url} className="btn custom-btn-color">
+        <Link to={url} className="btn custom-btn-color btn-hover-effect">
           Ver cómic
         </Link>
       </div>

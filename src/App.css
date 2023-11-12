@@ -105,6 +105,10 @@ button {
   color: #ffffff; 
 
 }
+.btn-hover-effect:hover {
+  transform: scale(1.05); /* Puedes ajustar el valor según tu preferencia */
+  transition: transform 0.2s ease-in-out; /* Agrega una transición suave */
+}
 
 .Warning-btn-color {
   background-color: var(--rojito); 

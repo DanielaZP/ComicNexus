@@ -10,7 +10,7 @@ function PaginaAdmi() {
     const [isLoading, setIsLoading] = useState(true); 
     //conexion
     useEffect(() => {
-        axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido') 
+        axios.get('https://comic-next-laravel.vercel.app/api/api/listascomics') 
           .then((response) => {
             console.log(response.data);
             setComicsData(response.data);

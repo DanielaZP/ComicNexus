@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 
 function CardCat({ comic }) {
   const { cod_comic, titulo, sinopsis } = comic.comic; // Datos del cómic
@@ -8,8 +9,14 @@ function CardCat({ comic }) {
   // Crear la URL con el ID del cómic
   const url = `/vista-comic/${cod_comic}`;
 
+  // Definir la animación para el componente
+  const props = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+  });
+
   return (
-    <div className="card borde-container">
+    <animated.div style={props} className="card borde-container">
       <img
         src={portadaUrl}
         className="card-img-top"
@@ -27,7 +34,7 @@ function CardCat({ comic }) {
           Ver cómic
         </Link>
       </div>
-    </div>
+    </animated.div>
   );
 }
 

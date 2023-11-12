@@ -1,16 +1,59 @@
 import { Link } from "react-router-dom";
 import NavComponent from "./filtrado/NavComponent";
+import React, { useState } from 'react';
 
 const Navbar = () => {
+  const [hoverInicio, setHoverInicio] = useState(false);
+  const [hoverComics, setHoverComics] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false); // Nuevo estado
+
+  const handleInicioHover = () => {
+    setHoverInicio(true);
+  };
+
+  const handleInicioLeave = () => {
+    setHoverInicio(false);
+  };
+
+  const handleComicsHover = () => {
+    setHoverComics(true);
+  };
+
+  const handleComicsLeave = () => {
+    setHoverComics(false);
+  };
+
+  const handleCategoriesHover = () => {
+    setShowCategories(true);
+  };
+
+  const handleCategoriesLeave = () => {
+    setShowCategories(false);
+  };
+
+  const handleUserMenuHover = () => {
+    setShowUserMenu(true);
+  };
+
+  const handleUserMenuLeave = () => {
+    setShowUserMenu(false);
+  };
+
+  const linkStyleInicio = hoverInicio ? { borderBottom: '2px solid black' } : {};
+  const linkStyleComics = hoverComics ? { borderBottom: '2px solid black' } : {};
+  const dropdownStyle = showCategories ? { display: 'block' } : {};
+  const userMenuStyle = showUserMenu ? { display: 'block' } : {};
+
   return (
     <div style={{ marginBottom: '30px' }}>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <a className="navbar-brand" href="/inicio">
-              <img
-              src="/LogoComicsNexus.png" // Reemplaza "/ruta/del/tu/logo.png" con la ruta de tu logo
+            <img
+              src="/LogoComicsNexus.png"
               alt="Logo de tu aplicación"
-              style={{ maxHeight: '45px', marginRight: '20px', marginLeft:'15px'}} // Puedes ajustar el estilo según tus necesidades
+              style={{ maxHeight: '45px', marginRight: '20px', marginLeft: '15px' }}
             />
           </a>
           <button
@@ -27,16 +70,33 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/inicio">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/inicio"
+                  onMouseEnter={handleInicioHover}
+                  onMouseLeave={handleInicioLeave}
+                  style={linkStyleInicio}
+                >
                   Inicio
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/lista-comics">
+                <Link
+                  className="nav-link"
+                  to="/lista-comics"
+                  onMouseEnter={handleComicsHover}
+                  onMouseLeave={handleComicsLeave}
+                  style={linkStyleComics}
+                >
                   Lista cómics
                 </Link>
               </li>
-              <li className="nav-item dropdown">
+              <li
+                className="nav-item dropdown"
+                onMouseEnter={handleCategoriesHover}
+                onMouseLeave={handleCategoriesLeave}
+              >
                 <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -46,7 +106,7 @@ const Navbar = () => {
                 >
                   Categorías
                 </a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" style={dropdownStyle}>
                   <li>
                     <Link className="dropdown-item" to="/terror">
                       Terror
@@ -54,12 +114,12 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/accion">
-                    Acción
+                      Acción
                     </Link>
                   </li>
                   <li>
                     <Link className="dropdown-item" to="/ciencia-ficcion">
-                    Ciencia ficción
+                      Ciencia ficción
                     </Link>
                   </li>
                   <li>
@@ -71,20 +131,20 @@ const Navbar = () => {
               </li>
             </ul>
 
-            <NavComponent/>
-            
+            <NavComponent />
+
           </div>
-        </div> 
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle custom-btn-color" style={{marginRight:20}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle "></i>
+        </div>
+        <div className="dropdown" onMouseEnter={handleUserMenuHover} onMouseLeave={handleUserMenuLeave}>
+          <button className="btn btn-secondary dropdown-toggle custom-btn-color" style={{ marginRight: 20 }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i className="bi bi-person-circle "></i>
           </button>
-          <ul class="dropdown-menu" id="main-menu">
-            {/* <li><a class="dropdown-item" href="#">Mi perfil</a></li> */}
-            <li><Link class="dropdown-item" to="/playlists">Mis playlists</Link></li>
-            <li><Link class="dropdown-item" to="/favoritos">Mis favoritos</Link></li>
-            <li><hr class="dropdown-divider"/></li>
-            <li><Link class="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
+          <ul className="dropdown-menu" id="main-menu" style={userMenuStyle}>
+            {/* <li><a className="dropdown-item" href="#">Mi perfil</a></li> */}
+            <li><Link className="dropdown-item" to="/playlists">Mis playlists</Link></li>
+            <li><Link className="dropdown-item" to="/favoritos">Mis favoritos</Link></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><Link className="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>
         </div>
       </nav>

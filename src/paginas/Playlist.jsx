@@ -24,7 +24,7 @@ const Playlist = () => {
   const playlistsPerPage = 15;
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  
+  const [editPlaylist, setEditPlaylist] = useState(null);  
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -91,7 +91,12 @@ const Playlist = () => {
   const handleCancelDelete = () => {
     setDeleteModalVisible(false);
   };
-
+  const handleEditPlaylist = (playlist) => {
+    setEditPlaylist(playlist);
+    setPlaylistName(playlist.playlist.nombre_playlist); // Establecer el nombre de la playlist en el estado
+    setSelectedImage(playlist.portadaUrl); // Establecer la imagen de la playlist en el estado
+    setShowModal(true); // Abrir el modal de edición
+  };
   const handleClose = () => {
     setShowModal(false);
     setSelectedImage(null);
@@ -286,7 +291,7 @@ const Playlist = () => {
         
         <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
           <Modal.Header closeButton>
-            <Modal.Title>Crear playlist</Modal.Title>
+          <Modal.Title>{editPlaylist ? 'Editar Playlist' : 'Crear Playlist'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -461,7 +466,7 @@ const Playlist = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item >Editar Playlist</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleEditPlaylist(playlist)}>Editar Playlist</Dropdown.Item>
                     <Dropdown.Item onClick={() => handleDeletePlaylist(playlist)}>Eliminar Playlist</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

@@ -8,9 +8,9 @@ function PaginaAdmi() {
     const [selectedComic, setSelectedComic] = useState(null);
     const [comicsData, setComicsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
-    
+    //conexion
     useEffect(() => {
-        axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
+        axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido') 
           .then((response) => {
             console.log(response.data);
             setComicsData(response.data);

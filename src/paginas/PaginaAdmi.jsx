@@ -10,7 +10,7 @@ function PaginaAdmi() {
             <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }}/>
         </Container>
         <div class="row">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="col-sm-6 mb-4 mb-sm-0">
             <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Añadir nuevo cómic a la plataforma</h5>
@@ -19,12 +19,21 @@ function PaginaAdmi() {
             </div>
             </div>
         </div>
-         <div class="col-sm-6">
+         <div class="col-sm-6 mb-4">
             <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">Añadir nuevo contenido de cómic a la plataforma</h5>
                 <p class="card-text">Para agregar nuevo contenido de un cómic presione el botón de abajo.</p>
                 <Link class="btn custom-btn-color" to="/contenido-comic">Añadir contenido</Link>
+            </div>
+            </div>
+        </div> 
+        <div class="col-sm-6 mb-4 mx-auto">
+            <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text"></p>
+                <Link class="btn custom-btn-color" to=""></Link>
             </div>
             </div>
         </div> 

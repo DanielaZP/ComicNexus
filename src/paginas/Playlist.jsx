@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const Playlist = () => {
   const [loading, setLoading] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
@@ -104,6 +105,7 @@ const Playlist = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setImageError(false);
     if (file) {
       const allowedExtensions = /(\.png|\.jpg)$/i;
       if (!allowedExtensions.exec(file.name)) {
@@ -136,30 +138,43 @@ const Playlist = () => {
 
   const handleSavePlaylist = () => {
     const specialCharactersRegex = /^[a-zA-Z0-9ñÑ ]+$/;
+    let hayError = false;
+
     if (!playlistName.trim()) {
       setNameError('Rellene este campo.');
       setMinLengthError(false);
       setMaxLengthError(false);
+      hayError = true;
     } else if (playlistName.trim().length < 3) {
       setMinLengthError(true);
       setMaxLengthError(false);
       setNameError('');
+      hayError = true;
     } else if (playlistName.trim().length > 50) {
       setMinLengthError(false);
       setMaxLengthError(true);
       setNameError('');
+      hayError = true;
     } else if (!specialCharactersRegex.test(playlistName)) {
       setNameError('El nombre no puede contener caracteres especiales.');
       setMinLengthError(false);
       setMaxLengthError(false);
-    } else if (!selectedImage) {
-      setNameError('Sube una imagen válida.');
-      setMinLengthError(false);
-      setMaxLengthError(false);
+      hayError = true;
+
     } else {
       setMinLengthError(false);
       setMaxLengthError(false);
-      setConfirmModalVisible(true);
+    }
+
+    if (!selectedImage) {
+      setImageError(true);
+      hayError = true;
+    } else {
+      setImageError(false);
+    }
+
+    if(!hayError) {
+      setConfirmModalVisible(true)
     }
   }  
 
@@ -175,6 +190,8 @@ const Playlist = () => {
     } else {
       handleClose();
     }
+
+    setImageError(false )
   };
 
   const handleConfirmSave = () => {
@@ -266,7 +283,7 @@ const Playlist = () => {
               }}>
           Crear playlist
         </Button>
-
+        
         <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Crear playlist</Modal.Title>
@@ -291,12 +308,15 @@ const Playlist = () => {
                     {selectedImage ? (
                       <img
                         src={selectedImage}
-                        alt="Previsualización"
+                        al t="Previsualización"
                         style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover' }}
                       />
                     ) : (
-                      <span>Subir Imagen</span>
+                      <>
+                        <span>Subir Imagen</span>
+                        </>
                     )}
+                    
                     <input
                       type="file"
                       accept=".png, .jpg, .jpeg"
@@ -311,6 +331,13 @@ const Playlist = () => {
                     />
                     
                   </div>
+                  <div style={{ marginTop: '10px', color: 'red' }}>
+                            {imageError && (
+                              <div style={{ marginTop: '10px', color: 'red' }}>
+                                Sube una imagen válida.
+                              </div>
+                            )}
+                          </div>
                   <Button
                     variant="btn custom-btn-color"
                     style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Container, Row, Col, Spinner, Card, Pagination } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -20,6 +21,8 @@ const Playlist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const playlistsPerPage = 15;
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   
 
   useEffect(() => {
@@ -56,6 +59,37 @@ const Playlist = () => {
         console.error('Error al obtener playlists:', error);
       });
   }, []);
+  const handleDeletePlaylist = (playlist) => {
+    setSelectedPlaylist(playlist);
+    setDeleteModalVisible(true);
+  };  
+
+  const handleConfirmDelete = () => {
+    console.log('Eliminar playlist:', selectedPlaylist);
+    const cod_playlist = selectedPlaylist?.playlist?.cod_playlist;
+    axios
+      .delete(`https://comic-next-laravel.vercel.app/api/api/eliminarPlaylist?cod_playlist=${cod_playlist}`)
+      .then(() => {
+        setPlaylists((prevPlaylists) =>
+          prevPlaylists.filter((playlist) => playlist.playlist.cod_playlist !== cod_playlist)
+        )
+        setDeleteModalVisible(false);
+        Swal.fire({
+          icon: 'success',
+          title: '¡La playlist ha sido eliminada con éxito!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error('Error al eliminar la playlist:', error);
+
+      });
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteModalVisible(false);
+  };
 
   const handleClose = () => {
     setShowModal(false);
@@ -319,10 +353,10 @@ const Playlist = () => {
           <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
-         <Button variant="danger" onClick={() => setConfirmModalVisible(false)}>
+         <Button variant="btn Warning-btn-color" onClick={() => setConfirmModalVisible(false)}>
           No
           </Button>
-          <Button variant="success" onClick={handleConfirmSave}>
+          <Button variant="btn custom-btn-color" onClick={handleConfirmSave}>
          Sí
       </Button>
    </Modal.Footer>
@@ -330,20 +364,20 @@ const Playlist = () => {
 
 
         <Modal
-  show={cancelModalVisible}
-  onHide={() => setCancelModalVisible(false)}
-  centered
-  backdrop="static"
-  keyboard={false}
-  >
+            show={cancelModalVisible}
+            onHide={() => setCancelModalVisible(false)}
+            centered
+            backdrop="static"
+            keyboard={false}
+            >
           <Modal.Body>
             <h4>¿Estás seguro de que deseas cancelar la creación de la playlist?</h4>
           </Modal.Body>
           <Modal.Footer className="justify-content-center">
-            <Button variant="danger" onClick={() => setCancelModalVisible(false)}>
+            <Button variant="btn Warning-btn-color" onClick={() => setCancelModalVisible(false)}>
               No
             </Button>
-            <Button variant="success" onClick={() => { setCancelModalVisible(false); handleClose(); }}>
+            <Button variant="btn custom-btn-color" onClick={() => { setCancelModalVisible(false); handleClose(); }}>
               Sí
             </Button>
           </Modal.Footer>
@@ -387,6 +421,23 @@ const Playlist = () => {
                   border: '3px solid white', 
                   borderRadius: '8px', 
                 }}>
+                    <Dropdown
+                  className="position-absolute top-0 end-0 m-2"
+                  style={{ zIndex: 1 }} 
+                >
+                  <Dropdown.Toggle
+                    variant="dark"
+                    id={`dropdown-${playlist.playlist.cod_playlist}`}
+                    style={{ background: 'var(--celestito)', border: '1px solid white', borderRadius: '8px', padding: '5px' }}
+                  >
+                    <i className="bi bi-three-dots-vertical" style={{ color: 'white' }}></i>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item >Editar Playlist</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleDeletePlaylist(playlist)}>Eliminar Playlist</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                   <Card.Img
                     variant="top"
                     src={playlist.portadaUrl}
@@ -403,6 +454,19 @@ const Playlist = () => {
             ))
           )}
         </Row>
+        <Modal show={deleteModalVisible} onHide={handleCancelDelete} centered backdrop="static" keyboard={false}>
+            <Modal.Body>
+              <h4>¿Deseas eliminar la playlist: {selectedPlaylist?.playlist?.nombre_playlist}?</h4>
+            </Modal.Body>
+            <Modal.Footer className="justify-content-center">
+              <Button variant="btn Warning-btn-color" onClick={handleCancelDelete}>
+                No
+              </Button>
+              <Button variant="btn custom-btn-color" onClick={handleConfirmDelete} style={{marginLeft:'25px'}}>
+                Sí
+              </Button>
+            </Modal.Footer>
+        </Modal>
           <div className="mt-4 text-center">
           {totalPages > 1 && (
             <>

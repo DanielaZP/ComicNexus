@@ -57,8 +57,7 @@ useEffect(() => {
        </Container>
         ) : comicsData.length === 0 ? (
           <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <p style={{ fontFamily: "Comic Sans MS" ,
-            fontSize: "20px"}}>
+            <p style={{ fontSize: "20px"}}>
             {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
             : 'No se han encontraron resultados para ""'}
           </p>

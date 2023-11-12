@@ -80,8 +80,8 @@ function BusquedaTodo() {
     <div>{search === "¡" || search === null ? (
       <Container className="text-center my-5">
           <div className='container d-flex justify-content-center align-items-center'>
-          <h3 style={{textAlign: "center", fontFamily: "Comic Sans MS", lineHeight: '10px',
-                        backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '700px', height: '50px',
+          <h3 style={{textAlign: "center", lineHeight: '10px',backgroundColor: 'white',
+             padding: '20px', borderRadius: '50%', width: '700px', height: '50px',
                         }}>Ingrese una palabra en el buscador, para explorar cómics</h3>
          </div>
 
@@ -145,8 +145,8 @@ function BusquedaTodo() {
        <TabContent activeTab={activeTab} style={{ margin: "0 auto"}} lazy={true}>
          <TabPane tabId="1">
            <div className='container'>
-           <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS",
-                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+           <h1 style={{textAlign: "left", backgroundColor: 'white', padding: '20px',
+             borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
                 }}>Títulos</h1>
              <div className="container">
         {isLoading ? (
@@ -158,8 +158,7 @@ function BusquedaTodo() {
        </Container>
         ) : comicsData.length === 0 ? (
           <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <p style={{ fontFamily: "Comic Sans MS" ,
-            fontSize: "20px"}}>
+            <p style={{ fontSize: "20px"}}>
             {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
             : 'No se han encontraron resultados para ""'}
           </p>
@@ -177,22 +176,22 @@ function BusquedaTodo() {
         )}
       </div>
      </div>
-          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+          <div className='container'> <h1 style={{textAlign: "left", backgroundColor: 'white', 
+              padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
                 }}>Autor</h1>
           </div> 
 
           <NavArtista/>
 
-          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+          <div className='container'> <h1 style={{textAlign: "left", backgroundColor: 'white', 
+              padding: '20px', borderRadius: '50%', width: '170px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
                  }}>Sinopsis</h1>
           </div> 
 
             <NavCat/>
 
-          <div className='container'> <h1 style={{textAlign: "left", fontFamily: "Comic Sans MS", 
-                backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '320px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+          <div className='container'> <h1 style={{textAlign: "left", backgroundColor: 'white',
+               padding: '20px', borderRadius: '50%', width: '320px', height: '30px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
                 }}>Año de publicación</h1>
           </div> 
              
@@ -212,8 +211,7 @@ function BusquedaTodo() {
       </Container>
         ) : comicsData.length === 0 ? (
           <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <p style={{ fontFamily: "Comic Sans MS" ,
-            fontSize: "20px"}}>
+            <p style={{ fontSize: "20px"}}>
             {search !== "¡" ? `No se han encontraron resultados para "${search}"` 
             : 'No se han encontraron resultados para ""'}
           </p>

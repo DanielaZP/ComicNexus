@@ -55,26 +55,31 @@ function InicioSesion() {
       // No hay errores, enviar el formulario
       try {
         const response = await axios.get(`https://comic-next-laravel.vercel.app/api/api/verificar-credenciales?nombre_u=${formData.username}&password=${formData.password}`)
-        if (response.status === 200) {
-          // Autenticación exitosa
-          const data = response.data; // Obtén los datos de la respuesta
-          const codUsuario = data.cod_usuario; // Obten el valor 'cod_usuario'
-          localStorage.setItem('cod_usuario', codUsuario);
-          console.log('Autenticación exitosa. Código de usuario:', codUsuario);
-          navigate('/inicio');
-        } else {
-          // Autenticación fallida
-          console.error('Error de autenticación:', response.data.error);
-
-        }
+  
+        // Si la respuesta es exitosa
+        console.log('Usuario autenticado:', response.data.cod_usuario);
+        const data = response.data; // Obtén los datos de la respuesta
+        const codUsuario = data.cod_usuario; // Obten el valor 'cod_usuario'
+        localStorage.setItem('cod_usuario', codUsuario);
+        console.log('Autenticación exitosa. Código de usuario:', codUsuario);
+        navigate('/inicio');
       } catch (error) {
-        console.error('Error al enviar la solicitud:', error);
-        setFormData({ username: '', password: '', showPassword: false });
-        setErrorMensaje('Error al iniciar sesión. Por favor, ingrese nuevamente sus credenciales.');
-        const response2 = await axios.get(`https://comic-next-laravel.vercel.app/api/api/incrementarFallidos/${formData.username}`)
-        if (response2.status === 200) {
-          const data2 = response2.data;
-          console.log(data2);
+        // Manejar errores de la solicitud
+        if (error.response) {
+          // El servidor respondió con un código de estado fuera del rango 2xx
+          setFormData({ username: '', password: '', showPassword: false });
+          if( error.response.data.error == 'Credenciales incorrectas'){
+            setErrorMensaje('Error al iniciar sesión. Por favor, ingrese nuevamente sus credenciales.');
+          }else{
+            setErrorMensaje('Cuenta Bloqueada. Por favor, intentelo más tarde.');
+          }
+          console.error('Error de autenticación:', error.response.data.error);
+        } else if (error.request) {
+          // La solicitud fue realizada, pero no se recibió respuesta
+          console.error('No se recibió respuesta del servidor');
+        } else {
+          // Algo sucedió en la configuración de la solicitud que desencadenó un error
+          console.error('Error al realizar la solicitud:', error.message);
         }
       }
     }

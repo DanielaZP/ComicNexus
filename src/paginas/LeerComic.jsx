@@ -4,8 +4,10 @@ import pageFlipSFX from '../page-flip-01a.mp3';
 
 import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
+import { Container } from "react-bootstrap";
 
 export default function LeerComic() {
+
   const [soundOn, setSoundOn] = React.useState(true);
   const [play] = useSound(pageFlipSFX);
   const flipbook = React.useRef(null);
@@ -35,7 +37,8 @@ export default function LeerComic() {
       pageFlipObj?.getCurrentPageIndex() + 2 ===
       pageFlipObj?.getPageCount()
     ) {
-      pageFlipObj.flip(0);
+      // pageFlipObj.flip(0);
+      console.log("Final")
     } else {
       pageFlipObj.flipNext();
     }
@@ -43,10 +46,10 @@ export default function LeerComic() {
 
   return (
     <div className="Leer">
-      <h1>Flipbook CodeSandbox</h1>
-      <h2 onClick={() => setSoundOn((prev) => !prev)}>
-        Click here to TURN {soundOn ? "OFF" : "ON"} audio
-      </h2>
+      <Container className="text-center my-5">
+      <h1 className="display-4 badabb">Temporal</h1>
+      <hr className="my-4 custom-divider"  />
+    </Container>
       <span>
         <div
           style={{ width: "fit-content", margin: "8px auto" }}
@@ -63,42 +66,32 @@ export default function LeerComic() {
           Next Page{" "}
         </div>
         <div className="flipbook">
-          <HTMLFlipBook
+          <HTMLFlipBook 
             ref={flipbook}
             onFlip={onFlip}
-            width={200}
-            height={500}
-            size="stretch"
+            width={450}
+            height={530}
+            size="fixed"
             showCover={true}
             drawShadow={false}
             flippingTime={750}
             useMouseEvents={false}
+            autoSize={true}
           >
             <div className="page">
-              <h1>My awesome first article</h1>
-              <p>My awesome first content</p>
+              <img src='/LogoComicsNexus.png'/>
             </div>
             <div className="page">
-              <h1>My wonderful second article</h1>
-              <p>My wonderful second content</p>
+              <img src='heroes/dc-arrow.jpg'  alt='Descripción de la imagen'/>
             </div>
             <div className="page">
-              <h1>My excellent third article</h1>
-              <p>My excellent third content</p>
-              <video
-                controls
-                src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
-                poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
-                width="620"
-              />
+            <img src='heroes/dc-flash.jpg'  alt='Descripción de la imagen'/>
             </div>
             <div className="page">
-              <h1>My excellent fourth article</h1>
-              <p>My excellent fourth content</p>
+            <img src='heroes/marvel-hulk.jpg'  alt='Descripción de la imagen'/>
             </div>
             <div className="page">
-              <h1>My excellent fifth article</h1>
-              <p>My excellent fifth content</p>
+            <img src='heroes/marvel-silver.jpg'  alt='Descripción de la imagen'/>
             </div>
           </HTMLFlipBook>
         </div>

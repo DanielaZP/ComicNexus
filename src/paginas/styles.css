@@ -4,9 +4,25 @@
 }
 
 .flipbook {
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
+  position: relative;
+  width: 100%; /* Ajusta el ancho si es necesario */
+  height: 100vh; /* Esto toma el 100% del viewport height (alto de la pantalla) */
+  display: grid;
+  place-items: center;
 }
 
 .page {
   background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
+
+.page img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+

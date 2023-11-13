@@ -271,45 +271,61 @@ function ContenidoComic() {
                 </div>
               ))}
             </div>
-            <button onClick={uploadImages} className="btn custom-btn-color"
-              style={{
-                marginTop: '20px',
-                width: '180px',
-                height: '60px',
-                justifyContent: 'center',
-                lineHeight: '35px',
-                border: '3px solid white',
-                borderRadius: '8px',
-              }}>
-              Subir imagenes
-            </button>
-            <button className="btn custom-btn-color"
-              style={{
-                marginTop: '20px',
-                width: '180px',
-                height: '60px',
-                justifyContent: 'center',
-                lineHeight: '35px',
-                border: '3px solid white',
-                borderRadius: '8px',
-                marginRight: '110px',
-                marginLeft: '110px'
-              }} onClick={clearImages}>
-              Limpiar
-            </button>
-            <Link className="btn Warning-btn-color" to="/pagina-admi"
-              style={{
-                marginTop: '20px',
-                width: '180px',
-                height: '60px',
-                justifyContent: 'center',
-                lineHeight: '35px',
-                border: '3px solid white',
-                borderRadius: '8px',
-                marginRight: '0px'
-              }}>
-              Cancelar
-            </Link>
+            <Row>
+              <Col>
+                <button
+                  onClick={uploadImages}
+                  className="btn custom-btn-color"
+                  style={{
+                    marginTop: '20px',
+                    width: '180px',
+                    height: '60px',
+                    justifyContent: 'center',
+                    lineHeight: '35px',
+                    border: '3px solid white',
+                    borderRadius: '8px',
+                    marginRight: '10px', // Ajusta el margen según sea necesario
+                  }}
+                >
+                  Subir imágenes
+                </button>
+              </Col>
+              <Col>
+                <button
+                  className="btn custom-btn-color"
+                  style={{
+                    marginTop: '20px',
+                    width: '180px',
+                    height: '60px',
+                    justifyContent: 'center',
+                    lineHeight: '35px',
+                    border: '3px solid white',
+                    borderRadius: '8px',
+                    marginRight: '10px', // Ajusta el margen según sea necesario
+                  }}
+                  onClick={clearImages}
+                >
+                  Limpiar
+                </button>
+              </Col>
+              <Col>
+                <Link
+                  className="btn Warning-btn-color"
+                  to="/pagina-admi"
+                  style={{
+                    marginTop: '20px',
+                    width: '180px',
+                    height: '60px',
+                    justifyContent: 'center',
+                    lineHeight: '35px',
+                    border: '3px solid white',
+                    borderRadius: '8px',
+                  }}
+                >
+                  Cancelar
+                </Link>
+              </Col>
+            </Row>
           </div>
         </Col>
       </Row>

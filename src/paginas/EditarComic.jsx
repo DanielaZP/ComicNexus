@@ -121,7 +121,7 @@ function EditarComic() {
 
     e.preventDefault();
     setIsLoading(true);
-    Axios.post('https://comic-next-laravel.vercel.app/api/api/registro', {
+    Axios.post('https://comic-next-laravel.vercel.app/api/api/editar/'+localStorage.getItem('codComic'), {
       titulo: data.titulo,
       autor: data.autor,
       sinopsis: data.sinopsis,

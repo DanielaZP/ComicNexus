@@ -2,6 +2,7 @@ import { Container, Modal, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocalStorage } from 'react-use'; 
 
 function PaginaAdmi() {
     const [showModal, setShowModal] = useState(false);
@@ -9,6 +10,7 @@ function PaginaAdmi() {
     const [comicsData, setComicsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
     const navigate = useNavigate();
+    const [nuevo, setNuevo ]= useLocalStorage('codComic');
     //conexion
     useEffect(() => {
         axios.get('https://comic-next-laravel.vercel.app/api/api/listascomics') 
@@ -30,8 +32,9 @@ function PaginaAdmi() {
     const handleSelectComic = (comic) => {
         setSelectedComic(comic);
         handleCloseModal();
-
-        navigate('/editar-comic/${comic.id}');//id comic
+        localStorage.setItem('codComic',comic.comic.cod_comic)
+        console.log(localStorage.getItem('codComic'))
+        navigate(`/editar-comic/${comic.comic.cod_comic}`);//id comic
     };
 
     if (isLoading) {

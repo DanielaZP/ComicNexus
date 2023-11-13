@@ -26,3 +26,25 @@
   height: auto;
 }
 
+.flipbook-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.prev-button,
+.next-button {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+.prev-button {
+  left: 10px; /* Ajusta la posición del botón izquierdo */
+}
+
+.next-button {
+  right: 10px; /* Ajusta la posición del botón derecho */
+}
+

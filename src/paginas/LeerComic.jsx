@@ -1,10 +1,10 @@
 import "./styles.css";
 import React, { forwardRef } from "react";
 import pageFlipSFX from '../page-flip-01a.mp3';
-
+import { BiSolidChevronLeft, BiSolidChevronRight } from 'react-icons/bi';
 import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 export default function LeerComic() {
 
@@ -50,21 +50,10 @@ export default function LeerComic() {
       <h1 className="display-4 badabb">Temporal</h1>
       <hr className="my-4 custom-divider"  />
     </Container>
-      <span>
-        <div
-          style={{ width: "fit-content", margin: "8px auto" }}
-          onClick={flipBack}
-        >
-          {" "}
-          Prev Page
-        </div>
-        <div
-          style={{ width: "fit-content", margin: "8px auto" }}
-          onClick={flipForward}
-        >
-          {" "}
-          Next Page{" "}
-        </div>
+      <div className="flipbook-container">
+        <Button variant="link" className="prev-button" onClick={flipBack}>
+          <BiSolidChevronLeft color="white" size="5em" />
+        </Button>
         <div className="flipbook">
           <HTMLFlipBook 
             ref={flipbook}
@@ -95,7 +84,10 @@ export default function LeerComic() {
             </div>
           </HTMLFlipBook>
         </div>
-      </span>
+          <Button variant="link" className="next-button" onClick={flipForward}>
+          <BiSolidChevronRight color="white" size="5em" />
+        </Button>
+      </div>
     </div>
   );
 }

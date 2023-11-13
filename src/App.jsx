@@ -22,6 +22,8 @@ import RestablecerContraseña from './paginas/RestablecerContraseña';
 import ContenidoComic from './paginas/ContenidoComic';
 import EditarComic from './paginas/EditarComic';
 import Favoritos from './paginas/Favoritos';
+import LeerComic from './paginas/LeerComic';
+
 const codUsuario = localStorage.getItem('cod_usuario');
 
 function App() {
@@ -64,6 +66,7 @@ function App() {
             <Route path='contenido-comic' element={<ContenidoComic/>}/>
             <Route path='editar-comic/:id' element={<EditarComic/>}/>
             <Route path='favoritos' element={<Favoritos/>}/>
+            <Route path='leer' element={<LeerComic/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />

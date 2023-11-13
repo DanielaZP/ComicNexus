@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Icon, Popup } from 'semantic-ui-react';
 import axios from 'axios';
 import Favorite from '@mui/icons-material/Favorite';
@@ -15,6 +15,7 @@ function VistaComic() {
   const [Errormodalvisible, setErrormodalvisible] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const { id } = useParams();
+  let navigate = useNavigate();
   const codUsuario = localStorage.getItem('cod_usuario');
   const [likedHeart, setLikedHeart] = useState(false); 
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
@@ -80,7 +81,7 @@ function VistaComic() {
   
 
   const handleAddToLeerComic = () => {
-    
+    navigate('/leer')
     // Aquí puedes realizar logica de   leer comic 
   };
   const handleCloseModal = () => {

@@ -371,7 +371,7 @@ function EditarComic() {
 
     <div className="container" >
       <Container className="text-center mt-5">
-        <h3 className="display-4 badabb">Registro Comic</h3>
+        <h3 className="display-4 badabb">Editar Comic</h3>
         <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
       </Container>
 
@@ -554,7 +554,7 @@ function EditarComic() {
               <div className="d-flex justify-content-between">
                 <Link className="btn Warning-btn-color" to="/inicio">Cancelar</Link>
                 <a href="#" onClick={handleLimpiarClick} className="btn custom-btn-color">Limpiar</a>
-                <button onClick={handleGuardarClick} className="btn custom-btn-color">Guardar</button>
+                <button onClick={handleGuardarClick} className="btn custom-btn-color">Guardar Cambios</button>
               </div>
 
             </div>
@@ -575,7 +575,7 @@ function EditarComic() {
         <h3 style={{ fontWeight: 'bold' }}>Confirmar</h3>
         </Modal.Header>
         <Modal.Content style={{ textAlign: 'center',  marginTop: '-40px' }}>
-        <p>¿Está seguro de añadir el cómic?</p>
+        <p>¿Está seguro de editar el cómic?</p>
         </Modal.Content>
         <Modal.Actions style={{ display: 'flex', justifyContent: 'center'}}>
           <button className="btn Warning-btn-color" style={{ marginRight: '10px'}} onClick={closeModal}>
@@ -612,7 +612,7 @@ function EditarComic() {
         height: '20%',
       }}>
         <Modal.Content>
-    <p>Comic subido con éxito.</p>
+    <p>Comic editado con éxito.</p>
   </Modal.Content>
   <Modal.Actions>
     <Button color="green" onClick={handleCloseComicSubidoConExito}>

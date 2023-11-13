@@ -31,7 +31,7 @@ function PaginaAdmi() {
         setSelectedComic(comic);
         handleCloseModal();
 
-        navigate(`/editar-comic/${comic.id}`);
+        navigate('/editar-comic/${comic.id}');//id comic
     };
 
     if (isLoading) {

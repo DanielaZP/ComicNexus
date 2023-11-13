@@ -20,6 +20,7 @@ import BusquedaTodo from './paginas/BusquedaTodo';
 import SolicitudRestablecimientoContraseña from './paginas/SolicitudRestablecimientoContraseña';
 import RestablecerContraseña from './paginas/RestablecerContraseña';
 import ContenidoComic from './paginas/ContenidoComic';
+import EditarComic from './paginas/EditarComic';
 import Favoritos from './paginas/Favoritos';
 const codUsuario = localStorage.getItem('cod_usuario');
 
@@ -61,6 +62,7 @@ function App() {
             <Route path='buscar' element={<BusquedaTodo/>}/>
             <Route path='perfil' element={<Perfil/>}/>
             <Route path='contenido-comic' element={<ContenidoComic/>}/>
+            <Route path='editar-comic/:id' element={<EditarComic/>}/>
             <Route path='favoritos' element={<Favoritos/>}/>
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />

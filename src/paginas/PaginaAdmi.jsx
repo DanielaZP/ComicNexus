@@ -1,5 +1,5 @@
 import { Container, Modal, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ function PaginaAdmi() {
     const [selectedComic, setSelectedComic] = useState(null);
     const [comicsData, setComicsData] = useState([]);
     const [isLoading, setIsLoading] = useState(true); 
+    const navigate = useNavigate();
     //conexion
     useEffect(() => {
         axios.get('https://comic-next-laravel.vercel.app/api/api/listascomics') 
@@ -29,6 +30,8 @@ function PaginaAdmi() {
     const handleSelectComic = (comic) => {
         setSelectedComic(comic);
         handleCloseModal();
+
+        navigate(`/editar-comic/${comic.id}`);
     };
 
     if (isLoading) {
@@ -85,6 +88,7 @@ function PaginaAdmi() {
                     className='contenido-image'
                   />
                   <span className='playlist-title'>{comic.comic.titulo}</span>
+                  <Link to='editar-comic'></Link>
                   <button
                     className='btn custom-btn-color'
                     onClick={() => handleSelectComic(comic)}

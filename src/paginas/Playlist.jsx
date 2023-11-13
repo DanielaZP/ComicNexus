@@ -25,6 +25,71 @@ const Playlist = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editPlaylist, setEditPlaylist] = useState(null);  
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
+  const handleEditPlaylist = (playlist) => {
+    setEditPlaylist(playlist);
+    setPlaylistName(playlist.playlist.nombre_playlist);
+    setSelectedImage(playlist.portadaUrl);
+    setEditModalVisible(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditModalVisible(false);
+    setEditPlaylist(null);
+    setSelectedImage(null);
+    setPlaylistName('');
+    setNameError('');
+    setMinLengthError(false);
+    setMaxLengthError(false);
+  };
+
+  const handleSaveEditPlaylist = () => {
+    if (loading || !editPlaylist) {
+      return;
+    }
+  
+    const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
+  
+    if (playlistExists) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Ya existe una playlist con este nombre!',
+      });
+      return;
+    }
+  
+    setLoading(true);
+    const base64Image = extractBase64Code(selectedImage);
+    const data = {
+      nombre_playlist: playlistName,
+      imagen_playlist: base64Image,
+      cod_playlist: editPlaylist.playlist.cod_playlist,
+    };
+  console.log(data);
+  console.log('imagen:');
+  console.log(selectedImage);
+    axios
+      .post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
+      .then(() => {
+        setSuccessModalVisible(true);
+        handleClose();
+        console.log("Conexion exitosa y terminada datos enviados:");
+      })
+      .catch((error) => {
+        window.alert('¡Error al subir la playlist!');
+        console.error('Error al enviar los datos:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+        setConfirmModalVisible(false);
+        setCancelModalVisible(false);
+        setConfirmed(false);
+      });
+  
+    handleCloseEditModal();
+  };
 
   useEffect(() => {
     if (playlistName.trim().length >= 3 && playlistName.trim().length <= 50) {
@@ -91,12 +156,7 @@ const Playlist = () => {
   const handleCancelDelete = () => {
     setDeleteModalVisible(false);
   };
-  const handleEditPlaylist = (playlist) => {
-    setEditPlaylist(playlist);
-    setPlaylistName(playlist.playlist.nombre_playlist); // Establecer el nombre de la playlist en el estado
-    setSelectedImage(playlist.portadaUrl); // Establecer la imagen de la playlist en el estado
-    setShowModal(true); // Abrir el modal de edición
-  };
+  
   const handleClose = () => {
     setShowModal(false);
     setSelectedImage(null);
@@ -288,10 +348,102 @@ const Playlist = () => {
               }}>
           Crear playlist
         </Button>
-        
+        <Modal show={editModalVisible} onHide={handleCloseEditModal} size="lg" backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Playlist</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Form>
+              <Row>
+                <Col md={6}>
+                  <div
+                    style={{
+                      width: '220px',
+                      height: '220px',
+                      border: '2px dashed #ccc',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      marginBottom: '20px',
+                      position: 'relative',
+                    }}
+                  >
+                    {selectedImage ? (
+                      <img
+                        src={selectedImage}
+                        al t="Previsualización"
+                        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <>
+                        <span>Subir Imagen</span>
+                        </>
+                    )}
+                    
+                    <input
+                      type="file"
+                      accept=".png, .jpg, .jpeg"
+                      style={{
+                        display: 'none',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                      }}
+                      onChange={handleImageChange}
+                    />
+                    
+                  </div>
+                  <div style={{ marginTop: '10px', color: 'red' }}>
+                            {imageError && (
+                              <div style={{ marginTop: 10, color: 'red', width: 222,
+                              textAlign: 'center',
+                              display: 'block',
+                              marginBottom: 15 }}>
+                                Sube una imagen válida.
+                              </div>
+                            )}
+                          </div>
+                  <Button
+                    variant="btn custom-btn-color"
+                    style={{ marginLeft: '50px', marginRight: 'auto', display: 'block' }}
+                    onClick={() => document.querySelector('input[type="file"]').click()}
+                  >
+                    Agregar Imagen
+                  </Button>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="playlistName">
+                    <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre del Playlist</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Ingrese el nombre de la playlist"
+                      value={playlistName}
+                      onChange={(e) => setPlaylistName(e.target.value)}
+                      isInvalid={!!nameError || minLengthError || maxLengthError}
+                      style={{ marginTop: '10px', marginLeft: '-100px' }}
+                    />
+                      {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
+                      {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                      {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
+                    </Form.Group>
+                  <div style={{ marginTop: '50px' }}>
+                    <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
+                      Cancelar
+                    </Button>
+                    <Button variant="btn custom-btn-color" onClick={handleSaveEditPlaylist} style={{ marginLeft: '80px' }}>
+                      Guardar cambios
+                    </Button>
+                  </div>
+                </Col>
+              </Row>
+            </Form>
+          </Modal.Body>
+      </Modal>
         <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
           <Modal.Header closeButton>
-          <Modal.Title>{editPlaylist ? 'Editar Playlist' : 'Crear Playlist'}</Modal.Title>
+          <Modal.Title> Crear Playlist</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -396,8 +548,6 @@ const Playlist = () => {
       </Button>
    </Modal.Footer>
   </Modal>
-
-
         <Modal
             show={cancelModalVisible}
             onHide={() => setCancelModalVisible(false)}

@@ -37,8 +37,12 @@
 .next-button {
   top: 50%;
   transform: translateY(-50%);
+  color:white ;
 }
 
+.next-button:hover{
+  color: blue !important;
+}
 
 .prev-button {
   left: 10px; /* Ajusta la posición del botón izquierdo */
@@ -46,5 +50,30 @@
 
 .next-button {
   right: 10px; /* Ajusta la posición del botón derecho */
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px; /* Ajusta el espaciado si es necesario */
+}
+
+/* Estilos para los botones */
+.control-button {
+  margin: 0 100px;
+  font-size: 55px; /* Tamaño de los botones */
+  color: #ffffff; /* Color del botón */
+  display: flex;
+  align-items: center; /* Alinear verticalmente al centro */
+  justify-content: space-between; /* Espacio entre el ícono y el texto */
+  text-align: left; /* Asegura que el texto se alinee a la izquierda */
+}
+
+/* Estilos para el texto al lado del ícono */
+.control-button span {
+  text-decoration: none !important; /* Quita el subrayado del texto */
+  font-size: 16px; /* Tamaño del texto */
+  display: inline-flex; /* Hacer que el texto esté en línea con el ícono */
+  text-align: center; /* Alinea el texto a la derecha */
+  gap: 5px; /* Ajusta el espacio entre el ícono y el texto */
 }
 

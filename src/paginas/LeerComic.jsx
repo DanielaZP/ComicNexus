@@ -2,12 +2,31 @@ import "./styles.css";
 import React, { forwardRef } from "react";
 import pageFlipSFX from '../page-flip-01a.mp3';
 import { BiSolidChevronLeft, BiSolidChevronRight } from 'react-icons/bi';
+import {TbBoxMultiple} from 'react-icons/tb';
+import { IoArrowBackCircle } from 'react-icons/io5';
+import {AiOutlineFullscreen} from 'react-icons/ai'
 import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
 import { Container, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 
 export default function LeerComic() {
+  let navigate = useNavigate();
 
+  const toggleFullScreen = () => {
+    const flipBookContainer = document.querySelector('.flipbook');
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      if (flipBookContainer) {
+        flipBookContainer.requestFullscreen();
+      }
+    }
+  };
+  
+  const changemode = (e) =>{
+    alert("XD falta tiempo")
+  }
   const [soundOn, setSoundOn] = React.useState(true);
   const [play] = useSound(pageFlipSFX);
   const flipbook = React.useRef(null);
@@ -44,15 +63,43 @@ export default function LeerComic() {
     }
   }, [flipbook]);
 
+  const backpage = (e)=>{
+    navigate(-1)
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      flipBack();
+    }else if(event.key === 'ArrowRight'){
+      flipForward();
+    }
+  });
+
   return (
     <div className="Leer">
       <Container className="text-center my-5">
-      <h1 className="display-4 badabb">Temporal</h1>
+        <div className="button-container">
+          <Button variant="link" className="control-button" onClick={backpage}>
+            <IoArrowBackCircle  />
+            <span>Atras</span>
+          </Button>
+          <Button variant="link" className="control-button" onClick={changemode}>
+            <TbBoxMultiple /> 
+            <span>Cascada</span>
+          </Button>
+          <Button variant="link" className="control-button" onClick={toggleFullScreen}>
+            <AiOutlineFullscreen /> 
+            <span>Pantalla Completo</span>
+          </Button>
+        </div>
+      </Container>
+      <Container className="text-center my-5">
       <hr className="my-4 custom-divider"  />
-    </Container>
+      </Container>
+      
       <div className="flipbook-container">
         <Button variant="link" className="prev-button" onClick={flipBack}>
-          <BiSolidChevronLeft color="white" size="5em" />
+          <BiSolidChevronLeft size="5em"/>
         </Button>
         <div className="flipbook">
           <HTMLFlipBook 
@@ -85,7 +132,7 @@ export default function LeerComic() {
           </HTMLFlipBook>
         </div>
           <Button variant="link" className="next-button" onClick={flipForward}>
-          <BiSolidChevronRight color="white" size="5em" />
+          <BiSolidChevronRight size="5em" />
         </Button>
       </div>
     </div>

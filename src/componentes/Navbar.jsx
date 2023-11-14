@@ -7,6 +7,7 @@ const Navbar = () => {
   const [hoverComics, setHoverComics] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false); // Nuevo estado
+  const codUsuario = localStorage.getItem('cod_usuario');
 
   const handleInicioHover = () => {
     setHoverInicio(true);
@@ -38,6 +39,10 @@ const Navbar = () => {
 
   const handleUserMenuLeave = () => {
     setShowUserMenu(false);
+  };
+  const handleLogout = () => {
+    // Elimina el codUsuario del localStorage al cerrar sesión
+    localStorage.removeItem('cod_usuario');
   };
 
   const linkStyleInicio = hoverInicio ? { borderBottom: '2px solid black' } : {};
@@ -143,7 +148,7 @@ const Navbar = () => {
             {/* <li><a className="dropdown-item" href="#">Mi perfil</a></li> */}
             <li><Link className="dropdown-item" to="/playlists">Mis playlists</Link></li>
             <li><Link className="dropdown-item" to="/favoritos">Mis favoritos</Link></li>
-            <li><Link className="dropdown-item" to="/">Cerrar Sesión</Link></li>
+            <li><Link className="dropdown-item" to="/" onClick={handleLogout}>Cerrar Sesión</Link></li>
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

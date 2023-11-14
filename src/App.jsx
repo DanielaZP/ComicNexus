@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import { Route, Routes, BrowserRouter, Outlet, Navigate } from 'react-router-dom';
 import Navbar from './componentes/Navbar';
 import Accion from './paginas/Accion';
@@ -26,16 +27,21 @@ import LeerComic from './paginas/LeerComic';
 
 const codUsuario = localStorage.getItem('cod_usuario');
 
+function PrivateRoute({ children }) {
+  return codUsuario ? children : <Navigate to="/" />;
+}
+
 function App() {
   const estiloFondo = {
-     backgroundImage: `url('../fondos/Fondo.jpeg')`,
-     backgroundColor: "#999999", 
-     backgroundSize: "cover",
-     backgroundRepeat: "no-repeat",
-     backgroundAttachment: "fixed",
-     minHeight: "100vh",
-     backgroundPosition: "center"
+    backgroundImage: `url('../fondos/Fondo.jpeg')`,
+    backgroundColor: "#999999",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
+    minHeight: "100vh",
+    backgroundPosition: "center"
   };
+
   return (
     <div className="App" style={estiloFondo}>
       <BrowserRouter>
@@ -50,29 +56,85 @@ function App() {
               </>
             }
           >
-            <Route path='inicio' element={<Inicio />} />
-            <Route path="accion" element={<Accion />} />
-            <Route path="registro-comic" element={<RegistroComic />} />
-            <Route path="lista-comics" element={<ListaComics />} />
-            <Route path="terror" element={<Terror />} />
-            <Route path="comedia" element={<Comedia />} />
-            <Route path="ciencia-ficcion" element={<CienciaFiccion />} />
-            <Route path="pagina-admi" element={<PaginaAdmi />} />
-            <Route path="vista-comic/:id" element={<VistaComic />} />
-            <Route path="playlists" element={<Playlist />} />
-            <Route path="vista-playlist/:id" element={<VistaPlaylist />} />
-            <Route path='buscar' element={<BusquedaTodo/>}/>
-            <Route path='perfil' element={<Perfil/>}/>
-            <Route path='contenido-comic' element={<ContenidoComic/>}/>
-            <Route path='editar-comic/:id' element={<EditarComic/>}/>
-            <Route path='favoritos' element={<Favoritos/>}/>
-            <Route path='leer' element={<LeerComic/>}/>
+            <Route
+              path="inicio"
+              element={<PrivateRoute><Inicio/></PrivateRoute>}
+            />
+            <Route
+              path="accion"
+              element={<PrivateRoute><Accion /></PrivateRoute>}
+            />
+            <Route
+              path="registro-comic"
+              element={<PrivateRoute><RegistroComic /></PrivateRoute>}
+            />
+            <Route
+              path="lista-comics"
+              element={<PrivateRoute><ListaComics /></PrivateRoute>}
+            />
+            <Route
+              path="terror"
+              element={<PrivateRoute><Terror /></PrivateRoute>}
+            />
+            <Route
+              path="comedia"
+              element={<PrivateRoute><Comedia /></PrivateRoute>}
+            />
+            <Route
+              path="ciencia-ficcion"
+              element={<PrivateRoute><CienciaFiccion /></PrivateRoute>}
+            />
+            <Route
+              path="pagina-admi"
+              element={<PrivateRoute><PaginaAdmi /></PrivateRoute>}
+            />
+            <Route
+              path="vista-comic/:id"
+              element={<PrivateRoute><VistaComic /></PrivateRoute>}
+            />
+            <Route
+              path="playlists"
+              element={<PrivateRoute><Playlist /></PrivateRoute>}
+            />
+            <Route
+              path="vista-playlist/:id"
+              element={<PrivateRoute><VistaPlaylist /></PrivateRoute>}
+            />
+            <Route
+              path="buscar"
+              element={<PrivateRoute><BusquedaTodo /></PrivateRoute>}
+            />
+            <Route
+              path="perfil"
+              element={<PrivateRoute><Perfil /></PrivateRoute>}
+            />
+            <Route
+              path="contenido-comic"
+              element={<PrivateRoute><ContenidoComic /></PrivateRoute>}
+            />
+            <Route
+              path="editar-comic/:id"
+              element={<PrivateRoute><EditarComic /></PrivateRoute>}
+            />
+            <Route
+              path="favoritos"
+              element={<PrivateRoute><Favoritos /></PrivateRoute>}
+            />
+            <Route
+              path="leer"
+              element={<PrivateRoute><LeerComic /></PrivateRoute>}
+            />
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />
-          <Route path="solicitud-restablecimiento-contraseña" element={<SolicitudRestablecimientoContraseña />} />
-          <Route path="restablecer-contraseña" element={<RestablecerContraseña />} />
-          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+          <Route
+            path="solicitud-restablecimiento-contraseña"
+            element={<SolicitudRestablecimientoContraseña />}
+          />
+          <Route
+            path="restablecer-contraseña"
+            element={<RestablecerContraseña />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

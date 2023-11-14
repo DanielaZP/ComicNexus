@@ -8,8 +8,6 @@ import { Popup } from 'semantic-ui-react';
 import { HeartFill } from 'react-bootstrap-icons';
 import { Icon } from 'semantic-ui-react';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 function VistaComic() {
   const [comic, setComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

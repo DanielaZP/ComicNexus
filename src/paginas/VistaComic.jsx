@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Icon, Popup } from 'semantic-ui-react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Favorite from '@mui/icons-material/Favorite';
 import { toast, ToastContainer } from 'react-toastify';

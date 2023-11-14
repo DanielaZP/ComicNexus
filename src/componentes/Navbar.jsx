@@ -143,6 +143,7 @@ const Navbar = () => {
             {/* <li><a className="dropdown-item" href="#">Mi perfil</a></li> */}
             <li><Link className="dropdown-item" to="/playlists">Mis playlists</Link></li>
             <li><Link className="dropdown-item" to="/favoritos">Mis favoritos</Link></li>
+            <li><Link className="dropdown-item" to="/">Cerrar Sesion</Link></li>
             <li><hr className="dropdown-divider" /></li>
             <li><Link className="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
           </ul>

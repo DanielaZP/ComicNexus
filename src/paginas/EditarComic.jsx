@@ -206,10 +206,10 @@ function EditarComic({ selectedComic }) {
     let categoriaError = false;
   
     // Verificar cada condición y establecer los errores correspondientes
-    if (data.titulo.trim() === "") {
+    if (titulo.trim() === "") {
       tituloError = true;
     }
-    if (data.sinopsis.trim() === "") {
+    if (sinopsis.trim() === "") {
       sinopsisError = true;
     }
     if (!hasImage) {

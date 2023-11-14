@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Favorite from '@mui/icons-material/Favorite';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify'; // Agregado
 import 'react-toastify/dist/ReactToastify.css';
+import { Popup } from 'semantic-ui-react';
+import { HeartFill } from 'react-bootstrap-icons';
+import { Icon } from 'semantic-ui-react';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function VistaComic() {
   const [comic, setComic] = useState(null);
@@ -16,15 +20,14 @@ function VistaComic() {
   const { id } = useParams();
   let navigate = useNavigate();
   const codUsuario = localStorage.getItem('cod_usuario');
-  const [likedHeart, setLikedHeart] = useState(false); 
+  const [likedHeart, setLikedHeart] = useState(false);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [addToPlaylistButtonDisabled, setAddToPlaylistButtonDisabled] = useState(false);
+
   useEffect(() => {
     axios
       .get(`https://comic-next-laravel.vercel.app/api/api/comic/${id}?codUsuario=${codUsuario}`)
       .then((response) => {
-        // Almacena los datos del cómic en el estado local
-        console.log(response.data);
         setComic(response.data[0]);
         setLikedHeart(response.data[0].comic_favoritos);
       })
@@ -32,7 +35,6 @@ function VistaComic() {
         console.error('Error al obtener datos del cómic:', error);
       })
       .finally(() => {
-        // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
         setIsLoading(false);
       });
   }, [id]);
@@ -53,39 +55,43 @@ function VistaComic() {
   const handleAddToPlaylist = () => {
     setShowModal(true);
   };
-  
+
   const handleToggleFavorite = async () => {
     try {
       const response = await axios({
-        method: 'post',  
+        method: 'post',
         url: 'https://comic-next-laravel.vercel.app/api/api/ComicFavoritosLike',
         data: {
           cod_comic: id,
           cod_usuario: codUsuario,
         },
-      }); 
-  
+      });
+
       if (response.status === 200) {
-        console.log(response.data.mensaje);
-  
-        // Actualiza el estado local para reflejar el cambio
         setLikedHeart(!likedHeart);
+  
+        const message = likedHeart
+          ? 'Cómic eliminado de favoritos'
+          : 'Cómic añadido a favoritos';
+  
+        console.log('Mostrando notificación:', message); // Agregado
+        toast.success(message); // Mostrar notificación de éxito
       } else {
         console.error('Error al agregar/eliminar de favoritos');
+        toast.error('Error al agregar/eliminar de favoritos');
       }
     } catch (error) {
       console.error('Error de red:', error);
+      toast.error('Error de red al procesar la solicitud');
     }
   };
-  
 
   const handleAddToLeerComic = () => {
-    navigate('/leer')
-    // Aquí puedes realizar logica de   leer comic 
+    navigate('/leer');
   };
+
   const handleCloseModal = () => {
     setShowModal(false);
-    // Restablecer el estado de selectedPlaylistId al cerrar el modal
     setSelectedPlaylistId(null);
     setAddToPlaylistButtonDisabled(false);
   };
@@ -93,42 +99,37 @@ function VistaComic() {
   const modalExito = () => {
     setSuccessModalVisible(true);
   };
+
   const modalError = () => {
     setErrormodalvisible(true);
   };
 
   const handleAddToPlaylistConfirm = (selectedPlaylistId) => {
     setAddToPlaylistButtonDisabled(true);
-      axios
-        .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
-          cod_comic: id,
-          cod_usuario: codUsuario,
-          cod_playlist: selectedPlaylistId,
-        })
-        .then((response) => {
-          console.log('Éxito al añadir el cómic a la playlist:', response.data);
-          modalExito();
-        })
-        .catch((error) => {
-          console.error('Error al añadir el cómic a la playlist:', error);
-          modalError();
-        })
-        .finally(() => {
-          setShowModal(false);
-          setSelectedPlaylistId(null);
-          setAddToPlaylistButtonDisabled(false);
-        });
-  };
-  const favoriteTextStyle = {
-    fontSize: '15px',
-    marginTop: '10px',
-    color: 'MenuText', 
-    textShadow: '1px 1px 1px rgba(0, 0, 0, 0.8)', // Añadir sombra de texto
-    marginLeft: '-45px',
+    axios
+      .post('https://comic-next-laravel.vercel.app/api/api/registroComicPlaylist', {
+        cod_comic: id,
+        cod_usuario: codUsuario,
+        cod_playlist: selectedPlaylistId,
+      })
+      .then((response) => {
+        console.log('Éxito al añadir el cómic a la playlist:', response.data);
+        modalExito();
+      })
+      .catch((error) => {
+        console.error('Error al añadir el cómic a la playlist:', error);
+        modalError();
+      })
+      .finally(() => {
+        setShowModal(false);
+        setSelectedPlaylistId(null);
+        setAddToPlaylistButtonDisabled(false);
+      });
   };
 
   return (
-    <div> 
+    <div>
+      <ToastContainer /> {/* Agregado */}
       {isLoading ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Spinner animation="border" variant="primary" role="status">
@@ -152,7 +153,7 @@ function VistaComic() {
               style={{
                 width: '300px',
                 height: '470px',
-                border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
+                border: '3px solid white',
                 borderRadius: '8px',
                 display: 'flex',
                 justifyContent: 'center',
@@ -175,29 +176,28 @@ function VistaComic() {
                 <strong>Sinopsis: </strong>
                 {comic.comic.sinopsis}
               </p>
-            
-            <Button
-              className="btn custom-btn-color"
-              style={{
-                marginTop: '50px',
-                width: '200px',
-                height: '80px',
-                border: '3px solid white', // Cambia el ancho y el estilo del borde según tus preferencias
-                borderRadius: '8px',
-              }}
-              onClick={handleAddToLeerComic}
-            >
-              Leer Comic
-            </Button>
-            {/* <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '20px' }}> */}
-            <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '20px' }}>    
+
+              <Button
+                className={`btn custom-btn-color${likedHeart ? ' liked' : ''}`}
+                style={{
+                  marginTop: '50px',
+                  width: '200px',
+                  height: '80px',
+                  border: '3px solid white',
+                  borderRadius: '8px',
+                }}
+                onClick={handleAddToLeerComic}
+              >
+                Leer Comic
+              </Button>
+              <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Popup
                     content="Añadir a la playlist"
                     trigger={
                       <div className="icon-container" onClick={handleAddToPlaylist}>
                         <Icon
-                          name='plus' 
+                          name='plus'
                           style={{
                             fontSize: '2em',
                             cursor: 'pointer',
@@ -215,22 +215,21 @@ function VistaComic() {
                     content="Me gusta"
                     trigger={
                       <div className="icon-container" onClick={handleToggleFavorite}>
-                        <Icon
-                          name='like'
+                        <HeartFill
+                          color={likedHeart ? 'red' : 'var(--color-original)'}
+                          size={32}
                           style={{
-                            fontSize: '2em',
                             cursor: 'pointer',
-                            color: likedHeart  ? 'red' : 'var(--color-original)',
                           }}
                         />
                       </div>
                     }
                   />
-                  <div className='icon-message' style={{ marginTop: '10px' }}>Añadir mis favoritos</div>
-                </div>
+                  <div className='icon-message' style={{ marginTop: '10px' }}>Añadir a favoritos</div>
                 </div>
               </div>
 
+            </div>
           </Col>
           <Modal show={showModal} onHide={handleCloseModal} dialogClassName="custom-modal">
             <Modal.Header closeButton>

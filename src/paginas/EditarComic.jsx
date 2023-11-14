@@ -196,7 +196,7 @@ function EditarComic({ selectedComic }) {
   };
 
 
-  const handleGuardarClick = (event) => {
+  const handleGuardarClick = () => {
     event.preventDefault();
   
     // Variables para controlar los errores en cada campo

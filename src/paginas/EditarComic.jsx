@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Axios from 'axios';
 
-function EditarComic({ selectedComic }) {
+function EditarComic() {
   const [fechaPublicacion, setFechaPublicacion] = useState("");
   const [errorFecha, setErrorFecha] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
@@ -33,29 +33,7 @@ function EditarComic({ selectedComic }) {
   const [caracterNoPermitidoSinopsis, setCaracterNoPermitidoSinopsis] = useState(false);
   const [isLoading , setIsLoading] = useState(false);
 
-  const location = useLocation();
-  const selectedComicData = location.state?.selectedComic || null;
 
-  useEffect(() => {
-    // Verifica si hay un cómic seleccionado
-    if (selectedComicData) {
-      // Actualiza el estado con los datos del cómic seleccionado
-      setData({
-        titulo: selectedComicData.comic.titulo,
-        autor: selectedComicData.comic.autor,
-        sinopsis: selectedComicData.comic.sinopsis,
-        fechaPublicacion: selectedComicData.comic.anio_publicacion,
-        selectedCategorias: selectedComicData.comic.categoria,
-      });
-
-      // Verifica si hay una portada y actualiza el estado correspondiente
-      if (selectedComicData.portadaUrl) {
-        setImageUrl(selectedComicData.portadaUrl);
-        setHasImage(true);
-      }
-    }
-  }, [selectedComicData]);
-  
   const handleCloseComicSubidoConExito = () => {
     setIsComicSubidoConExito(false); // Cierra el modal de éxito
   

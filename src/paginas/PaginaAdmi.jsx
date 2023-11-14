@@ -30,13 +30,12 @@ function PaginaAdmi() {
     const handleCloseModal = () => setShowModal(false);
 
     const handleSelectComic = (comic) => {
-        setSelectedComic(comic);
-        handleCloseModal();
-        localStorage.setItem('codComic',comic.comic.cod_comic)
-        console.log(localStorage.getItem('codComic'))
-        navigate(`/editar-comic/${comic.comic.cod_comic}`);//id comic
+      setSelectedComic(comic);
+      handleCloseModal();
+      localStorage.setItem('codComic', comic.comic.cod_comic);
+      navigate(`/editar-comic/${comic.comic.cod_comic}`, { state: { selectedComic: comic } });
     };
-
+    
     if (isLoading) {
         return <p>Cargando...</p>; 
       }

@@ -5,9 +5,11 @@ import { Container, Row, Col, ButtonGroup, Button, Spinner } from 'react-bootstr
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+
 export const Inicio = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     axios.get('https://comic-next-laravel.vercel.app/api/api/listascomics')
@@ -43,7 +45,10 @@ export const Inicio = () => {
             border: '3px solid white',
             fontWeight: "bold",
             fontSize: '24px',
-            
+            backgroundImage: `url('../fondos/MiniFondo8.jpg')`, 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            color: 'white',
           }}
           to="/terror"
         >
@@ -56,11 +61,15 @@ export const Inicio = () => {
             borderRadius: '8px',
             border: '3px solid white',
             fontWeight: "bold",
-            fontSize: '24px'
+            fontSize: '24px',
+            backgroundImage: `url('../fondos/MiniFondo7.jpg')`, 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            color: 'white',
           }}
           to="/accion"
         >
-          𝘼𝙘𝙘𝙞𝙤𝙣
+          𝘼𝙘𝙘𝙞𝙤́𝙣
         </Link>
         <Link
           className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
@@ -69,11 +78,15 @@ export const Inicio = () => {
             borderRadius: '8px',
             border: '3px solid white',
             fontWeight: "bold",
-            fontSize: '24px'
+            fontSize: '24px',
+            backgroundImage: `url('../fondos/MiniFondo2.jpg')`, // Agrega la imagen de fondo
+            backgroundSize: 'cover', // Ajusta el tamaño de la imagen de fondo
+            backgroundPosition: 'center', // Ajusta la posición de la imagen de fondo
+            color: 'White',
           }}
           to="/ciencia-ficcion"
         >
-          𝘾𝙞𝙚𝙣𝙘𝙞𝙖 𝙛𝙞𝙘𝙘𝙞𝙤𝙣
+          𝘾𝙞𝙚𝙣𝙘𝙞𝙖 𝙛𝙞𝙘𝙘𝙞𝙤́𝙣
         </Link>
         <Link
           className="btn custom-btn-color flex-grow-1 mx-2 btn-hover-effect d-flex align-items-center justify-content-center"
@@ -82,7 +95,11 @@ export const Inicio = () => {
             borderRadius: '8px',
             border: '3px solid white',
             fontWeight: "bold",
-            fontSize: '24px'
+            fontSize: '24px',
+            backgroundImage: `url('../fondos/MiniFondo5.jpg')`, // Agrega la imagen de fondo
+            backgroundSize: 'cover', // Ajusta el tamaño de la imagen de fondo
+            backgroundPosition: 'center', // Ajusta la posición de la imagen de fondo
+            color: 'White',
           }}
           to="/comedia"
         >

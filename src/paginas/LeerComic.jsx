@@ -12,6 +12,9 @@ import { useNavigate } from 'react-router-dom';
 
 export default function LeerComic() {
   let navigate = useNavigate();
+  // Variables de estado para controlar la visibilidad de los botones
+  const [showPrevButton, setShowPrevButton] = useState(false);
+  const [showNextButton, setShowNextButton] = useState(true);
 
   const toggleFullScreen = () => {
     const flipBookContainer = document.querySelector('.flipbook');
@@ -38,24 +41,21 @@ export default function LeerComic() {
 
   const flipBack = React.useCallback(() => {
     const pageFlipObj = flipbook.current.pageFlip();
-    if (pageFlipObj?.getCurrentPageIndex() === 0) {
-      pageFlipObj.flip(pageFlipObj?.getPageCount() - 1);
-    } else {
       pageFlipObj.flipPrev();
-    }
+      setShowPrevButton(pageFlipObj.getCurrentPageIndex() > 1);  
+      setShowNextButton(true)
   }, [flipbook]);
 
   const flipForward = React.useCallback(() => {
     const pageFlipObj = flipbook.current.pageFlip();
     if (
-      pageFlipObj?.getCurrentPageIndex() + 2 ===
-      pageFlipObj?.getPageCount()
+      !(pageFlipObj?.getCurrentPageIndex() + 2 ===
+      pageFlipObj?.getPageCount())
     ) {
-      // pageFlipObj.flip(0);
-      console.log("Final")
-    } else {
-      pageFlipObj.flipNext();
-    }
+    pageFlipObj.flipNext();
+    setShowPrevButton(true);  
+    setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 !==
+      pageFlipObj.getPageCount())}
   }, [flipbook]);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function LeerComic() {
         flipForward();
       }
     };
-  
+    
     // Agregar el evento keydown al documento
     document.addEventListener('keydown', handleKeyPress);
   
@@ -101,12 +101,11 @@ export default function LeerComic() {
       <Container className="text-center my-5">
       <hr className="my-4 custom-divider"  />
       </Container>
-      
       <div className="flipbook-container">
         <div className="persistent-buttons">
-          <Button variant="link" className="prev-button" onClick={flipBack}>
+          {showPrevButton && (<Button variant="link" className="prev-button" onClick={flipBack}>
             <BiSolidChevronLeft size="5em"/>
-          </Button>
+          </Button>)}
           </div>
         <div className="flipbook">
           <HTMLFlipBook 
@@ -138,9 +137,9 @@ export default function LeerComic() {
             </div>
           </HTMLFlipBook>
         </div>
-          <Button variant="link" className="next-button" onClick={flipForward}>
+          {showNextButton && <Button variant="link" className="next-button" onClick={flipForward}>
           <BiSolidChevronRight size="5em" />
-        </Button>
+        </Button>}
       </div>
     </div>
   );

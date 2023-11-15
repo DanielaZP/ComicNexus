@@ -49,16 +49,7 @@ const Playlist = () => {
       return;
     }
   
-    const playlistExists = playlists.some(playlist => playlist.playlist.nombre_playlist === playlistName);
-  
-    if (playlistExists) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '¡Ya existe una playlist con este nombre!',
-      });
-      return;
-    }
+    
   
     setLoading(true);
     const base64Image = extractBase64Code(selectedImage);
@@ -71,7 +62,7 @@ const Playlist = () => {
   console.log('imagen:');
   console.log(selectedImage);
     axios
-      .post('https://comic-next-laravel.vercel.app/api/api/registroplay', data)
+      .post('https://comic-next-laravel.vercel.app/api/api/updatePlaylist', data)
       .then(() => {
         setSuccessModalVisible(true);
         handleClose();

@@ -77,7 +77,7 @@ const Favoritos = () => {
                 marginTop: '0px'
               }}
             />
-                <div style={{ marginTop: '-40px', textAlign: 'center' }}>
+                <div style={{ marginTop: '0px', textAlign: 'center' }}>
       {isLoading ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Spinner animation="border" variant="primary" role="status">
@@ -149,7 +149,7 @@ const Favoritos = () => {
                         <Popup
                           content="Me gusta"
                           trigger={
-                            <div className="icon-container" onClick={() => handleToggleFavorite(comic.comic.cod_comic, index)}>
+                            <div className="icon-container" style={{ marginTop: '-110px',marginLeft: '900px' }} onClick={() => handleToggleFavorite(comic.comic.cod_comic, index)}>
                               <HeartFill
                                 color={likedHearts[index] ? 'red' : 'var(--color-original)'}
                                 size={32}

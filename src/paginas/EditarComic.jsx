@@ -191,7 +191,20 @@ function EditarComic({ selectedComic }) {
  const handleGuardarClick = () => {
   event.preventDefault();
   
-  
+  Axios.get(`https://comic-next-laravel.vercel.app/api/api/tituloExistente/${titulo}`)
+  .then((response) => {
+    if (response.data.exists) {
+      // El título ya existe en la base de datos, muestra un mensaje de error
+      setCampoTituloDuplicado(true);
+      console.log("Titulo ya registrado");
+    } else {
+      // El título no existe en la base de datos, puedes continuar y guardar el cómic
+      openModal();
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
   // Elimina la validación de los campos obligatorios antes de enviar la solicitud
   Axios.post('https://comic-next-laravel.vercel.app/api/api/editar/' + localStorage.getItem('codComic'), {
     titulo: data.titulo,

@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Spinner, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Favoritos = () => {
   const [comicsData, setComicsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [selectedComic, setSelectedComic] = useState(null);
+  const codUsuario = localStorage.getItem('cod_usuario');
+
 
   useEffect(() => {
-    // Lógica para obtener la lista de cómics favoritos (puedes mantener esta lógica si es necesario)
-    // axios
-    //   .get(`https://comic-next-laravel.vercel.app/api/api/comicFavorites/${codUsuario}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setComicsData(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error al obtener datos de favoritos:', error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
-
-    // Para propósitos de demostración, utilizamos un array vacío
-    setComicsData([]);
-    setIsLoading(false);
-  }, []); // Dependencias vacías para ejecutar solo una vez al montar el componente
+    axios.get(`https://comic-next-laravel.vercel.app/api/api/listasfavoritos/${codUsuario}`)
+      .then((response) => {
+        console.log(response.data);
+        setComicsData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener datos de la playlist:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  });
 
   const handleShowModal = (comic) => {
     setSelectedComic(comic);
@@ -36,32 +34,6 @@ const Favoritos = () => {
   const handleCloseModal = () => {
     setSelectedComic(null);
     setShowModal(false);
-  };
-
-  const handleDeleteComic = () => {
-    // Lógica para eliminar el cómic de la lista de favoritos (puedes mantener esta lógica si es necesario)
-    // axios
-    //   .delete('https://comic-next-laravel.vercel.app/api/api/deleteComicFavorites', {
-    //     data: {
-    //       cod_comic: selectedComic.comic.cod_comic,
-    //       cod_usuario: codUsuario,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log('Éxito al eliminar el cómic', response.data);
-    //     setComicsData((prevComicsData) =>
-    //       prevComicsData.filter((comic) => comic.comic.cod_comic !== selectedComic.comic.cod_comic)
-    //     );
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error al eliminar el cómic de favoritos:', error);
-    //   })
-    //   .finally(() => {
-    //     handleCloseModal();
-    //   });
-
-    // Para propósitos de demostración, simplemente cerramos el modal
-    handleCloseModal();
   };
 
   return (
@@ -99,9 +71,8 @@ const Favoritos = () => {
           <p className="mt-2">Cargando favoritos...</p>
         </Container>
       ) : (
-        // Aquí puedes agregar tu contenido cuando no está cargando
         <>
-          {/* Línea que deseas agregar */}
+          
           <Container className="text-center my-4">
             <hr className="my-5" style={{ borderColor: 'var(--celestito)', borderWidth: '1px', marginLeft: 'px', }} />
           </Container>
@@ -117,10 +88,62 @@ const Favoritos = () => {
               <h3>Lista de favoritos variados</h3>
             </div>
           </Col>
-          {/* Resto del código para mostrar la lista de cómics */}
+          <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
+          <Container className="mt-4">
+            {comicsData.length > 0 ? (
+              comicsData.map((comic, index) => (
+                <Row key={index} className="mb-4">
+                  <Col md={1} className="text-center badabb">
+                      <p className="font-weight-bold" style={{
+                          marginTop: '50px',
+                          marginLeft: '10px',
+                          width: '150px',
+                          height: '50px',
+                          color: 'white',
+                          fontSize: '1.5em',
+                          
+                        }}>
+                          {index + 1}
+                        </p>
+                      </Col>
+                      <Col md={3} className='text-center'>
+                        <img
+                          src={comic.portadaUrl}
+                          alt={`Comic ${index + 1}`}
+                          className="img-fluid"
+                          style={{ width: '150px', height: '150px', objectFit: 'cover',border: '3px solid white', 
+                          borderRadius: '8px'}}
+                        />
+                      </Col>
+                      <Col md={4} className='custom-form-container'>
+                        <h4>{comic.comic.titulo}</h4>
+                        {comic.comic.sinopsis.length > 150 ? `${comic.comic.sinopsis.substring(0, 150)}...` : comic.comic.sinopsis}
+                      </Col>
+                      
+                      {/* <Col md={4}> */}
+                      {/* <Link to={${comic.comic.cod_comic}} className="btn custom-btn-color "
+                          style={{
+                            marginTop: '30px',
+                            marginLeft: '10px',
+                            width: '150px',
+                            height: '50px',
+                            justifyContent: 'center',  // Alinea horizontalmente en el centro
+                            lineHeight: '35px',  // Centra verticalmente el texto
+                            border: '3px solid white', 
+                            borderRadius: '8px'
+                          }}
+                        >Ver el cómic</Link> */}
+                      
+                </Row>
+              ))
+            ) : (
+              <p className='text-center custom-form-container' style={{ maxWidth: '600px', margin: '0 auto' }}>
+                No hay ningún cómic registrado en favoritos.
+              </p>
+            )}
+          </Container>
         </Row>
       )}
-      {/* Resto del código para mostrar la lista de cómics y el modal */}
     </div>
   );
 };

@@ -26,6 +26,7 @@ const Playlist = () => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [editPlaylist, setEditPlaylist] = useState(null);  
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const codUsuario = localStorage.getItem('cod_usuario');
 
   const handleEditPlaylist = (playlist) => {
     setEditPlaylist(playlist);
@@ -48,45 +49,85 @@ const Playlist = () => {
     if (loading || !editPlaylist) {
       return;
     }
-    setLoading(true);
-    const base64Image = extractBase64Code(selectedImage);
-    const data = {
-      nombre_playlist: playlistName,
-      imagen_playlist: base64Image,
-      cod_playlist: editPlaylist.playlist.cod_playlist,
-    };
-  console.log(data);
-  console.log('imagen:');
-  console.log(selectedImage);
+    if (!playlistName.trim()) {
+      setNameError('Rellene este campo.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
+      return;
+    }
+    if (playlistName.trim().length < 3) {
+      setMinLengthError(true);
+      setMaxLengthError(false);
+      setNameError('');
+      return;
+    } else if (playlistName.trim().length > 50) {
+      setMinLengthError(false);
+      setMaxLengthError(true);
+      setNameError('');
+      return;
+    }
+    const specialCharactersRegex = /^[a-zA-Z0-9ñÑ ]+$/;
+    if (!specialCharactersRegex.test(playlistName)) {
+      setNameError('El nombre no puede contener caracteres especiales.');
+      setMinLengthError(false);
+      setMaxLengthError(false);
+      return;
+    }
+
     axios
-      .post('https://comic-next-laravel.vercel.app/api/api/updatePlaylist', data)
-      .then(() => {
-        Swal.fire({
-          icon: 'success',
-          title: `¡La playlist ${data.nombre_playlist} ha sido editada con éxito!`,
-          showConfirmButton: true, 
-          confirmButtonText: 'Cerrar', 
-          confirmButtonColor: '#00557C'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        });
-        handleClose();
-        console.log("Conexion exitosa y terminada datos enviados:");
+      .get(`https://comic-next-laravel.vercel.app/api/api/playlistExistente?nomPlaylist=${playlistName}&cod_playlist=${editPlaylist.playlist.cod_playlist}&cod_usuario=${codUsuario}`)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.exists === true) {
+          setNameError('Existe una playlist con ese nombre.')
+          console.log('Ya existe una playlist con este nombre.');
+          setMinLengthError(false);
+          setMaxLengthError(false);
+          return;
+        } 
+        else {
+          setLoading(true);
+          const base64Image = extractBase64Code(selectedImage);
+          const data = {
+            nombre_playlist: playlistName,
+            imagen_playlist: base64Image,
+            cod_playlist: editPlaylist.playlist.cod_playlist,
+          };
+  
+          axios
+            .post('https://comic-next-laravel.vercel.app/api/api/updatePlaylist', data)
+            .then(() => {
+              Swal.fire({
+                icon: 'success',
+                title: `¡La playlist ${data.nombre_playlist} ha sido editada con éxito!`,
+                showConfirmButton: true,
+                confirmButtonText: 'Cerrar',
+                confirmButtonColor: '#00557C',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.reload();
+                }
+              });
+              handleClose();
+              console.log('Conexion exitosa y terminada datos enviados:');
+            })
+            .catch((error) => {
+              window.alert('¡Error al subir la playlist!');
+              console.error('Error al enviar los datos:', error);
+            })
+            .finally(() => {
+              setLoading(false);
+              setConfirmModalVisible(false);
+              setCancelModalVisible(false);
+              setConfirmed(false);
+            });
+  
+          handleCloseEditModal();
+        }
       })
       .catch((error) => {
-        window.alert('¡Error al subir la playlist!');
-        console.error('Error al enviar los datos:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-        setConfirmModalVisible(false);
-        setCancelModalVisible(false);
-        setConfirmed(false);
+        console.error('Error al verificar la existencia de la playlist:', error);
       });
-  
-    handleCloseEditModal();
   };
 
   useEffect(() => {

@@ -427,7 +427,7 @@ const Playlist = () => {
                       {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
                     </Form.Group>
                   <div style={{ marginTop: '50px' }}>
-                    <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
+                    <Button variant="btn Warning-btn-color" onClick={handleCloseEditModal} style={{ marginLeft: '-45px' }}>
                       Cancelar
                     </Button>
                     <Button variant="btn custom-btn-color" onClick={handleSaveEditPlaylist} style={{ marginLeft: '80px' }}>

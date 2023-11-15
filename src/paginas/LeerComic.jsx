@@ -1,5 +1,5 @@
 import "./styles.css";
-import React, { forwardRef } from "react";
+import React, { forwardRef , useState, useEffect} from "react";
 import pageFlipSFX from '../page-flip-01a.mp3';
 import { BiSolidChevronLeft, BiSolidChevronRight } from 'react-icons/bi';
 import {TbBoxMultiple} from 'react-icons/tb';
@@ -21,8 +21,7 @@ export default function LeerComic() {
       if (flipBookContainer) {
         flipBookContainer.requestFullscreen();
       }
-    }
-  };
+    } };
   
   const changemode = (e) =>{
     alert("XD falta tiempo")
@@ -33,11 +32,7 @@ export default function LeerComic() {
   console.log(forwardRef);
 
   const onFlip = React.useCallback(
-    (e) => {
-      // console.log(e.object);
-      // console.log("Current page: " + e.data);
-      soundOn && play();
-    },
+    (e) => {soundOn && play(); },
     [play, soundOn]
   );
 
@@ -63,17 +58,27 @@ export default function LeerComic() {
     }
   }, [flipbook]);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.keyCode === 37) { // Tecla de flecha izquierda
+        flipBack();
+      } else if (event.keyCode === 39) { // Tecla de flecha derecha
+        flipForward();
+      }
+    };
+  
+    // Agregar el evento keydown al documento
+    document.addEventListener('keydown', handleKeyPress);
+  
+    // Remover el evento keydown al desmontar el componente
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [flipBack, flipForward]);
+
   const backpage = (e)=>{
     navigate(-1)
   }
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-      flipBack();
-    }else if(event.key === 'ArrowRight'){
-      flipForward();
-    }
-  });
 
   return (
     <div className="Leer">
@@ -98,9 +103,11 @@ export default function LeerComic() {
       </Container>
       
       <div className="flipbook-container">
-        <Button variant="link" className="prev-button" onClick={flipBack}>
-          <BiSolidChevronLeft size="5em"/>
-        </Button>
+        <div className="persistent-buttons">
+          <Button variant="link" className="prev-button" onClick={flipBack}>
+            <BiSolidChevronLeft size="5em"/>
+          </Button>
+          </div>
         <div className="flipbook">
           <HTMLFlipBook 
             ref={flipbook}

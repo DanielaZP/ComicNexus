@@ -48,9 +48,6 @@ const Playlist = () => {
     if (loading || !editPlaylist) {
       return;
     }
-  
-    
-  
     setLoading(true);
     const base64Image = extractBase64Code(selectedImage);
     const data = {
@@ -64,7 +61,17 @@ const Playlist = () => {
     axios
       .post('https://comic-next-laravel.vercel.app/api/api/updatePlaylist', data)
       .then(() => {
-        setSuccessModalVisible(true);
+        Swal.fire({
+          icon: 'success',
+          title: `¡La playlist ${data.nombre_playlist} ha sido editada con éxito!`,
+          showConfirmButton: true, 
+          confirmButtonText: 'Cerrar', 
+          confirmButtonColor: '#00557C'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
         handleClose();
         console.log("Conexion exitosa y terminada datos enviados:");
       })

@@ -165,9 +165,13 @@ const Navbar = () => {
             {/* <li><a className="dropdown-item" href="#">Mi perfil</a></li> */}
             <li><Link className="dropdown-item" to="/playlists">Mis playlists</Link></li>
             <li><Link className="dropdown-item" to="/favoritos">Mis favoritos</Link></li>
-            <li><Link className="dropdown-item" to="/" onClick={handleLogout}>Cerrar Sesión</Link></li>
+            {localStorage.getItem('cod_usuario') === '127' && (
+              <li>
+                <Link className="dropdown-item" to="/pagina-admi">Panel administrador</Link>
+              </li>
+            )}
             <li><hr className="dropdown-divider" /></li>
-            <li><Link className="dropdown-item" to="/pagina-admi">Panel administrador</Link></li>
+            <li><Link className="dropdown-item" to="/" onClick={handleLogout}>Cerrar Sesión</Link></li>
           </ul>
         </div>
       </nav>

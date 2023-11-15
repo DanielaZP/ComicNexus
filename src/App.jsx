@@ -30,6 +30,11 @@ const codUsuario = localStorage.getItem('cod_usuario');
 function PrivateRoute({ children }) {
   return codUsuario ? children : <Navigate to="/" />;
 }
+function PrivateRouteAdmi({ children }) {
+  const codUsuario = parseInt(localStorage.getItem('cod_usuario'), 10);
+
+  return codUsuario === 127 ? children : <Navigate to="/inicio" />;
+}
 
 function App() {
   const estiloFondo = {
@@ -66,7 +71,7 @@ function App() {
             />
             <Route
               path="registro-comic"
-              element={<PrivateRoute><RegistroComic /></PrivateRoute>}
+              element={<PrivateRouteAdmi><RegistroComic /></PrivateRouteAdmi>}
             />
             <Route
               path="lista-comics"
@@ -86,7 +91,7 @@ function App() {
             />
             <Route
               path="pagina-admi"
-              element={<PrivateRoute><PaginaAdmi /></PrivateRoute>}
+              element={<PrivateRouteAdmi><PaginaAdmi /></PrivateRouteAdmi>}
             />
             <Route
               path="vista-comic/:id"
@@ -110,11 +115,11 @@ function App() {
             />
             <Route
               path="contenido-comic"
-              element={<PrivateRoute><ContenidoComic /></PrivateRoute>}
+              element={<PrivateRouteAdmi><ContenidoComic /></PrivateRouteAdmi>}
             />
             <Route
               path="editar-comic/:id"
-              element={<PrivateRoute><EditarComic /></PrivateRoute>}
+              element={<PrivateRouteAdmi><EditarComic /></PrivateRouteAdmi>}
             />
             <Route
               path="favoritos"

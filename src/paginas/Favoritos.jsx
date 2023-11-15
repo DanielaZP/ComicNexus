@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container, Spinner,Row,Col,Button,Modal} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { HeartFill } from 'react-bootstrap-icons';
+import { Popup } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const Favoritos = () => {
   const [comicsData, setComicsData] = useState([]);
@@ -10,6 +14,9 @@ const Favoritos = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedComic, setSelectedComic] = useState(null);
   const codUsuario = localStorage.getItem('cod_usuario');
+  const [likedHearts, setLikedHearts] = useState([]);
+  
+
 
 
   useEffect(() => {
@@ -17,6 +24,8 @@ const Favoritos = () => {
       .then((response) => {
         console.log(response.data);
         setComicsData(response.data);
+        const initialLikedHearts = response.data.map(() => true); 
+        setLikedHearts(initialLikedHearts);
       })
       .catch((error) => {
         console.error('Error al obtener datos de la playlist:', error);
@@ -25,17 +34,23 @@ const Favoritos = () => {
         setIsLoading(false);
       });
   });
+  const handleToggleFavorite = async (comicId, index) => {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'https://comic-next-laravel.vercel.app/api/api/ComicFavoritosLike',
+        data: {
+          cod_comic: comicId,
+          cod_usuario: codUsuario,
+        },
+      });
 
-  const handleShowModal = (comic) => {
-    setSelectedComic(comic);
-    setShowModal(true);
+    } catch (error) {
+      console.error('Error de red:', error);
+      toast.error('Error de red al procesar la solicitud');
+    }
   };
-
-  const handleCloseModal = () => {
-    setSelectedComic(null);
-    setShowModal(false);
-  };
-
+  
   return (
     <div>
       {isLoading ? (
@@ -74,7 +89,6 @@ const Favoritos = () => {
         <>
           
           <Container className="text-center my-4">
-            <hr className="my-5" style={{ borderColor: 'var(--celestito)', borderWidth: '1px', marginLeft: 'px', }} />
           </Container>
         </>
       )}
@@ -119,21 +133,34 @@ const Favoritos = () => {
                         <h4>{comic.comic.titulo}</h4>
                         {comic.comic.sinopsis.length > 150 ? `${comic.comic.sinopsis.substring(0, 150)}...` : comic.comic.sinopsis}
                       </Col>
-                      
-                      {/* <Col md={4}> */}
-                      {/* <Link to={${comic.comic.cod_comic}} className="btn custom-btn-color "
-                          style={{
-                            marginTop: '30px',
-                            marginLeft: '10px',
-                            width: '150px',
-                            height: '50px',
-                            justifyContent: 'center',  // Alinea horizontalmente en el centro
-                            lineHeight: '35px',  // Centra verticalmente el texto
-                            border: '3px solid white', 
-                            borderRadius: '8px'
-                          }}
-                        >Ver el cómic</Link> */}
-                      
+                      <Link to={`/vista-comic/${comic.comic.cod_comic}`} className="btn custom-btn-color "
+                        style={{
+                          marginTop: '30px',
+                          marginLeft: '10px',
+                          width: '150px',
+                          height: '50px',
+                          justifyContent: 'center',  // Alinea horizontalmente en el centro
+                          lineHeight: '35px',  // Centra verticalmente el texto
+                          border: '3px solid white', 
+                          borderRadius: '8px'
+                        }}
+                      >Ver el cómic</Link>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Popup
+                          content="Me gusta"
+                          trigger={
+                            <div className="icon-container" onClick={() => handleToggleFavorite(comic.comic.cod_comic, index)}>
+                              <HeartFill
+                                color={likedHearts[index] ? 'red' : 'var(--color-original)'}
+                                size={32}
+                                style={{
+                                  cursor: 'pointer',
+                                }}
+                              />
+                            </div>
+                          }
+                        />
+                      </div>
                 </Row>
               ))
             ) : (

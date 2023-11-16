@@ -176,21 +176,6 @@ function EditarComic({ selectedComic }) {
     setIsModalOpen(false);
   };
 
-  const handleLimpiarClick = () => {
-    setData({
-      titulo: "",
-      autor: "",
-      sinopsis: "",
-      fechaPublicacion: "",
-      selectedCategorias: [],
-
-    });
-
-    setImageUrl(null);
-    setHasImage(false);
-  };
-
-
   const handleGuardarClick = () => {
     event.preventDefault();
 
@@ -572,7 +557,6 @@ function EditarComic({ selectedComic }) {
 
               <div className="d-flex justify-content-between">
                 <Link className="btn Warning-btn-color" to="/inicio">Cancelar</Link>
-                <a href="#" onClick={handleLimpiarClick} className="btn custom-btn-color">Limpiar</a>
                 <button onClick={handleGuardarClick} className="btn custom-btn-color">Guardar Cambios</button>
               </div>
 

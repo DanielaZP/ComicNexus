@@ -119,21 +119,22 @@ export default function LeerComic() {
             flippingTime={750}
             useMouseEvents={false}
             autoSize={true}
+            mobileScrollSupport={true}
           >
-            <div className="page">
-              <img src='/LogoComicsNexus.png'/>
+             <div className="page">
+              <img src='/LogoComicsNexus.png' className="full-image" alt='Descripción de la imagen' />
             </div>
             <div className="page">
-              <img src='heroes/dc-arrow.jpg'  alt='Descripción de la imagen'/>
+              <img src='heroes/dc-arrow.jpg' className="full-image" alt='Descripción de la imagen' />
             </div>
             <div className="page">
-            <img src='heroes/dc-flash.jpg'  alt='Descripción de la imagen'/>
+            <img src='heroes/dc-flash.jpg'  alt='Descripción de la imagen' className="full-image"/>
             </div>
             <div className="page">
-            <img src='heroes/marvel-hulk.jpg'  alt='Descripción de la imagen'/>
+            <img src='heroes/marvel-hulk.jpg'  alt='Descripción de la imagen' className="full-image"/>
             </div>
             <div className="page">
-            <img src='heroes/marvel-silver.jpg'  alt='Descripción de la imagen'/>
+            <img src='heroes/marvel-silver.jpg'  alt='Descripción de la imagen' className="full-image"/>
             </div>
           </HTMLFlipBook>
         </div>
@@ -141,6 +142,17 @@ export default function LeerComic() {
           <BiSolidChevronRight size="5em" />
         </Button>}
       </div>
+      <Container className="select-page">
+        <div className="numero-page">
+         <h2><span class="badge rounded-pill text-bg-light">1 / 5 page</span></h2>
+        </div>
+          <select className="form-select" aria-label="Default select example">
+            <option selected>Open this select page</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          </Container>
     </div>
   );
 }

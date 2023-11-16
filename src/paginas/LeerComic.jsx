@@ -86,7 +86,7 @@ export default function LeerComic() {
         <div className="button-container">
           <Button variant="link" className="control-button" onClick={backpage}>
             <IoArrowBackCircle  />
-            <span>Atras</span>
+            <span>Atrás</span>
           </Button>
           <Button variant="link" className="control-button" onClick={changemode}>
             <TbBoxMultiple /> 
@@ -94,7 +94,7 @@ export default function LeerComic() {
           </Button>
           <Button variant="link" className="control-button" onClick={toggleFullScreen}>
             <AiOutlineFullscreen /> 
-            <span>Pantalla Completo</span>
+            <span>Pantalla Completa</span>
           </Button>
         </div>
       </Container>

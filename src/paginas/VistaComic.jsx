@@ -186,7 +186,7 @@ function VistaComic() {
                 }}
                 onClick={handleAddToLeerComic}
               >
-                Leer Comic
+                Leer Cómic
               </Button>
               <div style={{ marginLeft: 'center', marginTop: '20px', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '20px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

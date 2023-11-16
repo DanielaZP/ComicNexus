@@ -9,8 +9,12 @@ import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
 import { Container, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useLocalStorage } from 'react-use';
 
 export default function LeerComic() {
+  const codcontenido = localStorage.getItem('cod_contenido');
+  const [imageUrls, setImageUrls] = useState([]);
   let navigate = useNavigate();
   // Variables de estado para controlar la visibilidad de los botones
   const [showPrevButton, setShowPrevButton] = useState(false);
@@ -80,6 +84,19 @@ export default function LeerComic() {
     navigate(-1)
   }
 
+  useEffect(() => {
+    // Llamar a la API de Laravel para obtener las imágenes
+    axios.get(`https://comic-next-laravel.vercel.app/api/api/getpaginas/${codcontenido}`)
+      .then((response) => {
+        // axios ya transforma la respuesta JSON automáticamente
+        setImageUrls(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las imágenes del comic:", error);
+      });
+  }, []);
+  
+
   return (
     <div className="Leer">
       <Container className="text-center my-5">
@@ -121,21 +138,10 @@ export default function LeerComic() {
             autoSize={true}
             mobileScrollSupport={true}
           >
-             <div className="page">
-              <img src='/LogoComicsNexus.png' className="full-image" alt='Descripción de la imagen' />
-            </div>
-            <div className="page">
-              <img src='heroes/dc-arrow.jpg' className="full-image" alt='Descripción de la imagen' />
-            </div>
-            <div className="page">
-            <img src='heroes/dc-flash.jpg'  alt='Descripción de la imagen' className="full-image"/>
-            </div>
-            <div className="page">
-            <img src='heroes/marvel-hulk.jpg'  alt='Descripción de la imagen' className="full-image"/>
-            </div>
-            <div className="page">
-            <img src='heroes/marvel-silver.jpg'  alt='Descripción de la imagen' className="full-image"/>
-            </div>
+          {imageUrls.map((imageUrl, index) => (
+          <div key={index} className="page">
+            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} />
+          </div> ))}
           </HTMLFlipBook>
         </div>
           {showNextButton && <Button variant="link" className="next-button" onClick={flipForward}>

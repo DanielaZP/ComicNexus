@@ -7,8 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Popup } from 'semantic-ui-react';
 import { HeartFill } from 'react-bootstrap-icons';
 import { Icon } from 'semantic-ui-react';
+import { useLocalStorage } from 'react-use';
 
 function VistaComic() {
+  const codcontenido = localStorage.getItem('cod_contenido');
   const [comic, setComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -85,7 +87,8 @@ function VistaComic() {
   };
 
   const handleAddToLeerComic = () => {
-    // navigate('/leer');
+    navigate('/leer');
+    localStorage.setItem('cod_contenido',id)
   };
 
   const handleCloseModal = () => {

@@ -85,7 +85,7 @@ function VistaComic() {
   };
 
   const handleAddToLeerComic = () => {
-    navigate('/leer');
+    // navigate('/leer');
   };
 
   const handleCloseModal = () => {

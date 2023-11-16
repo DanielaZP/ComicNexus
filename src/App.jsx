@@ -125,10 +125,10 @@ function App() {
               path="favoritos"
               element={<PrivateRoute><Favoritos /></PrivateRoute>}
             />
-            <Route
+            {/* <Route
               path="leer"
               element={<PrivateRoute><LeerComic /></PrivateRoute>}
-            />
+            /> */}
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />
           <Route index element={<InicioSesion />} />

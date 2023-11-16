@@ -7,12 +7,13 @@ import { IoArrowBackCircle } from 'react-icons/io5';
 import {AiOutlineFullscreen} from 'react-icons/ai'
 import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocalStorage } from 'react-use';
 
 export default function LeerComic() {
+  const [isLoading, setIsLoading] = useState(true); 
   const codcontenido = localStorage.getItem('cod_contenido');
   const [imageUrls, setImageUrls] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,9 +104,14 @@ export default function LeerComic() {
       .then((response) => {
         // axios ya transforma la respuesta JSON automáticamente
         setImageUrls(response.data);
+        
       })
       .catch((error) => {
         console.error("Error al obtener las imágenes del comic:", error);
+      })
+      .finally(() => {
+        // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
+        setIsLoading(false);
       });
   }, []);
   
@@ -138,7 +144,21 @@ export default function LeerComic() {
           </Button>)}
           </div>
         <div className="flipbook">
-          <HTMLFlipBook 
+        {isLoading ? (
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <Spinner animation="border" variant="primary" role="status">
+            <span className="sr-only"></span>
+          </Spinner>
+          <p className="mt-2">Cargando paginas...</p>
+        </Container>
+      ) :   imageUrls.length === 1 ? (
+        <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <p style={{ fontSize: "20px"}}>
+          El cómic seleccionado no tiene contenido subido.
+        </p>
+        </Container>
+      ) : 
+      (<HTMLFlipBook 
             ref={flipbook}
             onFlip={onFlip}
             width={450}
@@ -155,7 +175,7 @@ export default function LeerComic() {
           <div key={index} className="page">
             <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} loading="lazy"/>
           </div> ))}
-          </HTMLFlipBook>
+          </HTMLFlipBook>) }
         </div>
           {showNextButton && <Button variant="link" className="next-button" onClick={flipForward}>
           <BiSolidChevronRight size="5em" />

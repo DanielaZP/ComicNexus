@@ -195,7 +195,7 @@ function EditarComic({ selectedComic }) {
     let sinopsisError = false;
     let portadaError = false;
     let categoriaError = false;
-  
+
     if (data.titulo.trim() === "") {
       tituloError = true;
     }
@@ -208,17 +208,17 @@ function EditarComic({ selectedComic }) {
     if (data.selectedCategorias.length === 0) {
       categoriaError = true;
     }
-  
+
     setCampoObligatorioTituloError(tituloError);
     setCampoObligatorioSinopsisError(sinopsisError);
     setCampoObligatorioPortadaError(portadaError);
     setCampoObligatorioCategoriaError(categoriaError);
-  
+
     // Si hay errores, no continuar
     if (tituloError || sinopsisError || portadaError || categoriaError) {
       return;
     }
-  
+
     // Realizar la validación de título solo si el título ha sido modificado
     if (data.titulo !== selectedComicData.comic.titulo) {
       Axios.get(`https://comic-next-laravel.vercel.app/api/api/tituloExistente/${data.titulo}`)
@@ -228,60 +228,17 @@ function EditarComic({ selectedComic }) {
             console.log("Titulo ya registrado");
           } else {
             openModal();
-  
-            // Continúa con la lógica para enviar la solicitud para editar el cómic
-            Axios.post('https://comic-next-laravel.vercel.app/api/api/editar/' + localStorage.getItem('codComic'), {
-              titulo: data.titulo,
-              autor: data.autor,
-              sinopsis: data.sinopsis,
-              anio_publicacion: data.fechaPublicacion,
-              portada: data.portada,
-              categoria: data.selectedCategorias
-            })
-              .then((response) => {
-                console.log(response.data);
-                setIsLoading(false);
-                setIsModalOpen(false);
-                setIsComicSubidoConExito(true);
-              })
-              .catch((error) => {
-                console.error(error);
-                setIsLoading(false);
-                setIsErrorModalOpen(false);
-                setErrorSubidaComic("Error al editar el cómic");
-              });
           }
         })
         .catch((error) => {
           console.error(error);
+          // Manejar errores de la solicitud a la API
+          openErrorModal();
         });
     } else {
-      // El título no ha sido modificado, puedes continuar y guardar el cómic sin validar el título
       openModal();
-  
-      // Continúa con la lógica para enviar la solicitud para editar el cómic
-      Axios.post('https://comic-next-laravel.vercel.app/api/api/editar/' + localStorage.getItem('codComic'), {
-        titulo: data.titulo,
-        autor: data.autor,
-        sinopsis: data.sinopsis,
-        anio_publicacion: data.fechaPublicacion,
-        portada: data.portada,
-        categoria: data.selectedCategorias
-      })
-        .then((response) => {
-          console.log(response.data);
-          setIsLoading(false);
-          setIsModalOpen(false);
-          setIsComicSubidoConExito(true);
-        })
-        .catch((error) => {
-          console.error(error);
-          setIsLoading(false);
-          setIsErrorModalOpen(false);
-          setErrorSubidaComic("Error al editar el cómic");
-        });
     }
-  };  
+  };
     
   const handleFechaChange = (e) => {
     const selectedDate = new Date(e.target.value);

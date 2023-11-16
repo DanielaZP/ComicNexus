@@ -63,6 +63,7 @@ function InicioSesion() {
         localStorage.setItem('cod_usuario', codUsuario);
         console.log('Autenticación exitosa. Código de usuario:', codUsuario);
         navigate('/inicio');
+        window.location.reload();
       } catch (error) {
         // Manejar errores de la solicitud
         if (error.response) {

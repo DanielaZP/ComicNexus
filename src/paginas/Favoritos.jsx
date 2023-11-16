@@ -6,6 +6,8 @@ import { HeartFill } from 'react-bootstrap-icons';
 import { Popup } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Favoritos = () => {
@@ -44,7 +46,16 @@ const Favoritos = () => {
           cod_usuario: codUsuario,
         },
       });
-
+      if (response.data.mensaje) {
+        setLikedHearts((prevLikedHearts) => {
+          const newLikedHearts = [...prevLikedHearts];
+          newLikedHearts[index] = !newLikedHearts[index];
+          return newLikedHearts;
+        });
+        toast.success('Cómic eliminado de favoritos');
+      } else {
+        toast.error('Error al marcar/desmarcar el cómic. Por favor, inténtalo de nuevo.');
+      }
     } catch (error) {
       console.error('Error de red:', error);
       toast.error('Error de red al procesar la solicitud');
@@ -53,6 +64,7 @@ const Favoritos = () => {
   
   return (
     <div>
+      <ToastContainer />
       {isLoading ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '200px', height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Spinner animation="border" variant="primary" role="status">

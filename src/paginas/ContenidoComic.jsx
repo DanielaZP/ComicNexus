@@ -12,7 +12,15 @@ function ContenidoComic() {
   const [selectedComic, setSelectedComic] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
-  
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const handleShowConfirmationModal = () => setShowConfirmationModal(true);
+  const handleCloseConfirmationModal = () => setShowConfirmationModal(false);
+
+  const confirmUpload = () => {
+    handleCloseConfirmationModal();
+    uploadImages();
+  };
+
   useEffect(() => {
     axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
       .then((response) => {
@@ -173,7 +181,7 @@ function ContenidoComic() {
   
 
   return (
-    <Container className="text-center my-5">
+    <Container className="text-center my-5 ">
       <h1 className="display-4 badabb">
         <strong>Registro contenido comic</strong>
         <Button
@@ -204,7 +212,7 @@ function ContenidoComic() {
                   marginTop: '20px',
                   marginLeft: '10px',
                   width: '300px',
-                  height: '80px',
+                  height: '100px',
                   backgroundColor: 'white',
                   borderRadius: '8px',
                   padding: '10px',
@@ -274,7 +282,7 @@ function ContenidoComic() {
             <Row>
               <Col>
                 <button
-                  onClick={uploadImages}
+                  onClick={handleShowConfirmationModal}
                   className="btn custom-btn-color"
                   style={{
                     marginTop: '20px',
@@ -367,6 +375,22 @@ function ContenidoComic() {
           <ProgressBar now={uploadProgress} label={`${uploadProgress}%`} variant='var(--celestito)'/>
         </Modal.Body>
       </Modal>
+      <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>Confirmar subida de imágenes</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      ¿Está seguro de registrar las {images.length} imagenes?
+      </Modal.Body>
+      <Modal.Footer>
+        <Button className="btn Warning-btn-color" onClick={handleCloseConfirmationModal}>
+          No
+        </Button>
+        <Button className='btn custom-btn-color' onClick={confirmUpload}>
+          Sí
+        </Button>
+      </Modal.Footer>
+    </Modal>
     </Container>
   );
 }

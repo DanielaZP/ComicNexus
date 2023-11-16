@@ -11,6 +11,8 @@ import { Container, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocalStorage } from 'react-use';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function LeerComic() {
   const [isLoading, setIsLoading] = useState(true); 
@@ -173,6 +175,17 @@ export default function LeerComic() {
           >
           {imageUrls.map((imageUrl, index) => (
           <div key={index} className="page">
+            <LazyLoadImage
+          key={index}
+          src={imageUrl.pagina}
+          alt={`Page ${index}`}
+          effect="blur" // Efecto de carga (puedes cambiarlo según tu preferencia)
+          width={450}
+          height={530}
+          className="full-image"
+          placeholderSrc={imageUrl.pagina}
+        />
+            
             <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} loading="lazy"/>
           </div> ))}
           </HTMLFlipBook>) }

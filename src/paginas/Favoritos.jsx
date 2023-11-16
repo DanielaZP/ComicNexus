@@ -167,6 +167,9 @@ const Favoritos = () => {
                                 size={32}
                                 style={{
                                   cursor: 'pointer',
+                                  filter: likedHearts[index] ? 'drop-shadow(0 0 9px white)' : 'none',
+                                  transition: 'transform 0.2s ease-in-out', // Agregamos una transición suave al tamaño
+                                  transform: likedHearts[index] ? 'scale(1.2)' : 'scale(1)', // Hacemos que el corazón sea ligeramente más grande cuando está marcado como favorito
                                 }}
                               />
                             </div>

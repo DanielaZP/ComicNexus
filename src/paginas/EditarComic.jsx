@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Dropdown, Grid, Image, Input, TextArea, Button, Label, Message, Modal } from "semantic-ui-react";
 import { Container, Row, Col } from 'react-bootstrap';
 import Axios from 'axios';
@@ -32,6 +32,7 @@ function EditarComic({ selectedComic }) {
   const [errorSubidaComic, setErrorSubidaComic] = useState("");
   const [caracterNoPermitidoSinopsis, setCaracterNoPermitidoSinopsis] = useState(false);
   const [isLoading , setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const selectedComicData = location.state?.selectedComic || null;
@@ -70,6 +71,8 @@ function EditarComic({ selectedComic }) {
   
     setImageUrl(null);
     setHasImage(false);
+
+    navigate('/lista-comics');
   };
 
   const handleImageUpload = (e) => {

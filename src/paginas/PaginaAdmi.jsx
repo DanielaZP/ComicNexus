@@ -13,7 +13,7 @@ function PaginaAdmi() {
     const [nuevo, setNuevo ]= useLocalStorage('codComic');
     //conexion
     useEffect(() => {
-        axios.get('https://comic-next-laravel.vercel.app/api/api/listascomics') 
+        axios.get('https://comic-next-laravel.vercel.app/api/api/getdatos') 
           .then((response) => {
             console.log(response.data);
             setComicsData(response.data);

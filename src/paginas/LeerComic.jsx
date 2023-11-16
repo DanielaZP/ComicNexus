@@ -15,6 +15,7 @@ import { useLocalStorage } from 'react-use';
 export default function LeerComic() {
   const codcontenido = localStorage.getItem('cod_contenido');
   const [imageUrls, setImageUrls] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   let navigate = useNavigate();
   // Variables de estado para controlar la visibilidad de los botones
   const [showPrevButton, setShowPrevButton] = useState(false);
@@ -31,7 +32,7 @@ export default function LeerComic() {
     } };
   
   const changemode = (e) =>{
-    alert("XD falta tiempo")
+    alert("sin funcionamiento")
   }
   const [soundOn, setSoundOn] = React.useState(true);
   const [play] = useSound(pageFlipSFX);
@@ -48,6 +49,7 @@ export default function LeerComic() {
       pageFlipObj.flipPrev();
       setShowPrevButton(pageFlipObj.getCurrentPageIndex() > 1);  
       setShowNextButton(true)
+      setCurrentPage(pageFlipObj?.getCurrentPageIndex());
   }, [flipbook]);
 
   const flipForward = React.useCallback(() => {
@@ -56,10 +58,15 @@ export default function LeerComic() {
       !(pageFlipObj?.getCurrentPageIndex() + 2 ===
       pageFlipObj?.getPageCount())
     ) {
-    pageFlipObj.flipNext();
-    setShowPrevButton(true);  
-    setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 !==
-      pageFlipObj.getPageCount())}
+      pageFlipObj.flipNext();
+      setShowPrevButton(true);  
+      setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 !==
+        pageFlipObj.getPageCount());
+        let array = [pageFlipObj?.getCurrentPageIndex()+2, pageFlipObj?.getCurrentPageIndex()+3]; // array es [1, 2]
+        let separador = "-";
+        let cadena = array.join(separador); // cadena es "1-2"
+      setCurrentPage(cadena);
+    }
   }, [flipbook]);
 
   useEffect(() => {
@@ -83,6 +90,12 @@ export default function LeerComic() {
   const backpage = (e)=>{
     navigate(-1)
   }
+
+  const handlePageChange = (e) => {
+    setCurrentPage(parseInt(e.target.value));
+    const pageFlipObj = flipbook.current.pageFlip();
+    pageFlipObj.flip(e)
+  };
 
   useEffect(() => {
     // Llamar a la API de Laravel para obtener las imágenes
@@ -140,7 +153,7 @@ export default function LeerComic() {
           >
           {imageUrls.map((imageUrl, index) => (
           <div key={index} className="page">
-            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} />
+            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} loading="lazy"/>
           </div> ))}
           </HTMLFlipBook>
         </div>
@@ -150,15 +163,25 @@ export default function LeerComic() {
       </div>
       <Container className="select-page">
         <div className="numero-page">
-         <h2><span class="badge rounded-pill text-bg-light">1 / 5 page</span></h2>
+          <h2>
+            <span className="badge rounded-pill text-bg-light">
+              {currentPage} / {imageUrls.length} page
+            </span>
+          </h2>
         </div>
-          <select className="form-select" aria-label="Default select example">
-            <option selected>Open this select page</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-          </Container>
+        <select
+          className="form-select"
+          aria-label="Default select example"
+          value={currentPage}
+          onChange={handlePageChange}
+        >
+          {imageUrls.map((_, index) => (
+            <option key={index} value={index + 1}>
+              {index + 1}
+            </option>
+          ))}
+        </select>
+      </Container>
     </div>
   );
 }

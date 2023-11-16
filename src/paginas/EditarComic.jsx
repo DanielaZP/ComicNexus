@@ -46,7 +46,7 @@ function EditarComic({ selectedComic }) {
         autor: selectedComicData.comic.autor,
         sinopsis: selectedComicData.comic.sinopsis,
         fechaPublicacion: selectedComicData.comic.anio_publicacion,
-        selectedCategorias: selectedComicData.comic.categoria,
+        selectedCategorias: selectedComicData.categoria,
       });
 
       // Verifica si hay una portada y actualiza el estado correspondiente

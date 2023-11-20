@@ -226,7 +226,8 @@ function VistaComic() {
                       </div>
                     }
                   />
-                  <div className='icon-message' style={{ marginTop: '10px' }}>Añadir a favoritos</div>
+                  <div className='icon-message' style={{ marginTop: '10px' }}>
+                  {likedHeart ? 'Eliminar de favoritos' : 'Añadir a favoritos'}</div>
                 </div>
               </div>
 

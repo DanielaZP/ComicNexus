@@ -110,4 +110,12 @@
   margin-left: 5px; /* Ajustar el espacio entre el texto y el badge */
 }
 
+/* En tu hoja de estilos (puede ser un archivo CSS externo) */
+.centered-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 

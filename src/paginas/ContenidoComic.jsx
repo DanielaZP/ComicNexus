@@ -379,22 +379,34 @@ function ContenidoComic() {
           <ProgressBar now={uploadProgress} label={`${uploadProgress}%`} variant='var(--celestito)'/>
         </Modal.Body>
       </Modal>
-      <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>Confirmar subida de imágenes</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      ¿Está seguro de registrar las {images.length} imagenes?
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn Warning-btn-color" onClick={handleCloseConfirmationModal}>
-          No
-        </Button>
-        <Button className='btn custom-btn-color' onClick={confirmUpload}>
-          Sí
-        </Button>
-      </Modal.Footer>
-    </Modal>
+            <Modal
+        show={showConfirmationModal}
+        onHide={handleCloseConfirmationModal}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '400px', // Ajusta este valor según tus necesidades
+          // height: 'auto', // Puedes comentar esta línea para que el tamaño se ajuste automáticamente al contenido
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+        }}
+      >
+      <Modal.Header closeButton style={{ textAlign: 'center' }}>
+          <Modal.Title style={{ margin: 'auto' }}>Confirmar subida de imágenes</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='text-center'>
+          ¿Está seguro de registrar las {images.length} imágenes?
+        </Modal.Body>
+        <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button className="btn Warning-btn-color" onClick={handleCloseConfirmationModal} style={{marginRight: '10px'}}>
+            No
+          </Button>
+          <Button className='btn custom-btn-color' onClick={confirmUpload}>
+            Sí
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

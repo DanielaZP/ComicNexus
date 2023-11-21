@@ -20,6 +20,7 @@ function ContenidoComic() {
     handleCloseConfirmationModal();
     uploadImages();
   };
+  
 
   useEffect(() => {
     axios.get('https://comic-next-laravel.vercel.app/api/api/comicsSinContenido')
@@ -412,7 +413,16 @@ const previewStyles = {
   marginTop: '20px',
   overflowX: 'auto',
   maxHeight: '300px',
+  backgroundColor: 'white', 
+  '&::-webkit-scrollbar': {
+    width: '12px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: 'red',  
+    borderRadius: '10px',
+  },
 };
+
 
 const imageContainerStyles = {
   position: 'relative',

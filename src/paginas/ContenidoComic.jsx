@@ -178,7 +178,7 @@ function ContenidoComic() {
       showConfirmButton: false,
       showCloseButton: true,
       customClass: {
-        popup: 'swal-info', // Agrega tu clase personalizada aquí
+        popup: 'swal-info', 
       },
     });
   };
@@ -329,7 +329,7 @@ function ContenidoComic() {
                     width: '180px',
                     height: '60px',
                     justifyContent: 'center',
-                    lineHeight: '35px',
+                    lineHeight: '40px',
                     border: '3px solid white',
                     borderRadius: '8px',
                   }}

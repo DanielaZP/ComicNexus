@@ -177,6 +177,9 @@ function ContenidoComic() {
         '<p>3. Haz clic en "Subir imágenes" para completar el proceso.</p>',
       showConfirmButton: false,
       showCloseButton: true,
+      customClass: {
+        popup: 'swal-info', // Agrega tu clase personalizada aquí
+      },
     });
   };
   

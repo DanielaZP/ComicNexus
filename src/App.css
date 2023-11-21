@@ -375,3 +375,7 @@ button:hover {
   background-color: lightblue; /* Cambia el color de fondo a azul claro */
   /* Otros estilos que desees aplicar a los botones deshabilitados */
 }
+.swal-info {
+  font-family: 'Lexend', sans-serif; /* Reemplaza 'Lexend' con tu fuente deseada */
+  /* Otros estilos personalizados, si es necesario */
+}

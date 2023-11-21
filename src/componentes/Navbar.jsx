@@ -157,7 +157,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="dropdown" onMouseEnter={handleUserMenuHover} onMouseLeave={handleUserMenuLeave}>
-          <button className="btn btn-secondary dropdown-toggle custom-btn-color" style={{ marginRight: 20 }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button className="btn btn-secondary dropdown-toggle custom-btn-color btn-hover-effect" style={{ marginRight: 20 }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i className="bi bi-person-circle "></i>
           </button>
           

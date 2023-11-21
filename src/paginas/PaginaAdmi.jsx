@@ -52,7 +52,7 @@ function PaginaAdmi() {
             <div class="card-body">
                 <h5 class="card-title">Añadir nuevo cómic a la plataforma</h5>
                 <p class="card-text">Para registrar un nuevo cómic y agregar sus datos presione el botón de abajo.</p>
-                <Link class="btn custom-btn-color" to="/registro-comic">Añadir cómic</Link>
+                <Link class="btn custom-btn-color btn-hover-effect" to="/registro-comic">Añadir cómic</Link>
             </div>
             </div>
         </div>
@@ -61,7 +61,7 @@ function PaginaAdmi() {
             <div class="card-body">
                 <h5 class="card-title">Añadir nuevo contenido de cómic a la plataforma</h5>
                 <p class="card-text">Para agregar nuevo contenido de un cómic presione el botón de abajo.</p>
-                <Link class="btn custom-btn-color" to="/contenido-comic">Añadir contenido</Link>
+                <Link class="btn custom-btn-color btn-hover-effect" to="/contenido-comic">Añadir contenido</Link>
             </div>
             </div>
         </div> 
@@ -70,7 +70,7 @@ function PaginaAdmi() {
             <div class="card-body">
                 <h5 class="card-title">Editar un cómic de la plataforma</h5>
                 <p class="card-text">Para editar datos de un cómic ya registrado presione el botón de abajo.</p>
-                <button class="btn custom-btn-color" onClick={handleShowModal} >Editar cómic</button>
+                <button class="btn custom-btn-color btn-hover-effect" onClick={handleShowModal} >Editar cómic</button>
             </div>
             </div>
         </div> 
@@ -92,7 +92,7 @@ function PaginaAdmi() {
                   <span className='playlist-title'>{comic.comic.titulo}</span>
                   <Link to='editar-comic'></Link>
                   <button
-                    className='btn custom-btn-color'
+                    className='btn custom-btn-color btn-hover-effect'
                     onClick={() => handleSelectComic(comic)}
                   >
                     Seleccionar
@@ -103,7 +103,7 @@ function PaginaAdmi() {
           </ul>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn Warning-btn-color" onClick={handleCloseModal}>
+          <Button className="btn Warning-btn-color btn-hover-effect" onClick={handleCloseModal}>
             Cancelar
           </Button>
         </Modal.Footer>

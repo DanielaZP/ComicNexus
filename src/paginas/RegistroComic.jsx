@@ -567,8 +567,8 @@ export const RegistroComic = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%',
-        height: '20%',
+        width: '400px',
+        height: '145px',
         fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}>
         <Modal.Header style={{ textAlign: 'center' }}>

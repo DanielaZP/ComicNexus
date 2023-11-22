@@ -27,6 +27,11 @@ const Playlist = () => {
   const [editPlaylist, setEditPlaylist] = useState(null);  
   const [editModalVisible, setEditModalVisible] = useState(false);
   const codUsuario = localStorage.getItem('cod_usuario');
+  const [characterCount, setCharacterCount] = useState(0);
+
+  const updateCharacterCount = (value) => {
+    setCharacterCount(value.length);
+  };
 
   const handleEditPlaylist = (playlist) => {
     setEditPlaylist(playlist);
@@ -456,17 +461,27 @@ const Playlist = () => {
                   <Form.Group controlId="playlistName">
                     <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre del Playlist</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Ingrese el nombre de la playlist"
-                      value={playlistName}
-                      onChange={(e) => setPlaylistName(e.target.value)}
-                      isInvalid={!!nameError || minLengthError || maxLengthError}
-                      style={{ marginTop: '10px', marginLeft: '-100px' }}
-                    />
-                      {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
-                      {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
-                      {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
-                    </Form.Group>
+                    type="text"
+                    placeholder="Ingrese el nombre de la playlist"
+                    value={playlistName}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (inputValue.length <= 50 || e.key === 'Backspace') {
+                        setPlaylistName(inputValue);
+                        updateCharacterCount(inputValue);
+                      }
+                    }}
+                    isInvalid={!!nameError || minLengthError || maxLengthError}
+                    disabled={characterCount >= 50}
+                    style={{ marginTop: '10px', marginLeft: '-100px' }}
+                  />
+                  <div style={{ marginTop: '10px', color: 'green', fontSize: '14px' }}>
+                    {characterCount}/{maxLengthError ? '50' : '50'}
+                  </div>
+                  {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
+                  {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                  {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
+                </Form.Group>
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleCloseEditModal} style={{ marginLeft: '-45px' }}>
                       Cancelar
@@ -549,17 +564,24 @@ const Playlist = () => {
                   <Form.Group controlId="playlistName">
                     <Form.Label style={{ marginTop: '50px', marginLeft: '-100px' }}>Nombre del Playlist</Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="Ingrese el nombre de la playlist"
-                      value={playlistName}
-                      onChange={(e) => setPlaylistName(e.target.value)}
-                      isInvalid={!!nameError || minLengthError || maxLengthError}
-                      style={{ marginTop: '10px', marginLeft: '-100px' }}
-                    />
-                      {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
-                      {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
-                      {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
-                    </Form.Group>
+                    type="text"
+                    placeholder="Ingrese el nombre de la playlist"
+                    value={playlistName}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (inputValue.length <= 51) {
+                        setPlaylistName(inputValue);
+                        updateCharacterCount(inputValue);
+                      }
+                    }}
+                    isInvalid={!!nameError || minLengthError || maxLengthError}
+                    style={{ marginTop: '10px', marginLeft: '-100px' }}
+                  />
+                  
+                  {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
+                  {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
+                  {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
+                </Form.Group>
                   <div style={{ marginTop: '50px' }}>
                     <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
                       Cancelar

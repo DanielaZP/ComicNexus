@@ -667,12 +667,16 @@ const Playlist = () => {
                     src={playlist.portadaUrl}
                     style={{ height: '200px', objectFit: 'cover' }}
                   />
-                  <Card.Body>
-                    <h5 className="card-title">{playlist.playlist.nombre_playlist}</h5>
-                    <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
-                      Ver playlist 
-                    </Link>
-                  </Card.Body>
+                 <Card.Body>
+                  <h5 className="card-title">
+                    {playlist.playlist.nombre_playlist.length > 15
+                      ? `${playlist.playlist.nombre_playlist.substring(0, 20)}...`
+                      : playlist.playlist.nombre_playlist}
+                  </h5>
+                  <Link to={`/vista-playlist/${playlist.playlist.cod_playlist}`} className="btn custom-btn-color">
+                    Ver playlist
+                  </Link>
+                </Card.Body>
                 </Card>
               </Col>
             ))

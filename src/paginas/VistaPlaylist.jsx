@@ -92,11 +92,11 @@ const VistaPlaylist = () => {
             />
           </Col>
           <Col md={6}>
-            <div className="content-container custom-form-container" >
-            <h1 className="display-4 badabb"><strong>playlist: {playlist.playlist.nombre_playlist}</strong></h1>
-            <h3 >Lista de cómics variados</h3>
-            </div>
-          </Col>
+  <div className="content-container custom-form-container" style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+    <h1 className="display-4 badabb"><strong>playlist: {playlist.playlist.nombre_playlist}</strong></h1>
+    <h3>Lista de cómics variados</h3>
+  </div>
+</Col>
           <hr className="my-4" style={{ borderColor: 'var(--celestito)', borderWidth: '2px' }} />
           <Container className="mt-4">
           {comicsData.length > 0 ? (

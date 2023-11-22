@@ -51,7 +51,15 @@ export default function LeerComic() {
       pageFlipObj.flipPrev();
       setShowPrevButton(pageFlipObj.getCurrentPageIndex() > 1);  
       setShowNextButton(true)
-      setCurrentPage(pageFlipObj?.getCurrentPageIndex());
+
+      if(pageFlipObj?.getCurrentPageIndex()>1 ){
+        let current = pageFlipObj?.getCurrentPageIndex()-1;
+        let next = pageFlipObj?.getCurrentPageIndex();
+        setCurrentPage(`${current}-${next}`); 
+      }else{
+        setCurrentPage(pageFlipObj?.getCurrentPageIndex()); 
+      } 
+
   }, [flipbook]);
 
   const flipForward = React.useCallback(() => {
@@ -62,12 +70,22 @@ export default function LeerComic() {
     ) {
       pageFlipObj.flipNext();
       setShowPrevButton(true);  
-      setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 !==
-        pageFlipObj.getPageCount() );
-        let array = [pageFlipObj?.getCurrentPageIndex()+2, pageFlipObj?.getCurrentPageIndex()+3]; // array es [1, 2]
-        let separador = "-";
-        let cadena = array.join(separador); // cadena es "1-2"
-      setCurrentPage(cadena);
+      setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 < pageFlipObj.getPageCount() );
+      if(pageFlipObj.getCurrentPageIndex() + 3 < pageFlipObj.getPageCount()){
+        let current;
+        let next
+        if(pageFlipObj?.getCurrentPageIndex()===0)  {
+          current = pageFlipObj?.getCurrentPageIndex() + 2;
+          next = pageFlipObj?.getCurrentPageIndex() + 3;
+        }else{
+          current = pageFlipObj?.getCurrentPageIndex() + 3;
+          next = pageFlipObj?.getCurrentPageIndex() + 4;
+        };
+          
+        setCurrentPage(`${current}-${next}`);    
+      }else{
+        setCurrentPage(pageFlipObj?.getCurrentPageIndex() + 3)
+      }  
     }
   }, [flipbook]);
 
@@ -188,7 +206,7 @@ export default function LeerComic() {
           placeholderSrc={imageUrl.pagina}
         />
             
-            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`} loading="lazy"/>
+            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`}/>
           </div> ))}
           </HTMLFlipBook>) }
         </div>

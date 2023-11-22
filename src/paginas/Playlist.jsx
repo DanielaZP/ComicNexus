@@ -392,7 +392,7 @@ const Playlist = () => {
               }}>
           Crear playlist
         </Button>
-        <Modal show={editModalVisible} onHide={handleCloseEditModal} size="lg" backdrop="static">
+        <Modal show={editModalVisible} onHide={handleCloseEditModal} size="lg" backdrop="static" style={{ marginTop: '80px' }}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Playlist</Modal.Title>
         </Modal.Header>
@@ -466,18 +466,15 @@ const Playlist = () => {
                     value={playlistName}
                     onChange={(e) => {
                       const inputValue = e.target.value;
-                      if (inputValue.length <= 50 || e.key === 'Backspace') {
+                      if (inputValue.length <= 51) {
                         setPlaylistName(inputValue);
                         updateCharacterCount(inputValue);
                       }
                     }}
                     isInvalid={!!nameError || minLengthError || maxLengthError}
-                    disabled={characterCount >= 50}
                     style={{ marginTop: '10px', marginLeft: '-100px' }}
                   />
-                  <div style={{ marginTop: '10px', color: 'green', fontSize: '14px' }}>
-                    {characterCount}/{maxLengthError ? '50' : '50'}
-                  </div>
+                
                   {minLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado corto (mínimo 3 caracteres).</Form.Control.Feedback>}
                   {maxLengthError && <Form.Control.Feedback type="invalid">El nombre es demasiado largo (máximo 50 caracteres).</Form.Control.Feedback>}
                   {nameError && <Form.Control.Feedback type="invalid">{nameError}</Form.Control.Feedback>}
@@ -495,11 +492,11 @@ const Playlist = () => {
             </Form>
           </Modal.Body>
       </Modal>
-        <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static">
+        <Modal show={showModal} onHide={handleCancelPlaylist} size="lg" backdrop="static" style={{ marginTop: '80px' }}>
           <Modal.Header closeButton>
           <Modal.Title> Crear Playlist</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body >
             <Form>
               <Row>
                 <Col md={6}>
@@ -586,7 +583,7 @@ const Playlist = () => {
                     <Button variant="btn Warning-btn-color" onClick={handleCancelPlaylist} style={{ marginLeft: '-45px' }}>
                       Cancelar
                     </Button>
-                    <Button variant="btn custom-btn-color" onClick={handleSavePlaylist} style={{ marginLeft: '80px' }}>
+                    <Button variant="btn custom-btn-color" onClick={handleConfirmSave} style={{ marginLeft: '80px' }}>
                       Guardar
                     </Button>
                   </div>
@@ -596,7 +593,7 @@ const Playlist = () => {
           </Modal.Body>
         </Modal>
 
-        <Modal show={confirmModalVisible} centered backdrop="static" keyboard={false}>
+        {/* <Modal show={confirmModalVisible} centered backdrop="static" keyboard={false}>
         <Modal.Body>
           <h4>¿Estás seguro de que deseas guardar esta playlist?</h4>
         </Modal.Body>
@@ -608,7 +605,7 @@ const Playlist = () => {
          Sí
       </Button>
    </Modal.Footer>
-  </Modal>
+  </Modal> */}
         <Modal
             show={cancelModalVisible}
             onHide={() => setCancelModalVisible(false)}

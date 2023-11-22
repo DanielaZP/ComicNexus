@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import './styles.css';
 
 function ContenidoComic() {
   const [images, setImages] = useState([]);
@@ -383,8 +384,8 @@ function ContenidoComic() {
         show={showConfirmationModal}
         onHide={handleCloseConfirmationModal}
         style={{
-          position: 'absolute',
-          top: '50%',
+          //position: 'absolute',
+          top: '80%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '400px', // Ajusta este valor según tus necesidades

@@ -24,6 +24,7 @@ function EditarComic({ selectedComic }) {
   const [campoObligatorioPortadaError, setCampoObligatorioPortadaError] = useState(false);
   const [campoObligatorioCategoriaError, setCampoObligatorioCategoriaError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [fileExtensionError, setFileExtensionError] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -175,6 +176,14 @@ function EditarComic({ selectedComic }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const openModal1 = () => {
+    setIsModalOpen1(true);
+  }
+
+  const closeModal1 = () => {
+    setIsModalOpen1(false);
+  }
 
   const handleGuardarClick = () => {
     event.preventDefault();
@@ -556,7 +565,7 @@ function EditarComic({ selectedComic }) {
               </div>
 
               <div className="d-flex justify-content-between">
-                <Link className="btn Warning-btn-color" to="/inicio">Cancelar</Link>
+              <Link className="btn Warning-btn-color" onClick={openModal1}>Cancelar</Link>
                 <button onClick={handleGuardarClick} className="btn custom-btn-color">Guardar Cambios</button>
               </div>
 
@@ -589,6 +598,31 @@ function EditarComic({ selectedComic }) {
           </button>
         </Modal.Actions>
       </Modal>
+
+      <Modal open={isModalOpen1} onClose={closeModal1} style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             width: '30%',
+             height: '22%',
+         }}>
+      <Modal.Header style={{ textAlign: 'center' }}>
+      <h3 style={{ fontWeight: 'bold' }}>Confirmar Cancelación</h3>
+      </Modal.Header>
+      <Modal.Content style={{ textAlign: 'center', marginTop: '-40px' }}>
+      <p>¿Está seguro de cancelar la edición del cómic? Los cambios se descartarán.</p>
+      </Modal.Content>
+      <Modal.Actions style={{ display: 'flex', justifyContent: 'center' }}>
+      <button className="btn Warning-btn-color" style={{ marginRight: '10px' }} onClick={closeModal1}>
+        NO
+      </button>
+      <Link className="btn custom-btn-color" to="/lista-comics" onClick={closeModal1}>
+        SÍ
+      </Link>
+       </Modal.Actions>
+     </Modal>
+
       <Modal open={isErrorModalOpen} onClose={closeErrorModal} style={{
         position: 'absolute',
         top: '50%',
@@ -597,6 +631,7 @@ function EditarComic({ selectedComic }) {
         width: '30%',
         height: '20%',
       }}>
+        
         <Modal.Content>
           <p>Por favor, seleccione una imagen con extensión .jpg o .png.</p>
         </Modal.Content>

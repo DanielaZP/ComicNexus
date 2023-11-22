@@ -21,19 +21,6 @@ function BusquedaTodo() {
   const location = useLocation();
   const search = new URLSearchParams(location.search).get("search");
   const[activeTab,setActiveTab] = useState("1");
-  let navigate = useNavigate();
-  const [cuenta, setCuenta] = useLocalStorage('cuenta');
-
-  window.onpopstate = () => {
-    let ir = ((localStorage.getItem('cuenta'))*-1)
-    console.log(ir)
-    navigate(ir);
-    //navigate("/inicio");
-    //Talvez se mejor guardar el path anterior :v
-    localStorage.setItem('cuenta',0)
-    console.log(localStorage.getItem('cod_usuario'))
-    console.log(localStorage.getItem('cuenta'))
-  }
 
   const cambiarTab = (numeroTab) =>{
     if(activeTab !== numeroTab){

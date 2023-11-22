@@ -10,7 +10,6 @@ import useSound from "use-sound";
 import { Container, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useLocalStorage } from 'react-use';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -22,7 +21,7 @@ export default function LeerComic() {
   let navigate = useNavigate();
   // Variables de estado para controlar la visibilidad de los botones
   const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
+  const [showNextButton, setShowNextButton] = useState(false);
 
   const toggleFullScreen = () => {
     const flipBookContainer = document.querySelector('.flipbook');
@@ -64,7 +63,7 @@ export default function LeerComic() {
       pageFlipObj.flipNext();
       setShowPrevButton(true);  
       setShowNextButton(pageFlipObj.getCurrentPageIndex() + 4 !==
-        pageFlipObj.getPageCount());
+        pageFlipObj.getPageCount() );
         let array = [pageFlipObj?.getCurrentPageIndex()+2, pageFlipObj?.getCurrentPageIndex()+3]; // array es [1, 2]
         let separador = "-";
         let cadena = array.join(separador); // cadena es "1-2"
@@ -105,8 +104,11 @@ export default function LeerComic() {
     axios.get(`https://comic-next-laravel.vercel.app/api/api/getpaginas/${codcontenido}`)
       .then((response) => {
         // axios ya transforma la respuesta JSON automáticamente
-        setImageUrls(response.data);
-        
+        // Verificar la cantidad de páginas en la respuesta
+        const images = response.data; // Suponiendo que response.data es un arreglo de imágenes
+        setImageUrls(images);
+        // Determinar si hay más de una página (más de una imagen en el arreglo)
+        setShowNextButton(images.length > 1);
       })
       .catch((error) => {
         console.error("Error al obtener las imágenes del comic:", error);

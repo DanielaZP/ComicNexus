@@ -20,7 +20,7 @@ const NavComponent = () => {
     setShowAlert(false);
     setInputValue('');
     // let ir = ((characterCount)*-1)
-    // navigate(ir)
+    navigate('/lista-comics')
     // localStorage.setItem('cuenta',0)
   };
 

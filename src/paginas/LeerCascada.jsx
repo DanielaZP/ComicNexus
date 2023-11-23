@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile} from "@fortawesome/free-regular-svg-icons";
 import { IoArrowBackCircle } from 'react-icons/io5';
 import {AiOutlineFullscreen} from 'react-icons/ai'
+import { FaArrowUp } from "react-icons/fa";
 import { Container, Button, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -18,6 +19,13 @@ export default function LeerCascada() {
   let navigate = useNavigate();
   const [isFullScreen, setIsFullScreen] = useState(false);
   // Variables de estado para controlar la visibilidad de los botones
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Desplazamiento suave
+    });
+  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -64,8 +72,9 @@ export default function LeerCascada() {
       .finally(() => {
         // Establece isLoading en false una vez que la solicitud se ha completado (ya sea con éxito o con error)
         setIsLoading(false);
+        setCurrentPage(1);
       });
-  }, []);
+  }, [cod]);
   
   const toggleFullScreen = () => {
     
@@ -144,24 +153,27 @@ export default function LeerCascada() {
             height={650}
             className="full-image"
             placeholderSrc={imageUrl.pagina}
+            onLoad={() => setCurrentPage(index+1)} // Actualizar currentPage al cargar una nueva imagen
           />
        
       </div>
     ))}
-  </div>
-
-  <div className="select-page">
-    <div className="numero-page">
-      <h2>
-        <span className="badge rounded-pill text-bg-light">
-          {currentPage} / {imageUrls.length} page
-        </span>
-      </h2>
+  </div> 
+  <div className="position-fixed bottom-0 end-0 p-3 contenedor-badge">
+    <div className="numero-pages">
+        <h2>
+            <span className="badge rounded-pill text-dark bg-light">
+            {currentPage} / {imageUrls.length} page
+            </span>
+        </h2>
+        </div> 
+      <button className="btn btn-inverted" onClick={scrollToTop}><FaArrowUp /></button>
     </div>
-  </div>
+    
 </Container>
 
       )}
+      
     </div>
   );
 }

@@ -117,3 +117,23 @@
   text-align: center;
 }
 
+.btn-inverted {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  opacity: 0.8; /* Puedes ajustar la opacidad según tus preferencias */
+}
+
+.contenedor-badge {
+  display: flex;
+  align-items: flex-end; /* Alinear elementos a la misma altura en la parte inferior */
+  gap: 10px; /* Espacio entre elementos */
+}
+
+.numero-pages {
+  margin-bottom: auto; /* Empuja el badge hacia arriba para alinearlo */
+}
+
+/* Otros estilos para el badge y el botón pueden ir aquí */
+
+

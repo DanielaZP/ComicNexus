@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile} from "@fortawesome/free-regular-svg-icons";
 import { IoArrowBackCircle } from 'react-icons/io5';
 import {AiOutlineFullscreen} from 'react-icons/ai'
-import { Container, Button, Spinner, Card } from "react-bootstrap";
+import { Container, Button, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';

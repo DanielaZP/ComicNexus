@@ -23,7 +23,8 @@ import RestablecerContraseña from './paginas/RestablecerContraseña';
 import ContenidoComic from './paginas/ContenidoComic';
 import EditarComic from './paginas/EditarComic';
 import Favoritos from './paginas/Favoritos';
-import LeerComic from './paginas/LeerComic';
+import LeerPaginacion from './paginas/LeerPaginacion';
+import LeerCascada from './paginas/LeerCascada';
 
 const codUsuario = localStorage.getItem('cod_usuario');
 
@@ -126,8 +127,12 @@ function App() {
               element={<PrivateRoute><Favoritos /></PrivateRoute>}
             />
             <Route
-              path="leer"
-              element={<PrivateRoute><LeerComic /></PrivateRoute>}
+              path="leer-paginacion/:cod"
+              element={<PrivateRoute><LeerPaginacion /></PrivateRoute>}
+            />
+             <Route
+              path="leer-cascada/:cod"
+              element={<PrivateRoute><LeerCascada /></PrivateRoute>}
             />
           </Route>
           <Route path="registro-usuario" element={<RegistroUsuario />} />

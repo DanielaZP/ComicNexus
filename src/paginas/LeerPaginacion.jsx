@@ -8,12 +8,13 @@ import {AiOutlineFullscreen} from 'react-icons/ai'
 import HTMLFlipBook from "react-pageflip";
 import useSound from "use-sound";
 import { Container, Button, Spinner } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-export default function LeerComic() {
+export default function LeerPaginacion() {
+  const { cod } = useParams();
   const [isLoading, setIsLoading] = useState(true); 
   const codcontenido = localStorage.getItem('cod_contenido');
   const [imageUrls, setImageUrls] = useState([]);
@@ -34,7 +35,7 @@ export default function LeerComic() {
     } };
   
   const changemode = (e) =>{
-    alert("sin funcionamiento")
+    navigate(`/leer-cascada/${cod}`)
   }
   const [soundOn, setSoundOn] = React.useState(true);
   const [play] = useSound(pageFlipSFX);
@@ -108,18 +109,19 @@ export default function LeerComic() {
   }, [flipBack, flipForward]);
 
   const backpage = (e)=>{
-    navigate(-1)
+    navigate(`/vista-comic/${cod}`)
   }
 
   const handlePageChange = (e) => {
-    setCurrentPage(parseInt(e.target.value));
-    const pageFlipObj = flipbook.current.pageFlip();
-    pageFlipObj.flip(e)
+    // setCurrentPage(parseInt(e.target.value));
+    // const pageFlipObj = flipbook.current.pageFlip();
+    // pageFlipObj.flip(parseInt(e.target.value)-1)
+    alert("sin funcionamiento")
   };
 
   useEffect(() => {
     // Llamar a la API de Laravel para obtener las imágenes
-    axios.get(`https://comic-next-laravel.vercel.app/api/api/getpaginas/${codcontenido}`)
+    axios.get(`https://comic-next-laravel.vercel.app/api/api/getpaginas/${cod}`)
       .then((response) => {
         // axios ya transforma la respuesta JSON automáticamente
         // Verificar la cantidad de páginas en la respuesta
@@ -218,7 +220,7 @@ export default function LeerComic() {
         <div className="numero-page">
           <h2>
             <span className="badge rounded-pill text-bg-light">
-              {currentPage} / {imageUrls.length} page
+              {currentPage} / {imageUrls.length} páginas
             </span>
           </h2>
         </div>

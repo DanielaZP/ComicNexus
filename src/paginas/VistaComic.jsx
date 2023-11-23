@@ -87,8 +87,8 @@ function VistaComic() {
   };
 
   const handleAddToLeerComic = () => {
-    navigate('/leer');
     localStorage.setItem('cod_contenido',id)
+    navigate(`/leer-paginacion/${id}`);
   };
 
   const handleCloseModal = () => {

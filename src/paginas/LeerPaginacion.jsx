@@ -23,15 +23,24 @@ export default function LeerPaginacion() {
   const [showPrevButton, setShowPrevButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(false);
 
+  // const toggleFullScreen = () => {
+  //   const flipBookContainer = document.querySelector('.flipbook');
+  //   if (document.fullscreenElement) {
+  //     document.exitFullscreen();
+  //   } else {
+  //     if (flipBookContainer) {
+  //       flipBookContainer.requestFullscreen();
+  //     }
+  //   } };
+
   const toggleFullScreen = () => {
-    const flipBookContainer = document.querySelector('.flipbook');
+    const element = document.getElementById('libro');
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {
-      if (flipBookContainer) {
-        flipBookContainer.requestFullscreen();
-      }
+      element.requestFullscreen();
     } };
+    
   
   const changemode = (e) =>{
     navigate(`/leer-cascada/${cod}`)
@@ -160,7 +169,7 @@ export default function LeerPaginacion() {
       <Container className="text-center my-5">
       <hr className="my-4 custom-divider"  />
       </Container>
-      <div className="flipbook-container">
+      <div className="flipbook-container" id="libro">
         <div className="persistent-buttons">
           {showPrevButton && (<Button variant="link" className="prev-button" onClick={flipBack}>
             <BiSolidChevronLeft size="5em"/>
@@ -192,7 +201,8 @@ export default function LeerPaginacion() {
             flippingTime={750}
             useMouseEvents={false}
             autoSize={true}
-            mobileScrollSupport={true}
+            // mobileScrollSupport={true}
+            // flipOnTouch={true}
           >
           {imageUrls.map((imageUrl, index) => (
           <div key={index} className="page">

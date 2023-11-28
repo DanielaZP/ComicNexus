@@ -78,32 +78,29 @@ export default function LeerCascada() {
   }, [cod]);
   
   const toggleFullScreen = () => {
-    
-    if (!isFullScreen) {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen();
-      } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen();
-      } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen();
-      }
+    const element = document.getElementById('cascada');
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+      element.requestFullscreen();
+    } };
+  
+   useEffect(() => {
+    const handleKeyDown = (event) => {
+      const element = document.getElementById('cascada');
+      if (event.key === 'ArrowUp') {
+        element.scrollTop -= 50; // Desplazamiento hacia arriba
+      } else if (event.key === 'ArrowDown') {
+        element.scrollTop += 50; // Desplazamiento hacia abajo
       }
-    }
-  
-    setIsFullScreen((prevState) => !prevState);
-  };
-  
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <div className="Leer">
@@ -141,7 +138,7 @@ export default function LeerCascada() {
         </Container>
       ) : (
         <Container>
-  <div>
+  <div id="cascada" className="overflow-auto h-100">
     {imageUrls.map((imageUrl, index) => (
       <div key={index} className="d-flex justify-content-center">
         

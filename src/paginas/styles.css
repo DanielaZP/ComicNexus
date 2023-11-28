@@ -3,6 +3,8 @@
   text-align: center;
 }
 
+
+
 .flipbook {
   /* border: 1px solid pink; */
   position: relative;
@@ -23,6 +25,14 @@
   overflow: hidden; /* Añadir overflow: hidden para evitar que las imágenes se desborden */
   padding: 0; /* Asegúrate de que no haya ningún relleno que afecte las dimensiones */
   margin: 0; /* Asegúrate de que no haya márgenes que afecten las dimensiones */
+}
+
+#cascada {
+  overflow: hidden;
+}
+
+#cascada::-webkit-scrollbar {
+  display: none; /* Oculta el scrollbar en navegadores webkit (Chrome, Safari, etc.) */
 }
 
 

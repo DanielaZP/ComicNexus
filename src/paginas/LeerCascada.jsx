@@ -25,6 +25,7 @@ export default function LeerCascada() {
       top: 0,
       behavior: 'smooth' // Desplazamiento suave
     });
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -132,7 +133,7 @@ export default function LeerCascada() {
           </Spinner>
           <p className="mt-2">Cargando paginas...</p>
         </Container>
-      ) :   imageUrls.length === 1 ? (
+      ) :  imageUrls.length === 1 ? (
         <Container className="text-center my-5" style={{ backgroundColor: 'white', padding: '20px', borderRadius: '50%', width: '450px', height: '75px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <p style={{ fontSize: "20px"}}>
           El cómic seleccionado no tiene contenido subido.
@@ -163,7 +164,7 @@ export default function LeerCascada() {
     <div className="numero-pages">
         <h2>
             <span className="badge rounded-pill text-dark bg-light">
-            {currentPage} / {imageUrls.length} page
+            {currentPage} / {imageUrls.length} páginas
             </span>
         </h2>
         </div> 

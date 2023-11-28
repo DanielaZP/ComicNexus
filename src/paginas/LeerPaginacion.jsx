@@ -206,8 +206,6 @@ export default function LeerPaginacion() {
           className="full-image"
           placeholderSrc={imageUrl.pagina}
         />
-            
-            <img src={imageUrl.pagina} className="full-image" alt={`Page ${index}`}/>
           </div> ))}
           </HTMLFlipBook>) }
         </div>
@@ -215,27 +213,29 @@ export default function LeerPaginacion() {
           <BiSolidChevronRight size="5em" />
         </Button>}
       </div>
-      <Container className="select-page">
-        <div className="numero-page">
-          <h2>
-            <span className="badge rounded-pill text-bg-light">
-              {currentPage} / {imageUrls.length} páginas
-            </span>
-          </h2>
-        </div>
-        <select
-          className="form-select"
-          aria-label="Default select example"
-          value={currentPage}
-          onChange={handlePageChange}
-        >
-          {imageUrls.map((_, index) => (
-            <option key={index} value={index + 1}>
-              {index + 1}
-            </option>
-          ))}
-        </select>
-      </Container>
+      {imageUrls.length !== 1 && (  
+        <Container className="select-page">
+          <div className="numero-page">
+            <h2>
+              <span className="badge rounded-pill text-bg-light">
+                {currentPage} / {imageUrls.length} páginas
+              </span>
+            </h2>
+          </div>
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            value={currentPage}
+            onChange={handlePageChange}
+          >
+            {imageUrls.map((_, index) => (
+              <option key={index} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
+          </select>
+        </Container>  
+        )}
     </div>
   );
 }

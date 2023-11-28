@@ -16,7 +16,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function LeerPaginacion() {
   const { cod } = useParams();
   const [isLoading, setIsLoading] = useState(true); 
-  const codcontenido = localStorage.getItem('cod_contenido');
   const [imageUrls, setImageUrls] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   let navigate = useNavigate();

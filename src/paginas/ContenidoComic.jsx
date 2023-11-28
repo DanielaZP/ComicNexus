@@ -42,7 +42,17 @@ function ContenidoComic() {
   const calculateProgress = (index) => Math.round(((index + 1) / images.length) * 100);
 
   const onDrop = async (acceptedFiles, rejectedFiles) => {
-    if (rejectedFiles.length > 0 || acceptedFiles.some(file => !file.type.startsWith('image/'))) {
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+    const validFiles = acceptedFiles.filter(file =>
+      acceptedImageTypes.includes(file.type)
+    );
+  
+    // Manejar los archivos válidos aquí (ejemplo: enviarlos a un servidor, procesarlos, etc.)
+    console.log('Archivos válidos:', validFiles);
+  
+    // Manejar los archivos rechazados si es necesario
+    if (rejectedFiles.length > 0 || validFiles.length !== acceptedFiles.length) {
+      console.log('Archivos rechazados:', rejectedFiles);
       Swal.fire({
         icon: 'error',
         title: 'Solo se permiten archivos JPG y PNG',
@@ -80,9 +90,8 @@ function ContenidoComic() {
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/jpeg, image/png',
-    onDrop,
+    onDrop: onDrop,
   });
-
   const uploadImages = async () => {
     if (!selectedComic) {
       Swal.fire({

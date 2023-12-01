@@ -121,11 +121,28 @@ export default function LeerPaginacion() {
   }
 
   const handlePageChange = (e) => {
-    // setCurrentPage(parseInt(e.target.value));
-    // const pageFlipObj = flipbook.current.pageFlip();
-    // pageFlipObj.flip(parseInt(e.target.value)-1)
-    alert("sin funcionamiento")
+    const selectedPage = parseInt(e.target.value);
+    const pageFlipObj = flipbook.current.pageFlip();
+    const currentPageIndex = pageFlipObj.getCurrentPageIndex() + 1;
+  
+    if (selectedPage !== currentPageIndex) {
+      if (selectedPage > currentPageIndex) {
+        const diff = selectedPage - currentPageIndex;
+        for (let i = 0; i < diff; i++) {
+          pageFlipObj.flipNext();
+        }
+        setShowPrevButton(true)
+      } else {
+        const diff = currentPageIndex - selectedPage;
+        for (let i = 0; i < diff; i++) {
+          pageFlipObj.flipPrev();
+        }
+      }
+  
+      setCurrentPage(selectedPage);
+    }
   };
+  
 
   useEffect(() => {
     // Llamar a la API de Laravel para obtener las imágenes

@@ -89,9 +89,9 @@ export default function LeerCascada() {
     const handleKeyDown = (event) => {
       const element = document.getElementById('cascada');
       if (event.key === 'ArrowUp') {
-        element.scrollTop -= 50; // Desplazamiento hacia arriba
+        element.scrollTop -= 130; // Desplazamiento hacia arriba
       } else if (event.key === 'ArrowDown') {
-        element.scrollTop += 50; // Desplazamiento hacia abajo
+        element.scrollTop += 130; // Desplazamiento hacia abajo
       }
     };
 
